@@ -16,5 +16,6 @@ public :
 	static int32 _columns;
 	UPROPERTY(EditAnywhere)
 	static float _tileWidth;
-	static TArray<TArray<Tile>> _tileGrid;
+	static TArray<TArray<Tile*>> _tileGrid;
+	static void GenerateGrid();
 };
