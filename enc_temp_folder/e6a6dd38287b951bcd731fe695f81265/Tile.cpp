@@ -30,20 +30,6 @@ ATile::ATile(int32 row, int32 column, float width, int32 height)
 	SetActorLocation(FVector3d(row * width, column * width, 0));
 }
 
-void ATile::Init(int32 row, int32 column, float width, int32 height)
-{
-	_row = row;
-	_column = column;
-	_height = height;
-
-	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
-
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Plane.Plane"));
-	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
-
-	RootComponent = _staticMeshComponent;
-	SetActorLocation(FVector3d(row * width, column * width, 0));
-}
 
 void ATile::AddItem() 
 {

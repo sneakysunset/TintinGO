@@ -26,7 +26,7 @@ public:
 	TArray<AItem*> _items;
 	UFUNCTION(BlueprintCallable)
 	void AddItem();
-	void Init(int32 row, int32 column, float width, int32 height);
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 		class UStaticMeshComponent* _staticMeshComponent = nullptr;
