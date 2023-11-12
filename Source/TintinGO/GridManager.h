@@ -44,8 +44,14 @@ private:
         int32 _columns;
     UPROPERTY(EditAnywhere, Category = "Grid Generation")
         double _tileWidth;
-    UPROPERTY(EditAnywhere, Category = "Tile")
-        UMaterialInterface* TileMaterial;
+    UPROPERTY(EditAnywhere, Category = "TileMaterials")
+        UMaterialInterface* _walkable_TileMaterial;
+    UPROPERTY(EditAnywhere, Category = "TileMaterials")
+        UMaterialInterface* _startPos_TileMaterial;
+    UPROPERTY(EditAnywhere, Category = "TileMaterials")
+        UMaterialInterface* _endPos_TileMaterial;
+    UPROPERTY(EditAnywhere, Category = "TileMaterials")
+        UMaterialInterface* _unwalkable_TileMaterial;
 
     UFUNCTION(CallInEditor, Category = "Events")
         void BlueprintEditorTick(float DeltaTime);

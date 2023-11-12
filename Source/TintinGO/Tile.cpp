@@ -2,51 +2,70 @@
 
 
 #include "Tile.h"
-
 ATile::ATile() 
 {
-	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Plane.Plane"));
-	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
-
-	RootComponent = _staticMeshComponent;
-	TileMaterial = nullptr;
-}
-
-ATile::ATile(int32 row, int32 column, float width, int32 height)
-{
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	_row = row;
-	_column = column;
-	_height = height;
-
 	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
-
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Plane.Plane"));
 	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
 
 	RootComponent = _staticMeshComponent;
-	SetActorLocation(FVector3d(row * width, column * width, 0));
 }
 
-void ATile::Init(int32 row, int32 column, float width, int32 height)
+void ATile::Tick(float DeltaTime)
 {
-	_row = row;
-	_column = column;
-	_height = height;
+#if WITH_EDITOR
+	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor)
+	{
+		BlueprintEditorTick(DeltaTime);
+	}
 
-	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
+#endif
+	Super::Tick(DeltaTime);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Plane.Plane"));
-	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
+}
 
-	RootComponent = _staticMeshComponent;
-	SetActorLocation(FVector3d(row * width, column * width, 0));
+bool ATile::ShouldTickIfViewportsOnly() const
+{
+	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor && _useEditorTick)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void ATile::BlueprintEditorTick(float DeltaTime)
+{
+	if (_walkable != _walkableChecker || _tileType != _tileTypeChecker) {
+		if (_walkable) {
+			switch (_tileType) {
+			case ETileType::Neutral:
+				_staticMeshComponent->SetMaterial(0, _walkableMat);
+				break;
+			case ETileType::StartingPosition:
+				_staticMeshComponent->SetMaterial(0, _startPosMat);
+				break;
+			case ETileType::EndingPosition:
+				_staticMeshComponent->SetMaterial(0, _endPosMat);
+				break;
+
+			}
+		}
+		else {
+			_staticMeshComponent->SetMaterial(0, _unwalkableMat);
+		}
+		_walkableChecker = _walkable;
+	}
 }
 
 void ATile::AddItem() 
 {
 
 }
+
+
+
 

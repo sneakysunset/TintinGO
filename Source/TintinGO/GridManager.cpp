@@ -4,10 +4,29 @@
 #include "Engine/World.h"
 #include "GridManager.h"
 
-// Sets default values
 AGridManager::AGridManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
+}
+
+void AGridManager::Tick(float DeltaTime)
+{
+#if WITH_EDITOR
+	//UE_LOG(LogTemp, Warning, TEXT("Test"));
+	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor)
+	{
+		BlueprintEditorTick(DeltaTime);
+	}
+
+#endif
+	Super::Tick(DeltaTime);
+
+}
+
+void AGridManager::BeginPlay()
+{
+	Super::BeginPlay();
+	
 }
 
 bool AGridManager::ShouldTickIfViewportsOnly() const
@@ -20,6 +39,16 @@ bool AGridManager::ShouldTickIfViewportsOnly() const
 	{
 		return false;
 	}
+}
+
+void AGridManager::BlueprintEditorTick(float DeltaTime)
+{
+	if (_initializeGrid) 
+	{
+		InitializeGrid();
+		_initializeGrid = false;
+	}
+	
 }
 
 void AGridManager::InitializeGrid()
@@ -46,34 +75,37 @@ void AGridManager::InitializeGrid()
 		{
 			ATile* tile = NewObject<ATile>(this);
 			FActorSpawnParameters SpawnParams;
-
-			FVector SpawnLocation = FVector(i * 100 + _tileWidth * 50 * i, j * 100 + _tileWidth * j * 50 , 0);
+			FVector SpawnLocation = FVector(i * 100 * _tileWidth, j * 100 * _tileWidth , 0);
 			FRotator SpawnRotation = FRotator(0, 0, 0);
 			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(tile->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
 			SpawnedTile->SetActorScale3D(FVector(_tileWidth, _tileWidth, 1));
 			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), i, j));
-			
-			if (SpawnedTile->TileMaterial)
+			tile->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
+			SpawnedTile->_row = i;
+			SpawnedTile->_column = j;
+			SpawnedTile->_walkableMat = _walkable_TileMaterial;
+			SpawnedTile->_startPosMat = _startPos_TileMaterial;
+			SpawnedTile->_endPosMat = _endPos_TileMaterial;
+			SpawnedTile->_unwalkableMat = _unwalkable_TileMaterial;
+			UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(_walkable_TileMaterial, SpawnedTile);
+			if (DynamicMaterial)
 			{
-				UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(TileMaterial, SpawnedTile);
-				if (DynamicMaterial)
+				// Set the material on the mesh component (assuming it's a UStaticMeshComponent)
+				UStaticMeshComponent* MeshComponent = SpawnedTile->FindComponentByClass<UStaticMeshComponent>();
+				if (MeshComponent)
 				{
-					// Set the material on the mesh component (assuming it's a UStaticMeshComponent)
-					UStaticMeshComponent* MeshComponent = SpawnedTile->FindComponentByClass<UStaticMeshComponent>();
-					if (MeshComponent)
-					{
-						MeshComponent->SetMaterial(0, DynamicMaterial);
-					}
-					else
-					{
-						UE_LOG(LogTemp, Warning, TEXT("No Static Mesh"));
-					}
+					MeshComponent->SetMaterial(0, DynamicMaterial);
 				}
-				else 
+				else
 				{
-					UE_LOG(LogTemp, Warning, TEXT("Failed At Dynamic Material creation"));
+					UE_LOG(LogTemp, Warning, TEXT("No Static Mesh"));
 				}
 			}
+			else 
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Failed At Dynamic Material creation"));
+			}
+
 
 			if (SpawnedTile)
 			{
@@ -98,34 +130,5 @@ void AGridManager::ReleaseCell(int32 Row, int32 Col)
 
 }
 
-// Called when the game starts or when spawned
-void AGridManager::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
 
-void AGridManager::BlueprintEditorTick(float DeltaTime)
-{
-	if (_initializeGrid) 
-	{
-		InitializeGrid();
-		_initializeGrid = false;
-	}
-	
-}
 
-// Called every frame
-void AGridManager::Tick(float DeltaTime)
-{
-#if WITH_EDITOR
-	//UE_LOG(LogTemp, Warning, TEXT("Test"));
-	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor)
-	{
-		BlueprintEditorTick(DeltaTime);
-	}
-
-#endif
-	Super::Tick(DeltaTime);
-
-}
