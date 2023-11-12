@@ -6,11 +6,11 @@
 ATile::ATile() 
 {
 	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
-
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Plane.Plane"));
 	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
 
 	RootComponent = _staticMeshComponent;
+	TileMaterial = nullptr;
 }
 
 ATile::ATile(int32 row, int32 column, float width, int32 height)
