@@ -2,24 +2,30 @@
 
 
 #include "GameManager.h"
+#include "State.h"
 #include "State_AwaitingInputs.h"
+#include "State_PlayerMove.h"
 
-// Sets default values
+
+AGameManager* AGameManager::SingletonInstance = nullptr;
+
 AGameManager::AGameManager()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	_states.Add(new State_AwaitingInputs());
 }
 
-// Called when the game starts or when spawned
 void AGameManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	SingletonInstance = this;
+
+	_states.Add(new State_AwaitingInputs());
+	_states.Add(new State_PlayerMove());
+	_currentStateIndex = 0;
+	_states[_currentStateIndex]->OnStateEnter();
 }
 
-// Called every frame
 void AGameManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
@@ -32,3 +38,7 @@ void AGameManager::StateChange()
 	_states[_currentStateIndex]->OnStateEnter();
 }
 
+AGameManager* AGameManager::GetInstance() 
+{
+	return SingletonInstance;
+}

@@ -7,6 +7,11 @@ State::State()
 {
 }
 
+//State::State(AGameManager* gameManager)
+//{
+//	//_gameManager = gameManager;
+//}
+
 State::~State()
 {
 }
