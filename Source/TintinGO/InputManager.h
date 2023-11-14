@@ -12,6 +12,4 @@ class TINTINGO_API UInputManager : public UObject
 public:
 	UInputManager();
 	~UInputManager();
-
-	virtual void SetUpInputComponent() override;
 };

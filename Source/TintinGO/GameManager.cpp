@@ -16,19 +16,16 @@ AGameManager::AGameManager()
 
 void AGameManager::BeginPlay()
 {
-	Super::BeginPlay();
-
 	SingletonInstance = this;
 
-	_states.Add(new State_AwaitingInputs());
-	_states.Add(new State_PlayerMove());
+	_states.Add(NewObject<State_AwaitingInputs>(this));
+	_states.Add(NewObject<State_PlayerMove>(this));
 	_currentStateIndex = 0;
 	_states[_currentStateIndex]->OnStateEnter();
 }
 
 void AGameManager::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
 	_states[_currentStateIndex]->OnStateTick();
 }
 
@@ -42,3 +39,5 @@ AGameManager* AGameManager::GetInstance()
 {
 	return SingletonInstance;
 }
+
+

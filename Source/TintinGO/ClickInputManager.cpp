@@ -1,12 +1,16 @@
 #include "ClickInputManager.h"
+#include "ClickInputManagerController.h"
 #include "State.h"
 #include "State_AwaitingInputs.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
+
 AClickInputManager::AClickInputManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
+   // CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 }
-
+    
 void AClickInputManager::BeginPlay()
 {
 	Super::BeginPlay();
@@ -23,8 +27,19 @@ void AClickInputManager::Tick(float DeltaTime)
 void AClickInputManager::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	
-	PlayerInputComponent->BindAction("MouseClick", IE_Pressed, this, &AClickInputManager::OnMouseClick);
+
+    UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+    AClickInputManagerController* FPC = Cast<AClickInputManagerController>(Controller);
+    check(EIC && FPC);
+   
+    EIC->BindAction(FPC->LeftClickAction, ETriggerEvent::Started, this, &AClickInputManager::OnMouseClick);
+
+    ULocalPlayer* LocalPlayer = FPC->GetLocalPlayer();
+    check(LocalPlayer);
+    UEnhancedInputLocalPlayerSubsystem* Subsystem = LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+    check(Subsystem);
+    Subsystem->ClearAllMappings();
+    Subsystem->AddMappingContext(FPC->PawnMappingContext, 0);
 }
 
 
@@ -56,6 +71,5 @@ void AClickInputManager::OnMouseClick()
         {
             AwaitingInputsState->ReceiveLeftMouseClick(HitLocation);
         }
-        // Do something with HitLocation
     }
 }

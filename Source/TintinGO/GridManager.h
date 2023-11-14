@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "Tile.h"
 #include "GridManager.generated.h"
+
 UCLASS()
 class TINTINGO_API AGridManager : public AActor
 {
@@ -16,6 +17,8 @@ public:
 	// Sets default values for this actor's properties
 	AGridManager();
 
+    static AGridManager* GetInstance();
+
     UFUNCTION(BlueprintCallable, Category = "Grid")
         void InitializeGrid();
 
@@ -24,6 +27,10 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Grid")
         void ReleaseCell(int32 Row, int32 Col);
+
+    ATile* WorldCoordinatesToTilePosition(FVector worldCoordinates);
+
+    ATile* GetTintinTileCoordinates();
 
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaTime) override;
@@ -37,7 +44,7 @@ public:
     TArray<TArray<ATile*>> _gridTiles;
 
 private:
-
+    static AGridManager* SingletonInstance;
     UPROPERTY(EditAnywhere, Category = "Grid Generation")
         int32 _rows;
     UPROPERTY(EditAnywhere, Category = "Grid Generation")

@@ -1,32 +1,28 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "State.h"
+#include "GameManager.h"
 
-State::State()
+UState::UState()
+{
+	_gameManager = AGameManager::GetInstance();
+}
+
+
+
+UState::~UState()
 {
 }
 
-//State::State(AGameManager* gameManager)
-//{
-//	//_gameManager = gameManager;
-//}
-
-State::~State()
-{
-}
-
-void State::OnStateEnter()
-{
-
-}
-
-void State::OnStateTick()
+void UState::OnStateEnter()
 {
 
 }
 
-void State::OnStateExit(int32* currentStateIndex)
+void UState::OnStateTick()
+{
+
+}
+
+void UState::OnStateExit(int32* currentStateIndex)
 {
 	*currentStateIndex ++;
 }

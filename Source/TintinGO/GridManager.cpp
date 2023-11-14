@@ -1,8 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tile.h"
+#include "Math/UnrealMathUtility.h"
 #include "Engine/World.h"
 #include "GridManager.h"
+
+
+AGridManager* AGridManager::SingletonInstance = nullptr;
+
+AGridManager* AGridManager::GetInstance() 
+{
+	return SingletonInstance;
+}
 
 AGridManager::AGridManager()
 {
@@ -26,7 +35,7 @@ void AGridManager::Tick(float DeltaTime)
 void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	SingletonInstance = this;
 }
 
 bool AGridManager::ShouldTickIfViewportsOnly() const
@@ -131,4 +140,30 @@ void AGridManager::ReleaseCell(int32 Row, int32 Col)
 }
 
 
+ATile* AGridManager::WorldCoordinatesToTilePosition(FVector worldCoordinates)
+{
+	int32 x = FMath::CeilToInt32(worldCoordinates.X / _tileWidth / 100.0f);
+	int32 y = FMath::CeilToInt32(worldCoordinates.Y / _tileWidth / 100.0f);
 
+	return _gridTiles[x][y];
+}
+
+//Need to assign Tintin class
+ATile* AGridManager::GetTintinTileCoordinates()
+{
+	for (size_t i = 0; i < _gridTiles.Num(); i++)
+	{
+		for (size_t j = 0; j < _gridTiles[i].Num(); j++)
+		{
+			for (size_t k = 0; k < _gridTiles[i][j]->_items.Num(); k++)
+			{
+				if (_gridTiles[i][j]->_items[k]->IsA<AItem>()) 
+				{
+					return _gridTiles[i][j];
+				}
+			}
+		}
+	}
+
+	return nullptr;
+}

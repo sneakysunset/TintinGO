@@ -4,27 +4,26 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "State.h"
 #include "GameManager.generated.h"
+
+class UState;
 
 UCLASS()
 class TINTINGO_API AGameManager : public AActor
 {
 	GENERATED_BODY()
-	
+
 public:	
 	AGameManager();
-	TArray<State*> _states;
+	TArray<UState*> _states;
 	int32 _currentStateIndex;
 	UFUNCTION()
 	void StateChange();
-
-protected:
-	// Called when the game starts or when spawned
+	static AGameManager* GetInstance();
+	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+private:
+	// Called when the game starts or when spawned
+	static AGameManager* SingletonInstance;
 };
