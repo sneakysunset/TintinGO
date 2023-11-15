@@ -15,7 +15,6 @@ ATintin::ATintin()
 void ATintin::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
