@@ -2,7 +2,12 @@
 
 AItem::AItem()
 {
-    PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = true;
+	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Sphere.Sphere"));
+	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
+
+	RootComponent = _staticMeshComponent;
 }
 
 void AItem::BeginPlay()

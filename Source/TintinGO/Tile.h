@@ -34,6 +34,8 @@ public:
 		bool _walkable = true;
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		TArray<AItem*> _items;
+	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
+		int32 _itemsNb;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 		bool _useEditorTick = true;
@@ -45,7 +47,7 @@ public:
 	UMaterialInterface* _startPosMat;
 	UMaterialInterface* _endPosMat;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, CallInEditor)
 		void AddItem();
 protected:
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;

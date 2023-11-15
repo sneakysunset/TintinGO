@@ -15,6 +15,8 @@ public:
 protected:
     virtual void BeginPlay() override;
 
+    class UStaticMeshComponent* _staticMeshComponent = nullptr;
+
 public:
     virtual void Tick(float DeltaTime) override;
 
