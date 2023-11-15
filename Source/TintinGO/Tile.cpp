@@ -63,7 +63,29 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 
 void ATile::AddItem() 
 {
+	TArray<AActor*> AttachedActors;
+	GetAttachedActors(AttachedActors);
+	for (auto* Attached : AttachedActors)
+	{
+		Attached->Destroy();
+	}
 
+	_items.Empty();
+
+
+	for (int i = 0; i < _itemsNb; i++)
+	{
+		AItem* item = NewObject<AItem>(this);
+		FActorSpawnParameters SpawnParams;
+		FVector SpawnLocation = GetActorLocation();
+		FRotator SpawnRotation = FRotator(0, 0, 0);
+		AItem* SpawnedItem = GetWorld()->SpawnActor<AItem>(item->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
+		SpawnedItem->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
+		SpawnedItem->SetActorScale3D(GetActorScale3D() / 10);
+		SpawnedItem->SetActorLabel(FString::Printf(TEXT("Item_%d_Of_Tile_%d_%d"), i, _row, _column));
+
+		_items.Add(SpawnedItem);
+	}
 }
 
 
