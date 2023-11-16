@@ -73,21 +73,43 @@ void ATile::AddItem()
 		Attached->Destroy();
 	}
 
-	_items.Empty();
+	_itemsList.Empty();
 
-
-	for (int i = 0; i < _itemsNb; i++)
+	for (int i = 0; i < _itemsType.Num(); i++)
 	{
-		AItem* item = NewObject<AItem>(this);
-		FActorSpawnParameters SpawnParams;
-		FVector SpawnLocation = GetActorLocation();
-		FRotator SpawnRotation = FRotator(0, 0, 0);
-		AItem* SpawnedItem = GetWorld()->SpawnActor<AItem>(item->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
-		SpawnedItem->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
-		SpawnedItem->SetActorScale3D(GetActorScale3D() / 10);
-		SpawnedItem->SetActorLabel(FString::Printf(TEXT("Item_%d_Of_Tile_%d_%d"), i, _row, _column));
+		FActorSpawnParameters params;
+		FVector position = GetActorLocation();
+		FRotator rotation = FRotator(0, 0, 0);
+		AItem* spawnedItem = nullptr;
 
-		_items.Add(SpawnedItem);
+		_itemsList.Add(spawnedItem);
+		FString name = "";
+
+		switch (_itemsType[i])
+		{
+			case EItemType::Stone:
+				spawnedItem = GetWorld()->SpawnActor<AItem>(AItem::StaticClass(), position, rotation, params);
+				spawnedItem->SetActorLabel(FString::Printf(TEXT("Stone_%d"), i));
+				name = "Stone";
+				break;
+			case EItemType::Wallet:
+				spawnedItem = GetWorld()->SpawnActor<AItem>(AItem::StaticClass(), position, rotation, params);
+				spawnedItem->SetActorLabel(FString::Printf(TEXT("Wallet_%d"), i));
+				name = "Wallet";
+				break;
+			default:
+				break;
+		}
+		if (spawnedItem)
+		{
+			spawnedItem->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
+			spawnedItem->SetActorScale3D(GetActorScale3D() / 10);
+			_itemsList.Add(spawnedItem);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("Character Spawned Not Valid"));
+		}
 	}
 }
 void ATile::AddCharacter() 

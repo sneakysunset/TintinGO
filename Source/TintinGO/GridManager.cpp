@@ -87,6 +87,7 @@ void AGridManager::InitializeGrid()
 			SpawnedTile->SetActorScale3D(FVector(_tileWidth, _tileWidth, 1));
 			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), i, j));
 			SpawnedTile->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
+			SpawnedTile->SetActorLocation(SpawnLocation);
 			SpawnedTile->_row = i;
 			SpawnedTile->_column = j;
 			SpawnedTile->_walkableMat = _walkable_TileMaterial;
@@ -152,9 +153,9 @@ ATile* AGridManager::GetTintinTileCoordinates()
 	{
 		for (size_t j = 0; j < _gridTiles[i].Num(); j++)
 		{
-			for (size_t k = 0; k < _gridTiles[i][j]->_items.Num(); k++)
+			for (size_t k = 0; k < _gridTiles[i][j]->_itemsList.Num(); k++)
 			{
-				if (_gridTiles[i][j]->_items[k]->IsA<AItem>()) 
+				if (_gridTiles[i][j]->_itemsList[k]->IsA<AItem>()) 
 				{
 					return _gridTiles[i][j];
 				}

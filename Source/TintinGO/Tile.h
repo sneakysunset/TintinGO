@@ -6,7 +6,6 @@
 #include "TileCharacter.h"
 #include "Tile.generated.h"
 
-
 UENUM(BlueprintType)
 enum class ETileType : uint8
 {
@@ -30,15 +29,14 @@ public:
 		bool _walkable = true;
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		TArray<AItem*> _items;
+		TArray<EItemType> _itemsType;
+
+	TArray<AItem*> _itemsList;
 
 	UPROPERTY(EditAnywhere, Category = "TileParameters")
 		TArray<ECharacterType> _ennemies;
 
 	TArray<ATileCharacter*> _ennemiesList;
-
-	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		int32 _itemsNb;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 		bool _useEditorTick = true;
