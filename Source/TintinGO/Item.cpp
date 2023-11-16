@@ -24,3 +24,13 @@ void AItem::OnTriggered()
 {
 
 }
+
+void AItem::PlaceBody()
+{
+}
+
+void AItem::TriggerBody()
+{
+	this->Destroy();
+}
+

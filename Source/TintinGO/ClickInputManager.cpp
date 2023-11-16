@@ -67,9 +67,11 @@ void AClickInputManager::OnMouseClick()
         // Hit something, you can access HitResult to get information about the hit
         FVector HitLocation = HitResult.Location;
         UState* state = _gameManager->_states[_gameManager->_currentStateIndex];
-        if(State_AwaitingInputs* AwaitingInputsState = Cast<State_AwaitingInputs>(state))
+        State_AwaitingInputs* inputState = Cast<State_AwaitingInputs>(state);
+        if(inputState)
         {
-            AwaitingInputsState->ReceiveLeftMouseClick(HitLocation);
+            inputState->ReceiveLeftMouseClick(HitLocation);
         }
+        else UE_LOG(LogTemp, Error, TEXT("The current State doesn't receive Inputs"))
     }
 }

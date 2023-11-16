@@ -1,6 +1,6 @@
+#include "ClickInputManagerController.h"
 #include "InputAction.h"
 #include "InputMappingContext.h"
-#include "ClickInputManagerController.h"
 
 void AClickInputManagerController::SetupInputComponent()
 {

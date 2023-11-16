@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "Tile.h"
 #include "MainGameMode.generated.h"
 
 UCLASS()

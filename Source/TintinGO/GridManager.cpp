@@ -1,9 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+#include "GridManager.h"
 #include "Tile.h"
 #include "Math/UnrealMathUtility.h"
 #include "Engine/World.h"
-#include "GridManager.h"
 
 
 AGridManager* AGridManager::SingletonInstance = nullptr;
@@ -82,14 +80,13 @@ void AGridManager::InitializeGrid()
 		_gridTiles.Add(TArray<ATile*>());
 		for (size_t j = 0; j < _columns; j++)
 		{
-			ATile* tile = NewObject<ATile>(this);
 			FActorSpawnParameters SpawnParams;
 			FVector SpawnLocation = FVector(i * 100 * _tileWidth, j * 100 * _tileWidth , 0);
 			FRotator SpawnRotation = FRotator(0, 0, 0);
-			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(tile->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
+			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(ATile::StaticClass(), SpawnLocation, SpawnRotation, SpawnParams);
 			SpawnedTile->SetActorScale3D(FVector(_tileWidth, _tileWidth, 1));
 			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), i, j));
-			tile->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
+			SpawnedTile->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
 			SpawnedTile->_row = i;
 			SpawnedTile->_column = j;
 			SpawnedTile->_walkableMat = _walkable_TileMaterial;

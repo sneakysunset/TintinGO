@@ -2,6 +2,9 @@
 
 
 #include "Tile.h"
+#include "Item.h"
+#include "TileCharacter.h"
+
 ATile::ATile() 
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -86,6 +89,38 @@ void ATile::AddItem()
 
 		_items.Add(SpawnedItem);
 	}
+}
+void ATile::AddCharacter() 
+{
+	for (size_t i = 0; i < _ennemies.Num(); i++)
+	{
+		FActorSpawnParameters SpawnParams;
+		FVector position = FVector(_row, _column, 50);
+		FRotator rotation = FRotator(0, 0, 0);
+		ATileCharacter* chara = nullptr;
+		switch (_ennemies[i])
+		{
+			case ECharacterType::Neutral:
+				chara = GetWorld()->SpawnActor<ATileCharacter>(ATileCharacter::StaticClass(), position, rotation, SpawnParams);
+				break;
+			case ECharacterType::Ennemy1:
+				break;
+			case ECharacterType::Ennemy2:
+				break;
+			default:
+				break;
+		}
+		if (chara)
+		{
+			chara->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
+			_ennemiesList.Add(chara);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("Character Spawned Not Valid"));
+		}
+	}
+
 }
 
 

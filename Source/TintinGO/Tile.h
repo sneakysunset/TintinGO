@@ -1,10 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Item.h"
+#include "TileCharacter.h"
 #include "Tile.generated.h"
 
 
@@ -22,18 +21,22 @@ class TINTINGO_API ATile : public AActor
 	GENERATED_BODY()
 
 public:
-
-
 	ATile();
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		ETileType _tileType {
-		ETileType::Neutral
-	};
+		ETileType _tileType {ETileType::Neutral};
+
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		bool _walkable = true;
+
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		TArray<AItem*> _items;
+
+	UPROPERTY(EditAnywhere, Category = "TileParameters")
+		TArray<ECharacterType> _ennemies;
+
+	TArray<ATileCharacter*> _ennemiesList;
+
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		int32 _itemsNb;
 
@@ -49,7 +52,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, CallInEditor)
 		void AddItem();
-protected:
+
+	UFUNCTION(BlueprintCallable, CallInEditor)
+		void AddCharacter();
+
+private:
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
 
 	bool _walkableChecker = true;
