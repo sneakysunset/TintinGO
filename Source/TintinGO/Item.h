@@ -5,13 +5,6 @@
 #include "PlacableBody.h"
 #include "Item.generated.h"
 
-UENUM(BlueprintType)
-enum class EItemType : uint8
-{
-    Stone = 0b0000 UMETA(DisplayName = "Stone"),
-    Wallet = 0b0001 UMETA(DisplayName = "Wallet")
-};
-
 UCLASS()
 class TINTINGO_API AItem : public AActor, public IPlacableBody
 {

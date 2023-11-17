@@ -13,5 +13,7 @@ UCLASS()
 class TINTINGO_API ATileCharacter_Enemy : public ATileCharacter
 {
 	GENERATED_BODY()
-	
+
+public:
+	ATileCharacter_Enemy();
 };

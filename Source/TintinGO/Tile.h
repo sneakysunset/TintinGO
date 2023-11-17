@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "PlacableBody.h"
 #include "Item.h"
 #include "TileCharacter.h"
 #include "Tile.generated.h"
@@ -29,12 +30,9 @@ public:
 		bool _walkable = true;
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		TArray<EItemType> _itemsType;
+		TArray<EPlacableBodyType> _placableBodies;
 
 	TArray<AItem*> _itemsList;
-
-	UPROPERTY(EditAnywhere, Category = "TileParameters")
-		TArray<ECharacterType> _ennemies;
 
 	TArray<ATileCharacter*> _ennemiesList;
 
@@ -49,10 +47,7 @@ public:
 	UMaterialInterface* _endPosMat;
 
 	UFUNCTION(BlueprintCallable, CallInEditor)
-		void AddItem();
-
-	UFUNCTION(BlueprintCallable, CallInEditor)
-		void AddCharacter();
+		void AddPlacableBodies();
 
 private:
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;

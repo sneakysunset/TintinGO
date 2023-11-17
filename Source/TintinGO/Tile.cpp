@@ -6,6 +6,7 @@
 #include "Item_Stone.h"
 #include "Item_Wallet.h"
 #include "TileCharacter.h"
+#include "TileCharacter_Enemy.h"
 
 ATile::ATile() 
 {
@@ -66,7 +67,7 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 	}
 }
 
-void ATile::AddItem() 
+void ATile::AddPlacableBodies() 
 {
 	TArray<AActor*> AttachedActors;
 	GetAttachedActors(AttachedActors);
@@ -76,72 +77,54 @@ void ATile::AddItem()
 	}
 
 	_itemsList.Empty();
+	_ennemiesList.Empty();
 
-	for (int i = 0; i < _itemsType.Num(); i++)
+	for (int i = 0; i < _placableBodies.Num(); i++)
 	{
 		FActorSpawnParameters params;
 		FVector position = GetActorLocation();
 		FRotator rotation = FRotator(0, 0, 0);
-		AItem* spawnedItem = nullptr;
+		AItem* item = nullptr;
+		ATileCharacter* character = nullptr;
 
-		_itemsList.Add(spawnedItem);
-
-		switch (_itemsType[i])
+		switch (_placableBodies[i])
 		{
-			case EItemType::Stone:
-				spawnedItem = GetWorld()->SpawnActor<AItem_Stone>(AItem_Stone::StaticClass(), position, rotation, params);
-				spawnedItem->SetActorLabel(FString::Printf(TEXT("Stone")));
+			case EPlacableBodyType::Tintin:
+				//character = GetWorld()->SpawnActor<ATileCharacter_Enemy>(ATileCharacter_Enemy::StaticClass(), position, rotation, params);
+				//character->SetActorLabel(FString::Printf(TEXT("Wallet")));
 				break;
-			case EItemType::Wallet:
-				spawnedItem = GetWorld()->SpawnActor<AItem_Wallet>(AItem_Wallet::StaticClass(), position, rotation, params);
-				spawnedItem->SetActorLabel(FString::Printf(TEXT("Wallet")));
+			case EPlacableBodyType::Enemy:
+				character = GetWorld()->SpawnActor<ATileCharacter_Enemy>(ATileCharacter_Enemy::StaticClass(), position, rotation, params);
+				character->SetActorLabel(FString::Printf(TEXT("Enemy")));
+				break;
+			case EPlacableBodyType::Stone:
+				item = GetWorld()->SpawnActor<AItem_Stone>(AItem_Stone::StaticClass(), position, rotation, params);
+				item->SetActorLabel(FString::Printf(TEXT("Stone")));
+				break;
+			case EPlacableBodyType::Wallet:
+				item = GetWorld()->SpawnActor<AItem_Wallet>(AItem_Wallet::StaticClass(), position, rotation, params);
+				item->SetActorLabel(FString::Printf(TEXT("Wallet")));
 				break;
 			default:
 				break;
 		}
-		if (spawnedItem)
+		if (item)
 		{
-			spawnedItem->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
-			spawnedItem->SetActorScale3D(GetActorScale3D() / 10);
-			_itemsList.Add(spawnedItem);
+			item->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+			item->SetActorScale3D(GetActorScale3D() / 5);
+			_itemsList.Add(item);
+		}
+		if (character)
+		{
+			character->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+			character->SetActorScale3D(GetActorScale3D() / 5);
+			_ennemiesList.Add(character);
 		}
 		else
 		{
 			UE_LOG(LogTemp, Error, TEXT("Character Spawned Not Valid"));
 		}
 	}
-}
-void ATile::AddCharacter() 
-{
-	for (size_t i = 0; i < _ennemies.Num(); i++)
-	{
-		FActorSpawnParameters SpawnParams;
-		FVector position = FVector(_row, _column, 50);
-		FRotator rotation = FRotator(0, 0, 0);
-		ATileCharacter* chara = nullptr;
-		switch (_ennemies[i])
-		{
-			case ECharacterType::Neutral:
-				chara = GetWorld()->SpawnActor<ATileCharacter>(ATileCharacter::StaticClass(), position, rotation, SpawnParams);
-				break;
-			case ECharacterType::Ennemy1:
-				break;
-			case ECharacterType::Ennemy2:
-				break;
-			default:
-				break;
-		}
-		if (chara)
-		{
-			chara->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
-			_ennemiesList.Add(chara);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Error, TEXT("Character Spawned Not Valid"));
-		}
-	}
-
 }
 
 

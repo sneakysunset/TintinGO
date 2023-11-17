@@ -11,13 +11,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18a00cf5-8619-465a-9e48-0ecda5c9207c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/TintinGO/Item_Stone.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/TintinGO/Item_Stone.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/TintinGO/Item_Wallet.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/TintinGO/Item_Wallet.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/TileCharacter_Enemy.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/TileCharacter_Enemy.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Item.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Item.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Item_Collectable.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Item_Collectable.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/PlacableBody.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/PlacableBody.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/PlacableBody.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/PlacableBody.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileCharacter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -188,6 +194,10 @@
       <workItem from="1700136832449" duration="740000" />
       <workItem from="1700147562932" duration="2131000" />
       <workItem from="1700238953025" duration="1085000" />
+      <workItem from="1700246756943" duration="107000" />
+      <workItem from="1700246993186" duration="87000" />
+      <workItem from="1700247202102" duration="916000" />
+      <workItem from="1700248159388" duration="1121000" />
     </task>
     <servers />
   </component>
@@ -196,6 +206,17 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/TintinGO/Tile.h</url>
+          <line>55</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
