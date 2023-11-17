@@ -4,10 +4,10 @@
 #include "CoreMinimal.h"
 
 
-class TINTINGO_API State_PlayerMove : public UState
+class TINTINGO_API State_PlayerMove : public State
 {
 public:
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick() override;
-	virtual void OnStateExit(int32* currentStateIndex) override;
+	virtual void OnStateExit() override;
 };

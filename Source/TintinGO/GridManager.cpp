@@ -86,7 +86,7 @@ void AGridManager::InitializeGrid()
 			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(ATile::StaticClass(), SpawnLocation, SpawnRotation, SpawnParams);
 			SpawnedTile->SetActorScale3D(FVector(_tileWidth, _tileWidth, 1));
 			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), i, j));
-			SpawnedTile->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
+			//SpawnedTile->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
 			SpawnedTile->_row = i;
 			SpawnedTile->_column = j;
 			SpawnedTile->_walkableMat = _walkable_TileMaterial;

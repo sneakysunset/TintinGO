@@ -3,16 +3,16 @@
 
 void State_PlayerMove::OnStateEnter()
 {
-	UState::OnStateEnter();
+	State::OnStateEnter();
 }
 
 void State_PlayerMove::OnStateTick()
 {
-	UState::OnStateTick();
+	State::OnStateTick();
 }
 
-void State_PlayerMove::OnStateExit(int32* currentStateIndex)
+void State_PlayerMove::OnStateExit()
 {
-	UState::OnStateExit(currentStateIndex);
+	State::OnStateExit();
 }
 

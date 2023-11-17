@@ -15,21 +15,21 @@ void AGameManager::BeginPlay()
 {
 	SingletonInstance = this;
 
-	_states.Add(NewObject<State_AwaitingInputs>(this));
-	_states.Add(NewObject<State_PlayerMove>(this));
-	_currentStateIndex = 0;
-	_states[_currentStateIndex]->OnStateEnter();
+	_states.Add(EStateType::AwaitingInputs ,new State_AwaitingInputs());
+	_states.Add(EStateType::PlayerMove,new State_PlayerMove());
+	_currentStateType = EStateType::AwaitingInputs;
+	_states[_currentStateType]->OnStateEnter();
 }
 
 void AGameManager::Tick(float DeltaTime)
 {
-	_states[_currentStateIndex]->OnStateTick();
+	_states[_currentStateType]->OnStateTick();
 }
 
 void AGameManager::StateChange()
 {
-	_states[_currentStateIndex]->OnStateExit(&_currentStateIndex);
-	_states[_currentStateIndex]->OnStateEnter();
+	_states[_currentStateType]->OnStateExit();
+	_states[_currentStateType]->OnStateEnter();
 }
 
 AGameManager* AGameManager::GetInstance() 

@@ -1,28 +1,34 @@
 #include "State.h"
 #include "GameManager.h"
 
-UState::UState()
+State::State()
 {
 	_gameManager = AGameManager::GetInstance();
 }
 
 
 
-UState::~UState()
+State::~State()
 {
 }
 
-void UState::OnStateEnter()
-{
-
-}
-
-void UState::OnStateTick()
+void State::OnStateEnter()
 {
 
 }
 
-void UState::OnStateExit(int32* currentStateIndex)
+void State::OnStateTick()
 {
-	*currentStateIndex ++;
+
+}
+
+void State::OnStateExit()
+{
+	//_gameManager->_currentStateType = _targetStateType;
+}
+
+
+void State::ReceiveLeftMouseClick(FVector mousePosition)
+{
+
 }

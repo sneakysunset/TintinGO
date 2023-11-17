@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Item.h"
-#include "TileCharacter.h"
 #include "Tile.generated.h"
 
 
@@ -13,6 +12,14 @@ enum class ETileType : uint8
 	Neutral = 0b0000 UMETA(DisplayName = "Neutral"),
 	StartingPosition = 0b0001 UMETA(DisplayName = "Starting Position"),
 	EndingPosition = 0b0010 UMETA(DisplayName = "Ending Position")
+};
+
+UENUM(BlueprintType)
+enum class EItemType : uint8
+{
+	BriefCase = 0 UMETA(DisplayName = "BriefCase"),
+	Milou = 1 UMETA(DisplayName = "Milou"),
+	Hadoc = 2 UMETA(DisplayName = "Hadoc")
 };
 
 UCLASS()
@@ -26,16 +33,14 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		ETileType _tileType {ETileType::Neutral};
 
+	
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		bool _walkable = true;
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
+		TArray<EItemType> _itemsToSpawn;
 		TArray<AItem*> _items;
 
-	UPROPERTY(EditAnywhere, Category = "TileParameters")
-		TArray<ECharacterType> _ennemies;
-
-	TArray<ATileCharacter*> _ennemiesList;
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		int32 _itemsNb;
@@ -43,18 +48,21 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 		bool _useEditorTick = true;
 
+	UPROPERTY()
 	int32 _row;
+	UPROPERTY()
 	int32 _column;
+	UPROPERTY()
 	UMaterialInterface* _walkableMat;
+	UPROPERTY()
 	UMaterialInterface* _unwalkableMat;
+	UPROPERTY()
 	UMaterialInterface* _startPosMat;
+	UPROPERTY()
 	UMaterialInterface* _endPosMat;
 
 	UFUNCTION(BlueprintCallable, CallInEditor)
 		void AddItem();
-
-	UFUNCTION(BlueprintCallable, CallInEditor)
-		void AddCharacter();
 
 private:
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;

@@ -6,8 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "GameManager.generated.h"
 
-class UState;
+class State;
 
+UENUM()
+enum class EStateType : uint8
+{
+	AwaitingInputs = 0b0000,
+	PlayerMove = 0b0001,
+};
 UCLASS()
 class TINTINGO_API AGameManager : public AActor
 {
@@ -15,8 +21,8 @@ class TINTINGO_API AGameManager : public AActor
 
 public:	
 	AGameManager();
-	TArray<UState*> _states;
-	int32 _currentStateIndex;
+	TMap<EStateType, State*> _states;
+	EStateType _currentStateType;
 	UFUNCTION()
 	void StateChange();
 	static AGameManager* GetInstance();

@@ -3,7 +3,7 @@
 #include "GameManager.h"
 void State_AwaitingInputs::OnStateEnter()
 {
-	UState::OnStateEnter();
+	State::OnStateEnter();
 	if (gridManager == nullptr) 
 	{
 		gridManager = AGridManager::GetInstance();
@@ -12,12 +12,13 @@ void State_AwaitingInputs::OnStateEnter()
 
 void State_AwaitingInputs::OnStateTick()
 {
-	UState::OnStateTick();
+	State::OnStateTick();
 }
 
-void State_AwaitingInputs::OnStateExit(int32* currentStateIndex)
+void State_AwaitingInputs::OnStateExit()
 {
-	UState::OnStateExit(currentStateIndex);
+	//_targetStateType = EStateType::PlayerMove;
+	State::OnStateExit();
 }
 
 

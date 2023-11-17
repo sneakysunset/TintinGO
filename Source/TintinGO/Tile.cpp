@@ -76,51 +76,30 @@ void ATile::AddItem()
 	_items.Empty();
 
 
-	for (int i = 0; i < _itemsNb; i++)
+	for (int i = 0; i < _itemsToSpawn.Num(); i++)
 	{
-		AItem* item = NewObject<AItem>(this);
 		FActorSpawnParameters SpawnParams;
 		FVector SpawnLocation = GetActorLocation();
 		FRotator SpawnRotation = FRotator(0, 0, 0);
-		AItem* SpawnedItem = GetWorld()->SpawnActor<AItem>(item->GetClass(), SpawnLocation, SpawnRotation, SpawnParams);
+		AItem* SpawnedItem = nullptr;
+		switch (_itemsToSpawn[i]) 
+		{
+			case EItemType::BriefCase :
+				SpawnedItem = GetWorld()->SpawnActor<AItem>(AItem::StaticClass(), SpawnLocation, SpawnRotation, SpawnParams);
+				break;
+			case EItemType::Milou:
+				SpawnedItem = GetWorld()->SpawnActor<AItem>(AItem::StaticClass(), SpawnLocation, SpawnRotation, SpawnParams);
+				break;
+			case EItemType::Hadoc:
+				SpawnedItem = GetWorld()->SpawnActor<AItem>(AItem::StaticClass(), SpawnLocation, SpawnRotation, SpawnParams);
+				break;
+		}
 		SpawnedItem->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
 		SpawnedItem->SetActorScale3D(GetActorScale3D() / 10);
 		SpawnedItem->SetActorLabel(FString::Printf(TEXT("Item_%d_Of_Tile_%d_%d"), i, _row, _column));
 
 		_items.Add(SpawnedItem);
 	}
-}
-void ATile::AddCharacter() 
-{
-	for (size_t i = 0; i < _ennemies.Num(); i++)
-	{
-		FActorSpawnParameters SpawnParams;
-		FVector position = FVector(_row, _column, 50);
-		FRotator rotation = FRotator(0, 0, 0);
-		ATileCharacter* chara = nullptr;
-		switch (_ennemies[i])
-		{
-			case ECharacterType::Neutral:
-				chara = GetWorld()->SpawnActor<ATileCharacter>(ATileCharacter::StaticClass(), position, rotation, SpawnParams);
-				break;
-			case ECharacterType::Ennemy1:
-				break;
-			case ECharacterType::Ennemy2:
-				break;
-			default:
-				break;
-		}
-		if (chara)
-		{
-			chara->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
-			_ennemiesList.Add(chara);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Error, TEXT("Character Spawned Not Valid"));
-		}
-	}
-
 }
 
 
