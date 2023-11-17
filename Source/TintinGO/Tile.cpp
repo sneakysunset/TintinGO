@@ -3,6 +3,8 @@
 
 #include "Tile.h"
 #include "Item.h"
+#include "Item_Stone.h"
+#include "Item_Wallet.h"
 #include "TileCharacter.h"
 
 ATile::ATile() 
@@ -83,19 +85,16 @@ void ATile::AddItem()
 		AItem* spawnedItem = nullptr;
 
 		_itemsList.Add(spawnedItem);
-		FString name = "";
 
 		switch (_itemsType[i])
 		{
 			case EItemType::Stone:
-				spawnedItem = GetWorld()->SpawnActor<AItem>(AItem::StaticClass(), position, rotation, params);
-				spawnedItem->SetActorLabel(FString::Printf(TEXT("Stone_%d"), i));
-				name = "Stone";
+				spawnedItem = GetWorld()->SpawnActor<AItem_Stone>(AItem_Stone::StaticClass(), position, rotation, params);
+				spawnedItem->SetActorLabel(FString::Printf(TEXT("Stone")));
 				break;
 			case EItemType::Wallet:
-				spawnedItem = GetWorld()->SpawnActor<AItem>(AItem::StaticClass(), position, rotation, params);
-				spawnedItem->SetActorLabel(FString::Printf(TEXT("Wallet_%d"), i));
-				name = "Wallet";
+				spawnedItem = GetWorld()->SpawnActor<AItem_Wallet>(AItem_Wallet::StaticClass(), position, rotation, params);
+				spawnedItem->SetActorLabel(FString::Printf(TEXT("Wallet")));
 				break;
 			default:
 				break;

@@ -11,11 +11,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18a00cf5-8619-465a-9e48-0ecda5c9207c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/Item_Stone.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/Item_Stone.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/Item_Wallet.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/Item_Wallet.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Item.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Item.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,6 +187,7 @@
       <workItem from="1700136421559" duration="382000" />
       <workItem from="1700136832449" duration="740000" />
       <workItem from="1700147562932" duration="2131000" />
+      <workItem from="1700238953025" duration="1085000" />
     </task>
     <servers />
   </component>
