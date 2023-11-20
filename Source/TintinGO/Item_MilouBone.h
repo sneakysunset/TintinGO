@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Item.h"
-#include "Item_Stone.generated.h"
+#include "Item_MilouBone.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TINTINGO_API AItem_Stone : public AItem
+class TINTINGO_API AItem_MilouBone : public AItem
 {
 	GENERATED_BODY()
 	
 public:
-	AItem_Stone();
+	AItem_MilouBone();
 };

@@ -3,9 +3,10 @@
 
 #include "Tile.h"
 #include "Item.h"
-#include "Item_Stone.h"
-#include "Item_Wallet.h"
+#include "Item_MilouBone.h"
+#include "Item_HaddockBottle.h"
 #include "TileCharacter.h"
+#include "TileCharacter_Tintin.h"
 #include "TileCharacter_Enemy.h"
 
 ATile::ATile() 
@@ -28,7 +29,6 @@ void ATile::Tick(float DeltaTime)
 
 #endif
 	Super::Tick(DeltaTime);
-
 }
 
 bool ATile::ShouldTickIfViewportsOnly() const
@@ -93,13 +93,13 @@ void ATile::AddPlacableBodies()
 				character = GetWorld()->SpawnActor<ATileCharacter_Enemy>(ATileCharacter_Enemy::StaticClass(), position, rotation, params);
 				character->SetActorLabel(FString::Printf(TEXT("Enemy")));
 				break;
-			case EPlacableBodyType::Stone:
-				item = GetWorld()->SpawnActor<AItem_Stone>(AItem_Stone::StaticClass(), position, rotation, params);
-				item->SetActorLabel(FString::Printf(TEXT("Stone")));
+			case EPlacableBodyType::MilouBone:
+				item = GetWorld()->SpawnActor<AItem_MilouBone>(AItem_MilouBone::StaticClass(), position, rotation, params);
+				item->SetActorLabel(FString::Printf(TEXT("MilouBone")));
 				break;
-			case EPlacableBodyType::Wallet:
-				item = GetWorld()->SpawnActor<AItem_Wallet>(AItem_Wallet::StaticClass(), position, rotation, params);
-				item->SetActorLabel(FString::Printf(TEXT("Wallet")));
+			case EPlacableBodyType::HaddockBottle:
+				item = GetWorld()->SpawnActor<AItem_HaddockBottle>(AItem_HaddockBottle::StaticClass(), position, rotation, params);
+				item->SetActorLabel(FString::Printf(TEXT("HaddockBottle")));
 				break;
 			default:
 				break;

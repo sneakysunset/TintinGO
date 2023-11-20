@@ -10,10 +10,12 @@ UCLASS()
 class TINTINGO_API ATileCharacter_Tintin : public ATileCharacter
 {
 	GENERATED_BODY()
-	
 
 public:
 	static ATileCharacter_Tintin* GetInstance();
 	static ATileCharacter_Tintin* SingletonInstance;
+	ATileCharacter_Tintin();
 	ATile* _currentTile;
+	int32 currentMilouBonesNb;
+	int32 currentHaddockBottleNb;
 };
