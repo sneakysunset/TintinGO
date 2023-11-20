@@ -5,9 +5,7 @@
 #include "TileCharacter.h"
 #include "TileCharacter_Tintin.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class TINTINGO_API ATileCharacter_Tintin : public ATileCharacter
 {
@@ -15,5 +13,7 @@ class TINTINGO_API ATileCharacter_Tintin : public ATileCharacter
 	
 
 public:
+	static ATileCharacter_Tintin* GetInstance();
+	static ATileCharacter_Tintin* SingletonInstance;
 	ATile* _currentTile;
 };
