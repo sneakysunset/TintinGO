@@ -8,10 +8,9 @@
 UENUM(BlueprintType)
 enum class EPlacableBodyType : uint8
 {
-	Tintin = 0 UMETA(DisplayName = "Tintin (Not implemented)"),
-	Enemy = 1 UMETA(DisplayName = "Enemy"),
-	Stone = 2 UMETA(DisplayName = "Stone"),
-	Wallet = 4 UMETA(DisplayName = "Wallet")
+	Enemy = 0 UMETA(DisplayName = "Enemy"),
+	MilouBone = 1 UMETA(DisplayName = "MilouBone"),
+	HaddockBottle = 2 UMETA(DisplayName = "HaddockBottle")
 };
 
 UINTERFACE(MinimalAPI)

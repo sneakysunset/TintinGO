@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Item.h"
-#include "Item_Wallet.generated.h"
+#include "Item_HaddockBottle.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TINTINGO_API AItem_Wallet : public AItem
+class TINTINGO_API AItem_HaddockBottle : public AItem
 {
 	GENERATED_BODY()
 
 public:
-	AItem_Wallet();
+	AItem_HaddockBottle();
 };
