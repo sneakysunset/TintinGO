@@ -31,5 +31,6 @@ void State_AwaitingInputs::ReceiveLeftMouseClick(FVector mousePosition)
 	{
 		//Set Tintin Target Tile on Tintin or in Game Manager
 		_gameManager->StateChange();
+		_gameManager->_playerTargetTile = hitTile;
 	}
 }

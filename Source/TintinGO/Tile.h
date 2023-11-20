@@ -4,6 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "PlacableBody.h"
 #include "Item.h"
+#include "TileCharacter.h"
 #include "Tile.generated.h"
 
 UENUM(BlueprintType)
