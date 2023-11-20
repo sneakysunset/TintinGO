@@ -43,23 +43,30 @@ void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
-
 	for (int i = 0; i < _gridTiles.Num(); i++)
 	{
-		for (int j = 0; j < _gridTiles[i].Num(); j++)
+		for (int j = 0; j < _gridTiles[i].Tiles.Num(); j++)
 		{
-			if(_gridTiles[i][j]->_tileType == ETileType::StartingPosition)
+			if(_gridTiles[i].Tiles[j]->_tileType == ETileType::StartingPosition)
 			{
-				ATile* tile = _gridTiles[i][j];
+				ATile* tile = _gridTiles[i].Tiles[j];
 				FActorSpawnParameters params;
 				FVector position = tile->GetActorLocation();
 				FRotator rotation = FRotator(0, 0, 0);
-				ATileCharacter_Tintin* character = GetWorld()->SpawnActor<ATileCharacter_Tintin>(ATileCharacter_Tintin::StaticClass(), position, rotation, params);
-				character->SetActorLabel(FString::Printf(TEXT("Tintin")));
-				character->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
-				character->SetActorScale3D(tile->GetActorScale3D() / 5);
-				character->_currentTile = tile;
+				UE_LOG(LogTemp, Warning, TEXT("tile %s"), *_gridTiles[i].Tiles[j]->GetName());
+				UE_LOG(LogTemp, Warning, TEXT("tile %f %f"), *_gridTiles[i].Tiles[j]->_row, *_gridTiles[i].Tiles[j]->_column);
+				UE_LOG(LogTemp, Warning, TEXT("tile %f %f"), *_gridTiles[i].Tiles[j]->GetActorLocation());
+
 				break;
+				ATileCharacter_Tintin* character = GetWorld()->SpawnActor<ATileCharacter_Tintin>(ATileCharacter_Tintin::StaticClass(), position, rotation, params);
+				if(character)
+				{
+					//character->SetActorLabel(FString::Printf(TEXT("Tintin")));
+				}
+				character->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
+				/*character->SetActorScale3D(tile->GetActorScale3D() / 5);
+				character->_currentTile = tile;
+				break;*/
 			}
 		}
 	}
@@ -91,7 +98,7 @@ void AGridManager::InitializeGrid()
 {
 	for (auto& row : _gridTiles)
 	{
-		for (ATile* tile : row)
+		for (ATile* tile : row.Tiles)
 		{
 			if (tile)
 			{
@@ -106,7 +113,7 @@ void AGridManager::InitializeGrid()
 	UE_LOG(LogTemp, Warning, TEXT("Initialization"));
 	for (size_t i = 0; i < _rows; i++)
 	{
-		_gridTiles.Add(TArray<ATile*>());
+		_gridTiles.Add(FTileArray());
 		for (size_t j = 0; j < _columns; j++)
 		{
 			FActorSpawnParameters SpawnParams;
@@ -143,7 +150,7 @@ void AGridManager::InitializeGrid()
 
 			if (SpawnedTile)
 			{
-				_gridTiles[i].Add(SpawnedTile);
+				_gridTiles[i].Tiles.Add(SpawnedTile);
 				//UE_LOG(LogTemp, Warning, TEXT("Tile %s spawned at (%f, %f, %f)"), *SpawnedTile->GetName(), SpawnLocation.X, SpawnLocation.Y, SpawnLocation.Z);
 			}
 			else
@@ -154,23 +161,12 @@ void AGridManager::InitializeGrid()
 	}
 }
 
-void AGridManager::OccupyCell(int32 Row, int32 Col)
-{
-
-}
-
-void AGridManager::ReleaseCell(int32 Row, int32 Col)
-{
-
-}
-
-
 ATile* AGridManager::WorldCoordinatesToTilePosition(const FVector& worldCoordinates)
 {
 	const int32 x = FMath::CeilToInt32(worldCoordinates.X / _tileWidth / 100.0f);
 	const int32 y = FMath::CeilToInt32(worldCoordinates.Y / _tileWidth / 100.0f);
 	
-	return _gridTiles[x][y];
+	return _gridTiles[x].Tiles[y];
 }
 
 

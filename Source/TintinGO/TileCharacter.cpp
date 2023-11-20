@@ -6,7 +6,7 @@ ATileCharacter::ATileCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Capsule.Capsule"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Cube.Cube"));
 	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
 
 	RootComponent = _staticMeshComponent;

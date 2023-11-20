@@ -14,7 +14,7 @@ AGameManager::AGameManager()
 void AGameManager::BeginPlay()
 {
 	SingletonInstance = this;
-
+	
 	_states.Add(EStateType::AwaitingInputs ,new State_AwaitingInputs());
 	_states.Add(EStateType::PlayerMove,new State_PlayerMove());
 	_currentStateType = EStateType::AwaitingInputs;

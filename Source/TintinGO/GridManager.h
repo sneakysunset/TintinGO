@@ -6,6 +6,15 @@
 #include "Tile.h"
 #include "GridManager.generated.h"
 
+USTRUCT(BlueprintType)
+struct FTileArray
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    TArray<class ATile*> Tiles;
+};
+
 UCLASS()
 class TINTINGO_API AGridManager : public AActor
 {
@@ -20,12 +29,6 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Grid")
         void InitializeGrid();
 
-    UFUNCTION(BlueprintCallable, Category = "Grid")
-        void OccupyCell(int32 Row, int32 Col);
-
-    UFUNCTION(BlueprintCallable, Category = "Grid")
-        void ReleaseCell(int32 Row, int32 Col);
-
     ATile* WorldCoordinatesToTilePosition(const FVector& worldCoordinates);
 
     ATile* GetTintinTileCoordinates();
@@ -39,7 +42,8 @@ public:
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
         bool _useEditorTick;
     // Add more functions as needed
-    TArray<TArray<ATile*>> _gridTiles;
+    UPROPERTY()
+    TArray<FTileArray> _gridTiles;
 
 private:
     static AGridManager* SingletonInstance;
