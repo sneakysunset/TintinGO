@@ -1,8 +1,8 @@
 #include "GridManager.h"
 #include "Tile.h"
+#include "TileCharacter_Tintin.h"
 #include "Math/UnrealMathUtility.h"
 #include "Engine/World.h"
-
 
 AGridManager* AGridManager::SingletonInstance = nullptr;
 
@@ -14,6 +14,15 @@ AGridManager* AGridManager::GetInstance()
 AGridManager::AGridManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	_rows = 10;
+	_columns = 10;
+	_tileWidth = 1;
+	_initializeGrid = false;
+	_useEditorTick = true;
+	_walkable_TileMaterial = nullptr;
+	_startPos_TileMaterial = nullptr;
+	_endPos_TileMaterial = nullptr;
+	_unwalkable_TileMaterial = nullptr;
 }
 
 void AGridManager::Tick(float DeltaTime)
@@ -34,6 +43,26 @@ void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
+
+	for (int i = 0; i < _gridTiles.Num(); i++)
+	{
+		for (int j = 0; j < _gridTiles[i].Num(); j++)
+		{
+			if(_gridTiles[i][j]->_tileType == ETileType::StartingPosition)
+			{
+				ATile* tile = _gridTiles[i][j];
+				FActorSpawnParameters params;
+				FVector position = tile->GetActorLocation();
+				FRotator rotation = FRotator(0, 0, 0);
+				ATileCharacter_Tintin* character = GetWorld()->SpawnActor<ATileCharacter_Tintin>(ATileCharacter_Tintin::StaticClass(), position, rotation, params);
+				character->SetActorLabel(FString::Printf(TEXT("Tintin")));
+				character->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
+				character->SetActorScale3D(tile->GetActorScale3D() / 5);
+				character->_currentTile = tile;
+				break;
+			}
+		}
+	}
 }
 
 bool AGridManager::ShouldTickIfViewportsOnly() const
@@ -85,7 +114,7 @@ void AGridManager::InitializeGrid()
 			FRotator SpawnRotation = FRotator(0, 0, 0);
 			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(ATile::StaticClass(), SpawnLocation, SpawnRotation, SpawnParams);
 			SpawnedTile->SetActorScale3D(FVector(_tileWidth, _tileWidth, 1));
-			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), i, j));
+			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), static_cast<int>(i), static_cast<int>(j)));
 			SpawnedTile->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
 			SpawnedTile->SetActorLocation(SpawnLocation);
 			SpawnedTile->_row = i;
@@ -94,12 +123,10 @@ void AGridManager::InitializeGrid()
 			SpawnedTile->_startPosMat = _startPos_TileMaterial;
 			SpawnedTile->_endPosMat = _endPos_TileMaterial;
 			SpawnedTile->_unwalkableMat = _unwalkable_TileMaterial;
-			UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(_walkable_TileMaterial, SpawnedTile);
-			if (DynamicMaterial)
+			if (UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(_walkable_TileMaterial, SpawnedTile))
 			{
 				// Set the material on the mesh component (assuming it's a UStaticMeshComponent)
-				UStaticMeshComponent* MeshComponent = SpawnedTile->FindComponentByClass<UStaticMeshComponent>();
-				if (MeshComponent)
+				if (UStaticMeshComponent* MeshComponent = SpawnedTile->FindComponentByClass<UStaticMeshComponent>())
 				{
 					MeshComponent->SetMaterial(0, DynamicMaterial);
 				}
@@ -138,30 +165,12 @@ void AGridManager::ReleaseCell(int32 Row, int32 Col)
 }
 
 
-ATile* AGridManager::WorldCoordinatesToTilePosition(FVector worldCoordinates)
+ATile* AGridManager::WorldCoordinatesToTilePosition(const FVector& worldCoordinates)
 {
-	int32 x = FMath::CeilToInt32(worldCoordinates.X / _tileWidth / 100.0f);
-	int32 y = FMath::CeilToInt32(worldCoordinates.Y / _tileWidth / 100.0f);
-
+	const int32 x = FMath::CeilToInt32(worldCoordinates.X / _tileWidth / 100.0f);
+	const int32 y = FMath::CeilToInt32(worldCoordinates.Y / _tileWidth / 100.0f);
+	
 	return _gridTiles[x][y];
 }
 
-//Need to assign Tintin class
-ATile* AGridManager::GetTintinTileCoordinates()
-{
-	for (size_t i = 0; i < _gridTiles.Num(); i++)
-	{
-		for (size_t j = 0; j < _gridTiles[i].Num(); j++)
-		{
-			for (size_t k = 0; k < _gridTiles[i][j]->_itemsList.Num(); k++)
-			{
-				if (_gridTiles[i][j]->_itemsList[k]->IsA<AItem>()) 
-				{
-					return _gridTiles[i][j];
-				}
-			}
-		}
-	}
 
-	return nullptr;
-}

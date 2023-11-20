@@ -26,10 +26,11 @@ void AGameManager::Tick(float DeltaTime)
 	_states[_currentStateType]->OnStateTick(DeltaTime);
 }
 
-void AGameManager::StateChange()
+void AGameManager::StateChange(EStateType newState)
 {
 	_states[_currentStateType]->OnStateExit();
-	_states[_currentStateType]->OnStateEnter();
+	_currentStateType = newState;
+	_states[newState]->OnStateEnter();
 }
 
 AGameManager* AGameManager::GetInstance() 

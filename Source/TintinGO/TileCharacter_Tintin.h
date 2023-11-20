@@ -16,7 +16,7 @@ public:
 	static ATileCharacter_Tintin* SingletonInstance;
 	ATileCharacter_Tintin();
 	ATile* _currentTile;
-	float speed;
 	int32 currentMilouBonesNb;
 	int32 currentHaddockBottleNb;
+>>>>>>> GameManager
 };

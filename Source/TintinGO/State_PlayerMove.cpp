@@ -20,11 +20,15 @@ void State_PlayerMove::OnStateEnter()
 void State_PlayerMove::OnStateTick(float DeltaTime)
 {
 	State::OnStateTick(DeltaTime);
-	_interpolateValue += DeltaTime * _tintin->speed;
+	_interpolateValue += DeltaTime * _gameManager->speed;
 	FVector const startPos = _tintin->_currentTile->GetActorLocation();
 	FVector const endPos = _gameManager->_playerTargetTile->GetActorLocation();
 	FVector const lerpVector = startPos + (endPos - startPos) * _interpolateValue;
 	_tintin->SetActorLocation(lerpVector);
+	if(_interpolateValue >= 1)
+	{
+		_gameManager->StateChange(EStateType::AwaitingInputs);
+	}
 }
 
 void State_PlayerMove::OnStateExit()

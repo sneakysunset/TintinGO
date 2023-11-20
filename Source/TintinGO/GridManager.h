@@ -26,7 +26,7 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Grid")
         void ReleaseCell(int32 Row, int32 Col);
 
-    ATile* WorldCoordinatesToTilePosition(FVector worldCoordinates);
+    ATile* WorldCoordinatesToTilePosition(const FVector& worldCoordinates);
 
     ATile* GetTintinTileCoordinates();
 
