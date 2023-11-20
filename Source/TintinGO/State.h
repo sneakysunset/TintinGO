@@ -11,7 +11,7 @@ public:
 virtual	~State();
 
 	virtual void OnStateEnter();
-	virtual void OnStateTick();
+	virtual void OnStateTick(float DeltaTime);
 	virtual void OnStateExit();
 	virtual void ReceiveLeftMouseClick(FVector mousePosition);
 

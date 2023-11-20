@@ -17,7 +17,7 @@ void State::OnStateEnter()
 
 }
 
-void State::OnStateTick()
+void State::OnStateTick(float DeltaTime)
 {
 
 }
