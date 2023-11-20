@@ -2,9 +2,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "PlacableBody.h"
 #include "Item.h"
 #include "Tile.generated.h"
-
 
 UENUM(BlueprintType)
 enum class ETileType : uint8
@@ -12,14 +12,6 @@ enum class ETileType : uint8
 	Neutral = 0b0000 UMETA(DisplayName = "Neutral"),
 	StartingPosition = 0b0001 UMETA(DisplayName = "Starting Position"),
 	EndingPosition = 0b0010 UMETA(DisplayName = "Ending Position")
-};
-
-UENUM(BlueprintType)
-enum class EItemType : uint8
-{
-	BriefCase = 0 UMETA(DisplayName = "BriefCase"),
-	Milou = 1 UMETA(DisplayName = "Milou"),
-	Hadoc = 2 UMETA(DisplayName = "Hadoc")
 };
 
 UCLASS()
@@ -38,12 +30,11 @@ public:
 		bool _walkable = true;
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		TArray<EItemType> _itemsToSpawn;
-		TArray<AItem*> _items;
+		TArray<EPlacableBodyType> _placableBodies;
 
+	TArray<AItem*> _itemsList;
 
-	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		int32 _itemsNb;
+	TArray<ATileCharacter*> _ennemiesList;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 		bool _useEditorTick = true;
@@ -62,7 +53,7 @@ public:
 	UMaterialInterface* _endPosMat;
 
 	UFUNCTION(BlueprintCallable, CallInEditor)
-		void AddItem();
+		void AddPlacableBodies();
 
 private:
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
