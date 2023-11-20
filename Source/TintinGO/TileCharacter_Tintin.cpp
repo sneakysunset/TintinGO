@@ -16,7 +16,6 @@ ATileCharacter_Tintin::ATileCharacter_Tintin()
 	RootComponent = _staticMeshComponent;
 
 	_currentTile = nullptr;
-	speed = 0;
 	currentMilouBonesNb = 0;
 	currentHaddockBottleNb = 0;
 }

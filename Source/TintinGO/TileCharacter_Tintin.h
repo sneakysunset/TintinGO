@@ -18,4 +18,5 @@ public:
 	ATile* _currentTile;
 	int32 currentMilouBonesNb;
 	int32 currentHaddockBottleNb;
+
 };
