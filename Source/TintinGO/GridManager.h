@@ -31,8 +31,6 @@ public:
 
     ATile* WorldCoordinatesToTilePosition(const FVector& worldCoordinates);
 
-    ATile* GetTintinTileCoordinates();
-
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaTime) override;
     virtual bool ShouldTickIfViewportsOnly() const override;

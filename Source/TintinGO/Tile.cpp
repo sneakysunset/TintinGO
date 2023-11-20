@@ -15,7 +15,7 @@ ATile::ATile()
 	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Plane.Plane"));
 	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
-
+	_staticMeshComponent->SupportsDefaultCollision();
 	RootComponent = _staticMeshComponent;
 }
 

@@ -40,6 +40,7 @@ void AClickInputManager::SetupPlayerInputComponent(UInputComponent* PlayerInputC
     check(Subsystem);
     Subsystem->ClearAllMappings();
     Subsystem->AddMappingContext(FPC->PawnMappingContext, 0);
+	UE_LOG(LogTemp, Warning, TEXT("Click1"));
 }
 
 
@@ -60,13 +61,15 @@ void AClickInputManager::OnMouseClick()
     FVector End = MouseWorldPosition + MouseWorldDirection * 5000.f; // Adjust the length of the ray as needed
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(this); // Ignore the pawn itself
-
+	UE_LOG(LogTemp, Warning, TEXT("Click"));
     // Perform the ray cast
     if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, CollisionParams))
     {
+    	UE_LOG(LogTemp, Warning, TEXT("Valid Click"));
         // Hit something, you can access HitResult to get information about the hit
         FVector HitLocation = HitResult.Location;
         State* state = _gameManager->_states[_gameManager->_currentStateType];
         state->ReceiveLeftMouseClick(HitLocation);
     }
 }
+	

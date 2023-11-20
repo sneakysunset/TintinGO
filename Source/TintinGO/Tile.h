@@ -59,7 +59,6 @@ public:
 		void AddPlacableBodies();
 
 private:
-	UPROPERTY()
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
 
 	bool _walkableChecker = true;

@@ -1,8 +1,8 @@
 #include "GridManager.h"
 #include "Tile.h"
-#include "TileCharacter_Tintin.h"
 #include "Math/UnrealMathUtility.h"
 #include "Engine/World.h"
+#include "TileCharacter_Tintin.h"
 
 AGridManager* AGridManager::SingletonInstance = nullptr;
 
@@ -51,22 +51,19 @@ void AGridManager::BeginPlay()
 			{
 				ATile* tile = _gridTiles[i].Tiles[j];
 				FActorSpawnParameters params;
+				params.bNoFail = true;
+				params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 				FVector position = tile->GetActorLocation();
 				FRotator rotation = FRotator(0, 0, 0);
-				UE_LOG(LogTemp, Warning, TEXT("tile %s"), *_gridTiles[i].Tiles[j]->GetName());
-				UE_LOG(LogTemp, Warning, TEXT("tile %f %f"), *_gridTiles[i].Tiles[j]->_row, *_gridTiles[i].Tiles[j]->_column);
-				UE_LOG(LogTemp, Warning, TEXT("tile %f %f"), *_gridTiles[i].Tiles[j]->GetActorLocation());
-
-				break;
 				ATileCharacter_Tintin* character = GetWorld()->SpawnActor<ATileCharacter_Tintin>(ATileCharacter_Tintin::StaticClass(), position, rotation, params);
-				if(character)
+				if(character != nullptr)
 				{
-					//character->SetActorLabel(FString::Printf(TEXT("Tintin")));
+					character->SetActorLabel(FString::Printf(TEXT("Tintin")));
 				}
 				character->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
-				/*character->SetActorScale3D(tile->GetActorScale3D() / 5);
+				character->SetActorScale3D(tile->GetActorScale3D() / 5);
 				character->_currentTile = tile;
-				break;*/
+				break;
 			}
 		}
 	}
