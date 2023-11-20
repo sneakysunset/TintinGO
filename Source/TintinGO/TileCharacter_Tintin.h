@@ -16,4 +16,5 @@ public:
 	static ATileCharacter_Tintin* GetInstance();
 	static ATileCharacter_Tintin* SingletonInstance;
 	ATile* _currentTile;
+	float speed;
 };

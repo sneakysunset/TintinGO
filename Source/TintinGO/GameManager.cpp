@@ -23,7 +23,7 @@ void AGameManager::BeginPlay()
 
 void AGameManager::Tick(float DeltaTime)
 {
-	_states[_currentStateType]->OnStateTick();
+	_states[_currentStateType]->OnStateTick(DeltaTime);
 }
 
 void AGameManager::StateChange()

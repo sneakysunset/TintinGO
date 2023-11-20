@@ -10,9 +10,9 @@ void State_AwaitingInputs::OnStateEnter()
 	}
 }
 
-void State_AwaitingInputs::OnStateTick()
+void State_AwaitingInputs::OnStateTick(float DeltaTime)
 {
-	State::OnStateTick();
+	State::OnStateTick(DeltaTime);
 }
 
 void State_AwaitingInputs::OnStateExit()
