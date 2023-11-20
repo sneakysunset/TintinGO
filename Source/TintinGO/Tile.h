@@ -33,9 +33,11 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		TArray<EPlacableBodyType> _placableBodies;
 
-	TArray<AItem*> _itemsList;
+	UPROPERTY()
+	TArray<AItem*> ItemsList;
 
-	TArray<ATileCharacter*> _ennemiesList;
+	UPROPERTY()
+	TArray<ATileCharacter*> TileCharacterList;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 		bool _useEditorTick = true;
@@ -57,6 +59,7 @@ public:
 		void AddPlacableBodies();
 
 private:
+	UPROPERTY()
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
 
 	bool _walkableChecker = true;

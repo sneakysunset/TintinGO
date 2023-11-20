@@ -76,8 +76,8 @@ void ATile::AddPlacableBodies()
 		Attached->Destroy();
 	}
 
-	_itemsList.Empty();
-	_ennemiesList.Empty();
+	ItemsList.Empty();
+	TileCharacterList.Empty();
 
 	for (int i = 0; i < _placableBodies.Num(); i++)
 	{
@@ -108,13 +108,13 @@ void ATile::AddPlacableBodies()
 		{
 			item->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 			item->SetActorScale3D(GetActorScale3D() / 5);
-			_itemsList.Add(item);
+			ItemsList.Add(item);
 		}
 		if (character)
 		{
 			character->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 			character->SetActorScale3D(GetActorScale3D() / 5);
-			_ennemiesList.Add(character);
+			TileCharacterList.Add(character);
 		}
 		else
 		{
