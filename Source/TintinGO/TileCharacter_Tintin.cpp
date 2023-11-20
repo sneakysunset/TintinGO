@@ -19,3 +19,14 @@ ATileCharacter_Tintin::ATileCharacter_Tintin()
 	currentMilouBonesNb = 0;
 	currentHaddockBottleNb = 0;
 }
+
+void ATileCharacter_Tintin::CheckTileItems()
+{
+	if(_currentTile != nullptr)
+	{
+		for (AItem* item : _currentTile->ItemsList)
+		{
+			item->TriggerBody();
+		}
+	}
+}

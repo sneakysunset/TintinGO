@@ -19,4 +19,6 @@ public:
 	int32 currentMilouBonesNb;
 	int32 currentHaddockBottleNb;
 
+UFUNCTION(BlueprintCallable, CallInEditor)
+	void CheckTileItems();
 };
