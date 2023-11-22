@@ -10,6 +10,8 @@ class TINTINGO_API AClickInputManagerController : public APlayerController
 {
 	GENERATED_BODY()
 
+	AClickInputManagerController();
+	
 public:
 	virtual void SetupInputComponent() override;
 
@@ -17,5 +19,4 @@ public:
 		class UInputMappingContext* PawnMappingContext;
 	UPROPERTY()
 		class UInputAction* LeftClickAction;
-	
 };

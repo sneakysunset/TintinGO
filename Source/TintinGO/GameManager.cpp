@@ -2,6 +2,7 @@
 #include "State.h"
 #include "State_AwaitingInputs.h"
 #include "State_PlayerMove.h"
+#include "State_TriggerItemsCharacters.h"
 
 
 AGameManager* AGameManager::SingletonInstance = nullptr;
@@ -13,24 +14,24 @@ AGameManager::AGameManager()
 
 void AGameManager::BeginPlay()
 {
+	Super::BeginPlay();
 	SingletonInstance = this;
 	
-	_states.Add(EStateType::AwaitingInputs ,new State_AwaitingInputs());
-	_states.Add(EStateType::PlayerMove,new State_PlayerMove());
-	_currentStateType = EStateType::AwaitingInputs;
-	_states[_currentStateType]->OnStateEnter();
+	_currentStateType = new State_AwaitingInputs();
+	_currentStateType->OnStateEnter();
 }
 
 void AGameManager::Tick(float DeltaTime)
 {
-	_states[_currentStateType]->OnStateTick(DeltaTime);
+	Super::Tick(DeltaTime);
+	_currentStateType->OnStateTick(DeltaTime);
 }
 
-void AGameManager::StateChange(EStateType newState)
+void AGameManager::StateChange(State* newState)
 {
-	_states[_currentStateType]->OnStateExit();
+	_currentStateType->OnStateExit();
 	_currentStateType = newState;
-	_states[newState]->OnStateEnter();
+	_currentStateType->OnStateEnter();
 }
 
 AGameManager* AGameManager::GetInstance() 

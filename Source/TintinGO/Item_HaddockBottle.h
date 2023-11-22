@@ -16,4 +16,5 @@ class TINTINGO_API AItem_HaddockBottle : public AItem
 
 public:
 	AItem_HaddockBottle();
+	virtual void TriggerBody() override;
 };

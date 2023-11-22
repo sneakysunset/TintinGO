@@ -6,7 +6,6 @@
 #include "Item_MilouBone.h"
 #include "Item_HaddockBottle.h"
 #include "TileCharacter.h"
-#include "TileCharacter_Tintin.h"
 #include "TileCharacter_Enemy.h"
 
 ATile::ATile() 
@@ -67,28 +66,52 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 	}
 }
 
-void ATile::AddPlacableBodies() 
+
+void ATile::SetHighlighted(bool toHightlight)
 {
-	TArray<AActor*> AttachedActors;
-	GetAttachedActors(AttachedActors);
-	for (auto* Attached : AttachedActors)
+	if(toHightlight)
 	{
-		Attached->Destroy();
+		_staticMeshComponent->SetMaterial(0, _HighlightedMat);
 	}
-
-	ItemsList.Empty();
-	TileCharacterList.Empty();
-
-	for (int i = 0; i < _placableBodies.Num(); i++)
+	else
 	{
-		FActorSpawnParameters params;
-		FVector position = GetActorLocation();
-		FRotator rotation = FRotator(0, 0, 0);
-		AItem* item = nullptr;
-		ATileCharacter* character = nullptr;
-
-		switch (_placableBodies[i])
+		switch (_tileType)
 		{
+		case ETileType::Neutral:
+			_staticMeshComponent->SetMaterial(0, _walkableMat);
+			break;
+		case ETileType::StartingPosition:
+			_staticMeshComponent->SetMaterial(0, _startPosMat);
+			break;
+		case ETileType::EndingPosition:
+			_staticMeshComponent->SetMaterial(0, _endPosMat);
+			break;
+		}
+	}
+}
+
+	void ATile::AddPlacableBodies()
+	{
+		TArray<AActor*> AttachedActors;
+		GetAttachedActors(AttachedActors);
+		for (auto* Attached : AttachedActors)
+		{
+			Attached->Destroy();
+		}
+
+		ItemsList.Empty();
+		TileCharacterList.Empty();
+
+		for (int i = 0; i < _placableBodies.Num(); i++)
+		{
+			FActorSpawnParameters params;
+			FVector position = GetActorLocation();
+			FRotator rotation = FRotator(0, 0, 0);
+			AItem* item = nullptr;
+			ATileCharacter* character = nullptr;
+
+			switch (_placableBodies[i])
+			{
 			case EPlacableBodyType::Enemy:
 				character = GetWorld()->SpawnActor<ATileCharacter_Enemy>(ATileCharacter_Enemy::StaticClass(), position, rotation, params);
 				character->SetActorLabel(FString::Printf(TEXT("Enemy")));
@@ -103,25 +126,25 @@ void ATile::AddPlacableBodies()
 				break;
 			default:
 				break;
-		}
-		if (item)
-		{
-			item->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-			item->SetActorScale3D(GetActorScale3D() / 5);
-			ItemsList.Add(item);
-		}
-		if (character)
-		{
-			character->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-			character->SetActorScale3D(GetActorScale3D() / 5);
-			TileCharacterList.Add(character);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Error, TEXT("Character Spawned Not Valid"));
+			}
+			if (item)
+			{
+				item->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+				item->SetActorScale3D(GetActorScale3D() / 5);
+				ItemsList.Add(item);
+			}
+			if (character)
+			{
+				character->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+				character->SetActorScale3D(GetActorScale3D() / 5);
+				TileCharacterList.Add(character);
+			}
+			else
+			{
+				UE_LOG(LogTemp, Error, TEXT("Character Spawned Not Valid"));
+			}
 		}
 	}
-}
 
 
 

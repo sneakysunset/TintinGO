@@ -15,8 +15,10 @@ public:
 	static ATileCharacter_Tintin* GetInstance();
 	static ATileCharacter_Tintin* SingletonInstance;
 	ATileCharacter_Tintin();
+	UPROPERTY()
 	ATile* _currentTile;
-	int32 currentMilouBonesNb;
+	
+	int32 currentMilouBonesNb ;
 	int32 currentHaddockBottleNb;
 
 UFUNCTION(BlueprintCallable, CallInEditor)

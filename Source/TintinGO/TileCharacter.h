@@ -13,6 +13,8 @@ class TINTINGO_API ATileCharacter : public APawn, public IPlacableBody
 public:
 	// Sets default values for this pawn's properties
 	ATileCharacter();
+	bool isTaskOver;
+	void OnEndTask();
 
 protected:
 	// Called when the game starts or when spawned

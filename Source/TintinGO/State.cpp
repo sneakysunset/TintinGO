@@ -26,9 +26,3 @@ void State::OnStateExit()
 {
 	//_gameManager->_currentStateType = _targetStateType;
 }
-
-
-void State::ReceiveLeftMouseClick(FVector mousePosition)
-{
-
-}

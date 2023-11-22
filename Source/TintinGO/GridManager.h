@@ -35,6 +35,12 @@ public:
     virtual void Tick(float DeltaTime) override;
     virtual bool ShouldTickIfViewportsOnly() const override;
 
+    void MarkStepsOnGrid(ATile* CenterTile);
+    void SetStepOnAdjacentsRecursive(ATile* tile);
+    void SetStepOnAdjacentTile(ATile* tile, FVector2D direction);
+    bool TileIsAvailable(ATile* tile, FVector2D direction);
+
+    
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
       bool _initializeGrid;
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -59,6 +65,8 @@ private:
         UMaterialInterface* _endPos_TileMaterial;
     UPROPERTY(EditAnywhere, Category = "TileMaterials")
         UMaterialInterface* _unwalkable_TileMaterial;
+    UPROPERTY(EditAnywhere, Category = "TileMaterials")
+        UMaterialInterface* _highlighted_TileMaterial;
 
     UFUNCTION(CallInEditor, Category = "Events")
         void BlueprintEditorTick(float DeltaTime);

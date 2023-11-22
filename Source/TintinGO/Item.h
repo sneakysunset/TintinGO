@@ -26,4 +26,9 @@ public:
     virtual void PlaceBody() override;
 
     virtual void TriggerBody() override;
+
+    void OnEndTask();
+    
+    bool isTaskOver;
+
 };

@@ -46,6 +46,8 @@ public:
 	int32 _row;
 	UPROPERTY()
 	int32 _column;
+	UPROPERTY(EditAnywhere)
+	int32 _step;
 	UPROPERTY()
 	UMaterialInterface* _walkableMat;
 	UPROPERTY()
@@ -54,7 +56,9 @@ public:
 	UMaterialInterface* _startPosMat;
 	UPROPERTY()
 	UMaterialInterface* _endPosMat;
-
+	UPROPERTY()
+	UMaterialInterface* _HighlightedMat;
+	void SetHighlighted(bool toHightlight);
 	UFUNCTION(BlueprintCallable, CallInEditor)
 		void AddPlacableBodies();
 
@@ -71,4 +75,5 @@ private:
 	UFUNCTION(CallInEditor)
 		void BlueprintEditorTick(float DeltaTime);
 
+	
 };

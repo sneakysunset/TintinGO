@@ -26,5 +26,6 @@ class TINTINGO_API IPlacableBody
 public:
 	UFUNCTION()
 	virtual void PlaceBody() = 0;
+	UFUNCTION()
 	virtual void TriggerBody() = 0;
 };

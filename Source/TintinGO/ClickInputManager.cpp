@@ -2,6 +2,7 @@
 #include "ClickInputManagerController.h"
 #include "State.h"
 #include "State_AwaitingInputs.h"
+#include "GameManager.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
@@ -10,12 +11,13 @@ AClickInputManager::AClickInputManager()
 	PrimaryActorTick.bCanEverTick = true;
    // CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 }
-    
+
+
+
 void AClickInputManager::BeginPlay()
 {
 	Super::BeginPlay();
     _gameManager = AGameManager::GetInstance();
-	
 }
 
 void AClickInputManager::Tick(float DeltaTime)
@@ -27,9 +29,11 @@ void AClickInputManager::Tick(float DeltaTime)
 void AClickInputManager::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	
 
     UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(PlayerInputComponent);
     AClickInputManagerController* FPC = Cast<AClickInputManagerController>(Controller);
+    pController = Cast<APlayerController>(Controller);
     check(EIC && FPC);
    
     EIC->BindAction(FPC->LeftClickAction, ETriggerEvent::Started, this, &AClickInputManager::OnMouseClick);
@@ -46,30 +50,11 @@ void AClickInputManager::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 void AClickInputManager::OnMouseClick()
 {
-    FVector2D MouseScreenPosition;
-    APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-    PlayerController->GetMousePosition(MouseScreenPosition.X, MouseScreenPosition.Y);
-
-    // Get mouse position in world space
-    FVector MouseWorldPosition;
-    FVector MouseWorldDirection;
-    PlayerController->DeprojectScreenPositionToWorld(MouseScreenPosition.X, MouseScreenPosition.Y, MouseWorldPosition, MouseWorldDirection);
-
-    // Perform ray cast
-    FHitResult HitResult;
-    FVector Start = MouseWorldPosition;
-    FVector End = MouseWorldPosition + MouseWorldDirection * 5000.f; // Adjust the length of the ray as needed
-    FCollisionQueryParams CollisionParams;
-    CollisionParams.AddIgnoredActor(this); // Ignore the pawn itself
-	UE_LOG(LogTemp, Warning, TEXT("Click"));
-    // Perform the ray cast
-    if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, CollisionParams))
-    {
-    	UE_LOG(LogTemp, Warning, TEXT("Valid Click"));
-        // Hit something, you can access HitResult to get information about the hit
-        FVector HitLocation = HitResult.Location;
-        State* state = _gameManager->_states[_gameManager->_currentStateType];
-        state->ReceiveLeftMouseClick(HitLocation);
-    }
+	if(_gameManager->OnClickD.IsBound())
+	{
+		_gameManager->OnClickD.Execute();
+	}
+    //State* state = _gameManager->_states[_gameManager->_currentStateType];
+    //state->ReceiveLeftMouseClick();
 }
 	

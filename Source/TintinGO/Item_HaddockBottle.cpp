@@ -3,6 +3,8 @@
 
 #include "Item_HaddockBottle.h"
 
+#include "TileCharacter_Tintin.h"
+
 AItem_HaddockBottle::AItem_HaddockBottle()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -10,4 +12,10 @@ AItem_HaddockBottle::AItem_HaddockBottle()
 	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
 
 	RootComponent = _staticMeshComponent;
+}
+
+void AItem_HaddockBottle::TriggerBody()
+{
+	Super::TriggerBody();
+	ATileCharacter_Tintin::GetInstance()->currentHaddockBottleNb++;
 }

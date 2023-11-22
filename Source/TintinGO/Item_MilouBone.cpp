@@ -3,6 +3,8 @@
 
 #include "Item_MilouBone.h"
 
+#include "TileCharacter_Tintin.h"
+
 AItem_MilouBone::AItem_MilouBone()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -10,4 +12,10 @@ AItem_MilouBone::AItem_MilouBone()
 	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
 
 	RootComponent = _staticMeshComponent;
+}
+
+void AItem_MilouBone::TriggerBody()
+{
+	Super::TriggerBody();
+	ATileCharacter_Tintin::GetInstance()->currentMilouBonesNb++;
 }

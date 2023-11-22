@@ -13,7 +13,6 @@ virtual	~State();
 	virtual void OnStateEnter();
 	virtual void OnStateTick(float DeltaTime);
 	virtual void OnStateExit();
-	virtual void ReceiveLeftMouseClick(FVector mousePosition);
 
 protected:
 	//EStateType _targetStateType;

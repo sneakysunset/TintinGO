@@ -12,6 +12,11 @@ ATileCharacter::ATileCharacter()
 	RootComponent = _staticMeshComponent;
 }
 
+void ATileCharacter::OnEndTask()
+{
+	this->Destroy();
+}
+
 // Called when the game starts or when spawned
 void ATileCharacter::BeginPlay()
 {
@@ -37,5 +42,6 @@ void ATileCharacter::PlaceBody(/*ATile* tile*/)
 
 void ATileCharacter::TriggerBody()
 {
+	isTaskOver = true;
 }
 

@@ -16,4 +16,5 @@ class TINTINGO_API AItem_MilouBone : public AItem
 	
 public:
 	AItem_MilouBone();
+	virtual void TriggerBody() override;
 };

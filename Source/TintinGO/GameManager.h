@@ -5,14 +5,10 @@
 #include "GameFramework/Actor.h"
 #include "GameManager.generated.h"
 
-class State;
+DECLARE_DELEGATE(FOnClickDelegate);
 
-UENUM()
-enum class EStateType : uint8
-{
-	AwaitingInputs = 0b0000,
-	PlayerMove = 0b0001,
-};
+
+class State;
 
 UCLASS()
 class TINTINGO_API AGameManager : public AActor
@@ -21,18 +17,18 @@ class TINTINGO_API AGameManager : public AActor
 
 public:	
 	static AGameManager* GetInstance();
+	FOnClickDelegate OnClickD;
+
 	AGameManager();
-	TMap<EStateType, State*> _states;
-	EStateType _currentStateType;
-	UFUNCTION()
-	void StateChange(EStateType newState);
+	State* _currentStateType;
+	void StateChange(State* NewState);
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 	UPROPERTY()
 	ATile* _playerTargetTile;
 	UPROPERTY(EditAnywhere, Category = "Tintin Parameters")
 	float speed;
-
+	ATile* hitTile;
 	
 	
 private:

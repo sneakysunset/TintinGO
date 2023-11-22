@@ -10,6 +10,7 @@ ATileCharacter_Tintin* ATileCharacter_Tintin::GetInstance()
 ATileCharacter_Tintin::ATileCharacter_Tintin()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	SingletonInstance = this;	
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Cube.Cube"));
 	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
 
@@ -22,11 +23,9 @@ ATileCharacter_Tintin::ATileCharacter_Tintin()
 
 void ATileCharacter_Tintin::CheckTileItems()
 {
-	if(_currentTile != nullptr)
+	check(_currentTile);
+	for (AItem* item : _currentTile->ItemsList)
 	{
-		for (AItem* item : _currentTile->ItemsList)
-		{
-			item->TriggerBody();
-		}
+		item->TriggerBody();
 	}
 }
