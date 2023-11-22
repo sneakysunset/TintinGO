@@ -39,7 +39,8 @@ public:
     void SetStepOnAdjacentsRecursive(ATile* tile);
     void SetStepOnAdjacentTile(ATile* tile, FVector2D direction);
     bool TileIsAvailable(ATile* tile, FVector2D direction);
-
+    TArray<ATile*> GetPath(ATile* endTile);
+    ATile* GetNextTileInPath(ATile* tile);
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
       bool _initializeGrid;

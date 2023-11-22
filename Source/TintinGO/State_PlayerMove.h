@@ -2,6 +2,7 @@
 
 #include "State.h"
 #include "CoreMinimal.h"
+#include "TileCharacter_Milou.h"
 #include "TileCharacter_Tintin.h"
 
 
@@ -15,5 +16,6 @@ public:
 
 private:
 	ATileCharacter_Tintin* _tintin;
+	ATileCharacter_Milou _milou;
 	float _interpolateValue;
 };

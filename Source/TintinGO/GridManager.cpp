@@ -56,13 +56,16 @@ void AGridManager::BeginPlay()
 				FVector position = tile->GetActorLocation();
 				FRotator rotation = FRotator(0, 0, 0);
 				ATileCharacter_Tintin* character = GetWorld()->SpawnActor<ATileCharacter_Tintin>(ATileCharacter_Tintin::StaticClass(), position, rotation, params);
-				if(character != nullptr)
-				{
-					character->SetActorLabel(FString::Printf(TEXT("Tintin")));
-				}
+				ATileCharacter_Milou* milou = GetWorld()->SpawnActor<ATileCharacter_Milou>(ATileCharacter_Tintin::StaticClass(), position, rotation, params);
+
+				character->SetActorLabel(FString::Printf(TEXT("Tintin")));
+				milou->SetActorLabel(FString::Printf(TEXT("Milou")));
 				character->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
-				character->SetActorScale3D(tile->GetActorScale3D() / 5);
+				milou->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
+				character->SetActorScale3D(tile->GetActorScale3D() / 2);
+				milou->SetActorScale3D(tile->GetActorScale3D() / 2);
 				character->_currentTile = tile;
+				milou->_currentTile = tile;
 				break;
 			}
 		}
@@ -80,6 +83,9 @@ bool AGridManager::ShouldTickIfViewportsOnly() const
 		return false;
 	}
 }
+
+
+
 
 void AGridManager::MarkStepsOnGrid(ATile* CenterTile)
 {
@@ -121,14 +127,49 @@ bool AGridManager::TileIsAvailable(ATile* tile, FVector2D direction)
 		tile->_column + direction.Y >= 0 && tile->_column + direction.Y < _gridTiles[0].Tiles.Num())
 	{
 		ATile* adjTile = _gridTiles[tile->_row + direction.X].Tiles[tile->_column + direction.Y];
-		//bool directionalCondittion = direction.X == 1 ?;
+		bool directionalCondition = direction.X == 1 ? adjTile->_rightLink : false;
+		directionalCondition = direction.X == -1 ? adjTile ->_leftLink : directionalCondition;
+		directionalCondition = direction.Y == 1 ? adjTile ->_upLink : directionalCondition;
+		directionalCondition = direction.Y == -1 ? adjTile ->_downLink : directionalCondition;
+		
+		if(adjTile->_walkable && directionalCondition && (adjTile->_step == -1 || adjTile->_step > tile->_step + 1))
+		{
+			return true;
+		}
+		else
+			return false;
 	}
 	else
 	{
 		return false;
 	}
-	return true;
 }
+
+TArray<ATile*> AGridManager::GetPath(ATile* endTile)
+{
+	TArray<ATile*> path;
+	ATile* currentTile = endTile;
+	while(currentTile->_step > 0)
+	{
+		currentTile = GetNextTileInPath(currentTile);
+		path.Add(currentTile);
+	}
+	return path;
+}
+
+ATile* AGridManager::GetNextTileInPath(ATile* tile)
+{
+	if(tile->_row + 1 >= 0 && tile->_row + 1 < _gridTiles.Num() && _gridTiles[tile->_row + 1].Tiles[tile->_column]->_step == tile->_step - 1)
+		return _gridTiles[tile->_row + 1].Tiles[tile->_column];
+	if(tile->_row - 1 >= 0 && tile->_row - 1 < _gridTiles.Num() && _gridTiles[tile->_row - 1].Tiles[tile->_column]->_step == tile->_step - 1)
+    	return _gridTiles[tile->_row - 1].Tiles[tile->_column];
+	if(tile->_column + 1 >= 0 && tile->_column + 1 < _gridTiles[0].Tiles.Num() && _gridTiles[tile->_row].Tiles[tile->_column + 1]->_step == tile->_step - 1)
+		return _gridTiles[tile->_row].Tiles[tile->_column + 1];
+	if(tile->_column - 1 >= 0 && tile->_column- 1 < _gridTiles[0].Tiles.Num() && _gridTiles[tile->_row].Tiles[tile->_column - 1]->_step == tile->_step - 1)
+		return _gridTiles[tile->_row].Tiles[tile->_column - 1];
+	else return nullptr;
+}
+
 
 void AGridManager::BlueprintEditorTick(float DeltaTime)
 {

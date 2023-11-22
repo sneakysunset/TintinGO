@@ -21,6 +21,14 @@ void AGameManager::BeginPlay()
 	_currentStateType->OnStateEnter();
 }
 
+void AGameManager::ReceiveMilouUIClick()
+{
+	if(OnMilouBoneClick.IsBound())
+	{
+		OnMilouBoneClick.Execute();
+	}
+}
+
 void AGameManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

@@ -25,11 +25,20 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		ETileType _tileType {ETileType::Neutral};
-
+	
 	
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		bool _walkable = true;
 
+	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
+	bool _rightLink = true;
+	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
+	bool _leftLink = true;
+	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
+	bool _upLink = true;
+	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
+	bool _downLink = true;
+	
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		TArray<EPlacableBodyType> _placableBodies;
 

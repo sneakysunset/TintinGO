@@ -16,6 +16,10 @@ ATile::ATile()
 	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
 	_staticMeshComponent->SupportsDefaultCollision();
 	RootComponent = _staticMeshComponent;
+	_rightLink = true;
+	_leftLink = true;
+	_upLink = true;
+	_downLink = true;
 }
 
 void ATile::Tick(float DeltaTime)
@@ -56,7 +60,6 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 			case ETileType::EndingPosition:
 				_staticMeshComponent->SetMaterial(0, _endPosMat);
 				break;
-
 			}
 		}
 		else {

@@ -6,7 +6,7 @@
 #include "GameManager.generated.h"
 
 DECLARE_DELEGATE(FOnClickDelegate);
-
+DECLARE_DELEGATE(FUIMilouClick)
 
 class State;
 
@@ -18,6 +18,7 @@ class TINTINGO_API AGameManager : public AActor
 public:	
 	static AGameManager* GetInstance();
 	FOnClickDelegate OnClickD;
+	FUIMilouClick OnMilouBoneClick;
 
 	AGameManager();
 	State* _currentStateType;
@@ -30,6 +31,8 @@ public:
 	float speed;
 	ATile* hitTile;
 	
+	UFUNCTION(BlueprintCallable)
+	void ReceiveMilouUIClick();
 	
 private:
 	// Called when the game starts or when spawned
