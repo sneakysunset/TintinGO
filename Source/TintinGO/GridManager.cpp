@@ -1,9 +1,9 @@
 #include "GridManager.h"
 #include "Tile.h"
-#include "TileCharacter_Milou.h"
+#include "TileActor_Character_Milou.h"
+#include "TileActor_Character_Tintin.h"
 #include "Math/UnrealMathUtility.h"
 #include "Engine/World.h"
-#include "TileCharacter_Tintin.h"
 
 AGridManager* AGridManager::SingletonInstance = nullptr;
 
@@ -58,8 +58,8 @@ void AGridManager::BeginPlay()
 				params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 				FVector position = tile->GetActorLocation();
 				FRotator rotation = FRotator(0, 0, 0);
-				ATileCharacter_Tintin* character = GetWorld()->SpawnActor<ATileCharacter_Tintin>(ATileCharacter_Tintin::StaticClass(), position, rotation, params);
-				ATileCharacter_Milou* milou = GetWorld()->SpawnActor<ATileCharacter_Milou>(ATileCharacter_Milou::StaticClass(), position, rotation, params);
+				ATileActor_Character_Tintin* character = GetWorld()->SpawnActor<ATileActor_Character_Tintin>(ATileActor_Character_Tintin::StaticClass(), position, rotation, params);
+				ATileActor_Character_Milou* milou = GetWorld()->SpawnActor<ATileActor_Character_Milou>(ATileActor_Character_Milou::StaticClass(), position, rotation, params);
 
 				character->SetActorLabel(FString::Printf(TEXT("Tintin")));
 				milou->SetActorLabel(FString::Printf(TEXT("Milou")));

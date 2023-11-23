@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Tile.h"
+#include "State_TActor.h"
 #include "TileActor.generated.h"
 
 UCLASS()
@@ -15,8 +15,11 @@ public:
 	virtual void OnEndTask();
 	virtual void TriggerBody();
 
+	State_TActor* _currentState_TA;
+	
 	bool _isTaskOver;
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
+
 	
 protected:
 	virtual void BeginPlay() override;

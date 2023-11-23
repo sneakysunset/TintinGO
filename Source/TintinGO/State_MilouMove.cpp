@@ -1,5 +1,4 @@
 ﻿#include "State_MilouMove.h"
-
 #include "GameManager.h"
 #include "State_AwaitingInputs.h"
 
@@ -14,7 +13,7 @@ void State_MilouMove::OnStateEnter()
 	UE_LOG(LogTemp, Warning, TEXT("Milou Move State Enter"));
 	_milou = ATileActor_Character_Milou::GetInstance();
 	_milou->isBoundToTintin = false;
-	_gameManager->_playerTargetTile = _milou->MilouTilePath.Last();
+	_milou->_nextTile = _milou->MilouTilePath.Last();
 	_milou->MilouTilePath[0]->SetHighlightedPath(true);
 	_interpolateValue = 0;
 }
@@ -25,7 +24,7 @@ void State_MilouMove::OnStateTick(float DeltaTime)
 	_interpolateValue += DeltaTime * _gameManager->speed;
 
 	FVector mStartPos = _milou->_currentTile->GetActorLocation();
-	FVector const mEndPos = _gameManager->_playerTargetTile->GetActorLocation();
+	FVector const mEndPos = _milou->_nextTile->GetActorLocation();
 	FVector const mLerpVector = mStartPos + (mEndPos - mStartPos) * _interpolateValue;
 	_milou->SetActorLocation(mLerpVector);
 

@@ -2,19 +2,17 @@
 
 #include "State.h"
 #include "CoreMinimal.h"
-#include "Item.h"
-#include "TileCharacter_Tintin.h"
+#include "TileActor_Character_Tintin.h"
 
 class State_TriggerItemsCharacters : public State
 {
 public:
 	State_TriggerItemsCharacters();
-	virtual void OnStateEnter();
-	virtual void OnStateTick(float DeltaTime);
-	virtual void OnStateExit();
+	virtual void OnStateEnter() override;
+	virtual void OnStateTick(float DeltaTime) override;
+	virtual void OnStateExit() override;
 
 private:
-	ATileCharacter_Tintin* _tintin;
-	TArray<AItem*> items;
-	TArray<ATileCharacter*> characters;
+	ATileActor_Character_Tintin* _tintin;
+	TArray<ATileActor*> _tileActors;
 };

@@ -1,5 +1,7 @@
 #include "TileActor.h"
 
+#include "State_TActor_Neutral.h"
+
 ATileActor::ATileActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -24,7 +26,7 @@ void ATileActor::TriggerBody()
 void ATileActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	_currentState_TA = new State_TActor_Neutral(this);
 }
 
 // Called every frame

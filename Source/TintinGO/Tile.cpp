@@ -2,11 +2,6 @@
 
 
 #include "Tile.h"
-#include "Item.h"
-#include "Item_MilouBone.h"
-#include "Item_HaddockBottle.h"
-#include "TileCharacter.h"
-#include "TileCharacter_Enemy.h"
 
 ATile::ATile() 
 {
@@ -70,7 +65,6 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 	}
 }
 
-
 void ATile::SetHighlighted(bool toHightlight)
 {
 	if(toHightlight)
@@ -126,50 +120,37 @@ void ATile::AddPlacableBodies()
 		Attached->Destroy();
 	}
 
-	ItemsList.Empty();
-	TileCharacterList.Empty();
+	_placableBodies.Empty();
 
 	for (int i = 0; i < _placableBodies.Num(); i++)
 	{
 		FActorSpawnParameters params;
 		FVector position = GetActorLocation();
 		FRotator rotation = FRotator(0, 0, 0);
-		AItem* item = nullptr;
-		ATileCharacter* character = nullptr;
 
-		switch (_placableBodies[i])
+		switch (_TileItems[i])
 		{
-		case EPlacableBodyType::Enemy:
-			character = GetWorld()->SpawnActor<ATileCharacter_Enemy>(ATileCharacter_Enemy::StaticClass(), position, rotation, params);
-			character->SetActorLabel(FString::Printf(TEXT("Enemy")));
+		case ETileActorType::Bone:
+			//_placableBodies.Add(GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params));
+			//_placableBodies.Last()->SetActorLabel(FString::Printf(TEXT("Item_Bone")));
 			break;
-		case EPlacableBodyType::MilouBone:
-			item = GetWorld()->SpawnActor<AItem_MilouBone>(AItem_MilouBone::StaticClass(), position, rotation, params);
-			item->SetActorLabel(FString::Printf(TEXT("MilouBone")));
+		case ETileActorType::Clue:
+			//_placableBodies.Add(GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params));
+			//_placableBodies.Last()->SetActorLabel(FString::Printf(TEXT("Item_Clue")));
 			break;
-		case EPlacableBodyType::HaddockBottle:
-			item = GetWorld()->SpawnActor<AItem_HaddockBottle>(AItem_HaddockBottle::StaticClass(), position, rotation, params);
-			item->SetActorLabel(FString::Printf(TEXT("HaddockBottle")));
+		case ETileActorType::Peruvien:
+			//_placableBodies.Add(GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params));
+			//_placableBodies.Last()->SetActorLabel(FString::Printf(TEXT("Enemy_Peruvien")));
 			break;
+		case ETileActorType::Condor:
+			//_placableBodies.Add(GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params));
+			//_placableBodies.Last()->SetActorLabel(FString::Printf(TEXT("Enemy_Condor")));
 		default:
 			break;
 		}
-		if (item)
-		{
-			item->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-			item->SetActorScale3D(GetActorScale3D() / 5);
-			ItemsList.Add(item);
-		}
-		if (character)
-		{
-			character->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-			character->SetActorScale3D(GetActorScale3D() / 5);
-			TileCharacterList.Add(character);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Error, TEXT("Character Spawned Not Valid"));
-		}
+
+		_placableBodies.Last()->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+		_placableBodies.Last()->SetActorScale3D(GetActorScale3D() / 5);
 	}
 }
 

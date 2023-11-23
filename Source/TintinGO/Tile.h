@@ -2,9 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "PlacableBody.h"
-#include "Item.h"
-#include "TileCharacter.h"
+#include "TileActor_Character.h"
 #include "Tile.generated.h"
 
 UENUM(BlueprintType)
@@ -13,6 +11,15 @@ enum class ETileType : uint8
 	Neutral = 0b0000 UMETA(DisplayName = "Neutral"),
 	StartingPosition = 0b0001 UMETA(DisplayName = "Starting Position"),
 	EndingPosition = 0b0010 UMETA(DisplayName = "Ending Position")
+};
+
+UENUM(BlueprintType)
+enum class ETileActorType : uint8
+{
+	Bone = 0 UMETA(DisplayName = "Milou's Bone"),
+	Clue = 1 UMETA(DisplayName = "Clue"),
+	Peruvien = 2 UMETA(DisplayName = "Peruvien [Ennemy]"),
+	Condor = 4 UMETA(DisplayName = "Condor [Ennemy]")
 };
 
 UCLASS()
@@ -38,16 +45,15 @@ public:
 	bool _upLink = true;
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 	bool _downLink = true;
-	
+
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		TArray<EPlacableBodyType> _placableBodies;
-
+		TArray<ETileActorType> _TileItems;
+	
 	UPROPERTY()
-	TArray<AItem*> ItemsList;
+		TArray<ATileActor*> _placableBodies;
 
-	UPROPERTY()
-	TArray<ATileCharacter*> TileCharacterList;
-
+	
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 		bool _useEditorTick = true;
 

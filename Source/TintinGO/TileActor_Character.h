@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "TileActor.h"
 #include "TileActor_Character.generated.h"
-
+class ATile;
 UCLASS()
 class TINTINGO_API ATileActor_Character : public ATileActor
 {

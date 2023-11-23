@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "State.h"
-#include "TileCharacter_Milou.h"
+#include "TileActor_Character_Milou.h"
 
 class ATileCharacter_Tintin;
 
@@ -15,6 +15,6 @@ public:
 	virtual void OnStateExit() override;
 
 private:
-	ATileCharacter_Milou* _milou;
+	ATileActor_Character_Milou* _milou;
 	float _interpolateValue;
 };

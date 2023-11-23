@@ -1,8 +1,6 @@
 #include "GameManager.h"
 #include "State.h"
 #include "State_AwaitingInputs.h"
-#include "State_PlayerMove.h"
-#include "State_TriggerItemsCharacters.h"
 
 
 AGameManager* AGameManager::SingletonInstance = nullptr;

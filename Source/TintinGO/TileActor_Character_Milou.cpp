@@ -19,5 +19,6 @@ ATileActor_Character_Milou::ATileActor_Character_Milou()
 
 	RootComponent = _staticMeshComponent;
 
+	isBoundToTintin = true;
 	_currentTile = nullptr;
 }

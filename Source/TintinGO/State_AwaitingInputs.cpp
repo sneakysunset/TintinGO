@@ -27,6 +27,14 @@ void State_AwaitingInputs::OnStateEnter()
 void State_AwaitingInputs::OnStateTick(float DeltaTime)
 {
 	State::OnStateTick(DeltaTime);
+	if(_tintin == nullptr || _milou == nullptr || gridManager == nullptr)
+	{
+		gridManager = AGridManager::GetInstance();
+		_milou = ATileActor_Character_Milou::GetInstance();
+		_tintin = ATileActor_Character_Tintin::GetInstance();
+		UE_LOG(LogTemp, Warning, TEXT("NOTHING"))
+		return;
+	}
 	ProcessMousePositionInput();
 }
 
@@ -94,6 +102,7 @@ void State_AwaitingInputs::ProcessMousePositionInput()
 
 void State_AwaitingInputs::ProcessPlayerInputs(ATile* hitTile)
 {
+	_tintin = ATileActor_Character_Tintin::GetInstance();
 	ATile* tintinTile = _tintin->_currentTile;
 
 	check(tintinTile);
@@ -173,6 +182,7 @@ void State_AwaitingInputs::ReceiveLeftMouseClick()
 		if(isTintinInput)
 		{
 			_tintin->_nextTile = _hitTile;
+			if(_milou->isBoundToTintin) _milou->_nextTile = _hitTile;
 			_gameManager->StateChange(new State_PlayerMove());
 		}
 		else
@@ -187,7 +197,7 @@ void State_AwaitingInputs::ReceiveMiloClickDelegate()
 	if(isTintinInput)
 	{
 		isTintinInput = false;
-		gridManager->MarkStepsOnGrid(ATileCharacter_Milou::GetInstance()->_currentTile);
+		gridManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->_currentTile);
 	}
 	else
 	{
