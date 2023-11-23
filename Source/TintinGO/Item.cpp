@@ -34,6 +34,7 @@ void AItem::TriggerBody()
 	isTaskOver = true;
 }
 
+
 void AItem::OnEndTask()
 {
 	this->Destroy();

@@ -1,5 +1,6 @@
 #include "GridManager.h"
 #include "Tile.h"
+#include "TileCharacter_Milou.h"
 #include "Math/UnrealMathUtility.h"
 #include "Engine/World.h"
 #include "TileCharacter_Tintin.h"
@@ -23,6 +24,8 @@ AGridManager::AGridManager()
 	_startPos_TileMaterial = nullptr;
 	_endPos_TileMaterial = nullptr;
 	_unwalkable_TileMaterial = nullptr;
+	_highlighted_TileMaterial = nullptr;
+	_highlightedPath_TileMaterial = nullptr;
 }
 
 void AGridManager::Tick(float DeltaTime)
@@ -56,7 +59,7 @@ void AGridManager::BeginPlay()
 				FVector position = tile->GetActorLocation();
 				FRotator rotation = FRotator(0, 0, 0);
 				ATileCharacter_Tintin* character = GetWorld()->SpawnActor<ATileCharacter_Tintin>(ATileCharacter_Tintin::StaticClass(), position, rotation, params);
-				ATileCharacter_Milou* milou = GetWorld()->SpawnActor<ATileCharacter_Milou>(ATileCharacter_Tintin::StaticClass(), position, rotation, params);
+				ATileCharacter_Milou* milou = GetWorld()->SpawnActor<ATileCharacter_Milou>(ATileCharacter_Milou::StaticClass(), position, rotation, params);
 
 				character->SetActorLabel(FString::Printf(TEXT("Tintin")));
 				milou->SetActorLabel(FString::Printf(TEXT("Milou")));
@@ -89,6 +92,8 @@ bool AGridManager::ShouldTickIfViewportsOnly() const
 
 void AGridManager::MarkStepsOnGrid(ATile* CenterTile)
 {
+	check(CenterTile != nullptr);
+	UE_LOG(LogTemp, Warning, TEXT("grid %d"),_gridTiles.Num());
 	for(int i = 0; i < _gridTiles.Num(); i++)
 	{
 		for(int j = 0; j < _gridTiles[i].Tiles.Num(); j++)
@@ -97,6 +102,7 @@ void AGridManager::MarkStepsOnGrid(ATile* CenterTile)
 		}
 	}
 	CenterTile->_step = 0;
+	//return;
 	SetStepOnAdjacentsRecursive(CenterTile);
 	
 }
@@ -149,6 +155,7 @@ TArray<ATile*> AGridManager::GetPath(ATile* endTile)
 {
 	TArray<ATile*> path;
 	ATile* currentTile = endTile;
+	path.Add(currentTile);
 	while(currentTile->_step > 0)
 	{
 		currentTile = GetNextTileInPath(currentTile);
@@ -218,6 +225,7 @@ void AGridManager::InitializeGrid()
 			SpawnedTile->_endPosMat = _endPos_TileMaterial;
 			SpawnedTile->_unwalkableMat = _unwalkable_TileMaterial;
 			SpawnedTile->_HighlightedMat = _highlighted_TileMaterial;
+			SpawnedTile->_HighlightedPathMat = _highlightedPath_TileMaterial;
 			if (UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(_walkable_TileMaterial, SpawnedTile))
 			{
 				// Set the material on the mesh component (assuming it's a UStaticMeshComponent)

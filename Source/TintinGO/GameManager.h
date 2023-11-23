@@ -25,10 +25,10 @@ public:
 	void StateChange(State* NewState);
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
-	UPROPERTY()
-	ATile* _playerTargetTile;
 	UPROPERTY(EditAnywhere, Category = "Tintin Parameters")
 	float speed;
+	UPROPERTY(EditAnywhere, Category = "Milou Parameters")
+	int32 milouBoneThrowRange;
 	ATile* hitTile;
 	
 	UFUNCTION(BlueprintCallable)

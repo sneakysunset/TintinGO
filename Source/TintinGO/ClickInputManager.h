@@ -24,7 +24,5 @@ public:
 	void OnMouseClick();
 		
 private :
-	UPROPERTY(EditAnywhere)
-		class UCameraComponent* CameraComponent;
 	AGameManager* _gameManager;
 };

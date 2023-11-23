@@ -9,7 +9,6 @@
 AClickInputManager::AClickInputManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
-   // CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 }
 
 

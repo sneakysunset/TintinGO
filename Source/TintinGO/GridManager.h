@@ -11,7 +11,7 @@ struct FTileArray
 {
     GENERATED_BODY()
 
-    UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    UPROPERTY()
     TArray<class ATile*> Tiles;
 };
 
@@ -68,6 +68,8 @@ private:
         UMaterialInterface* _unwalkable_TileMaterial;
     UPROPERTY(EditAnywhere, Category = "TileMaterials")
         UMaterialInterface* _highlighted_TileMaterial;
+    UPROPERTY(EditAnywhere, Category = "TileMaterials")
+    UMaterialInterface* _highlightedPath_TileMaterial;
 
     UFUNCTION(CallInEditor, Category = "Events")
         void BlueprintEditorTick(float DeltaTime);

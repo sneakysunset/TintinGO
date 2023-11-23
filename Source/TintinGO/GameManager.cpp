@@ -10,6 +10,8 @@ AGameManager* AGameManager::SingletonInstance = nullptr;
 AGameManager::AGameManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	speed = 1;
+	milouBoneThrowRange = 2;
 }
 
 void AGameManager::BeginPlay()

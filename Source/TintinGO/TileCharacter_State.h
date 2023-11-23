@@ -1,19 +1,15 @@
-#pragma once
+﻿#pragma once
+#include "TileCharacter.h"
 
-#include "CoreMinimal.h"
-
-class AGameManager;
-
-class TINTINGO_API State
+class TileCharacter_State
 {
 public:
-	State();
-virtual	~State();
-
+	TileCharacter_State(ATileCharacter* tileCharacter);
 	virtual void OnStateEnter();
 	virtual void OnStateTick(float DeltaTime);
 	virtual void OnStateExit();
 
 protected:
 	AGameManager* _gameManager ;
+	ATileCharacter* _tileCharacter;
 };

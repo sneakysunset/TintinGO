@@ -10,7 +10,7 @@ ATileCharacter_Tintin* ATileCharacter_Tintin::GetInstance()
 ATileCharacter_Tintin::ATileCharacter_Tintin()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	SingletonInstance = this;	
+	SingletonInstance = this;
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Cube.Cube"));
 	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
 

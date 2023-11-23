@@ -12,12 +12,13 @@ UCLASS()
 class TINTINGO_API ATileCharacter_Milou : public ATileCharacter
 {
 	GENERATED_BODY()
-	ATileCharacter_Milou();
 
 public:
+	ATileCharacter_Milou();
 	static ATileCharacter_Milou* GetInstance();
 	static ATileCharacter_Milou* SingletonInstance;
 	bool isBoundToTintin;
 	UPROPERTY()
 	ATile* _currentTile;
+	TArray<ATile*> MilouTilePath;
 };
