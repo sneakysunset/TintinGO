@@ -1,13 +1,16 @@
 ﻿#pragma once
 #include "State.h"
 #include "TileActor_Character_Milou.h"
+#include "State_MilouMove.generated.h"
 
 class ATileCharacter_Tintin;
 
-class State_MilouMove : public State
+UCLASS()
+class UState_MilouMove : public UState
 {
+GENERATED_BODY()
+	
 public:
-	State_MilouMove();
 
 
 	virtual void OnStateEnter() override;
@@ -16,5 +19,5 @@ public:
 
 private:
 	ATileActor_Character_Milou* _milou;
-	float _interpolateValue;
+	UBarrier* _barrier;
 };

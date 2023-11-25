@@ -15,13 +15,18 @@ public:
 	virtual void OnEndTask();
 	virtual void TriggerBody();
 
-	State_TActor* _currentState_TA;
+	UState_TActor* _currentState_TA;
+	void ChangeState(UState_TActor* newState);
+	virtual ATile* GetCurrentTile() const{return _currentTile;}
+	virtual void SetCurrentTile(ATile* tile){_currentTile = tile;}
 	
 	bool _isTaskOver;
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
 
 	
 protected:
+	UPROPERTY()
+	ATile* _currentTile;
 	virtual void BeginPlay() override;
 
 public:	

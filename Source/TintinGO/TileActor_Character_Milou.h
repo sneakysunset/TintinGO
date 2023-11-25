@@ -16,6 +16,5 @@ public:
 	static ATileActor_Character_Milou* GetInstance();
 	static ATileActor_Character_Milou* SingletonInstance;
 	bool isBoundToTintin;
-	ATile* _currentTile;
 	TArray<ATile*> MilouTilePath;
 };

@@ -16,8 +16,8 @@ void AGameManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
-	
-	_currentStateType = new State_AwaitingInputs();
+
+	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 	_currentStateType->OnStateEnter();
 }
 
@@ -35,7 +35,7 @@ void AGameManager::Tick(float DeltaTime)
 	_currentStateType->OnStateTick(DeltaTime);
 }
 
-void AGameManager::StateChange(State* newState)
+void AGameManager::StateChange(UState* newState)
 {
 	_currentStateType->OnStateExit();
 	_currentStateType = newState;

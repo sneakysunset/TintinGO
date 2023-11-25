@@ -5,25 +5,29 @@
 #include "State.h"
 #include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Tintin.h"
+#include "State_AwaitingInputs.generated.h"
 
-
-class TINTINGO_API State_AwaitingInputs : public State
+UCLASS()
+class TINTINGO_API UState_AwaitingInputs : public UState
 {
+GENERATED_BODY()
+	
 public:
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateExit() override;
 	void ProcessMousePositionInput();
-	void ProcessPlayerInputs(ATile* hitTile);
-	void ProcessMiloInputs(ATile* hitTile);
-	void ReceiveLeftMouseClick();
-	void ReceiveMiloClickDelegate();
-	void DisableTiles(bool disablePath, bool disablePlayerTarget);
-private:
+	
+	virtual void ProcessPlayerInputs(ATile* hitTile);
+	UFUNCTION()
+	virtual void ReceiveLeftMouseClick();
+	UFUNCTION()
+	virtual void ReceiveMiloClickDelegate();
+	virtual void DisableTiles(bool disablePath, bool disablePlayerTarget);
+protected:
 	AGridManager* gridManager;
 	ATile* _hitTile;
 	ATileActor_Character_Milou* _milou;
 	ATileActor_Character_Tintin* _tintin;
 	bool isTileAccessible;
-	bool isTintinInput;
 };

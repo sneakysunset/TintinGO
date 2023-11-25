@@ -4,25 +4,25 @@
 #include "State_AwaitingInputs.h"
 
 
-State_TriggerItemsCharacters::State_TriggerItemsCharacters()
+UState_TriggerItemsCharacters::UState_TriggerItemsCharacters()
 {
 }
 
-void State_TriggerItemsCharacters::OnStateEnter()
+void UState_TriggerItemsCharacters::OnStateEnter()
 {
-	State::OnStateEnter();
+	UState::OnStateEnter();
 	UE_LOG(LogTemp, Warning, TEXT("Trigger Items / Characters State Enter"));
 	_tintin = ATileActor_Character_Tintin::GetInstance();
-	for(int i = 0; i < _tintin->_currentTile->_placableBodies.Num(); i++)
+	for(int i = 0; i < _tintin->GetCurrentTile()->_placableBodies.Num(); i++)
 	{
-		_tintin->_currentTile->_placableBodies[i]->TriggerBody();
-		_tileActors.Add(_tintin->_currentTile->_placableBodies[i]);
+		_tintin->GetCurrentTile()->_placableBodies[i]->TriggerBody();
+		_tileActors.Add(_tintin->GetCurrentTile()->_placableBodies[i]);
 	}
 }
 
-void State_TriggerItemsCharacters::OnStateTick(float DeltaTime)
+void UState_TriggerItemsCharacters::OnStateTick(float DeltaTime)
 {
-	State::OnStateTick(DeltaTime);
+	UState::OnStateTick(DeltaTime);
 	for(int i = 0; i < _tileActors.Num(); i++)
 	{
 		if(_tileActors[i]->_isTaskOver)
@@ -35,11 +35,11 @@ void State_TriggerItemsCharacters::OnStateTick(float DeltaTime)
 
 	if(_tileActors.Num() == 0)
 	{
-		_gameManager->StateChange(new State_AwaitingInputs());
+		_gameManager->StateChange(NewObject<UState>(UState_AwaitingInputs::StaticClass()));
 	}
 }
 
-void State_TriggerItemsCharacters::OnStateExit()
+void UState_TriggerItemsCharacters::OnStateExit()
 {
-	State::OnStateExit();
+	UState::OnStateExit();
 }

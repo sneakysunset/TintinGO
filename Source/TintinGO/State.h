@@ -1,14 +1,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UObject/Class.h"
+#include "State.generated.h"
 
 class AGameManager;
 
-class TINTINGO_API State
+UCLASS()
+class TINTINGO_API UState : public UObject
 {
+GENERATED_BODY()
+	
 public:
-	State();
-virtual	~State();
+	UState();
 
 	virtual void OnStateEnter();
 	virtual void OnStateTick(float DeltaTime);
@@ -17,3 +21,5 @@ virtual	~State();
 protected:
 	AGameManager* _gameManager ;
 };
+
+

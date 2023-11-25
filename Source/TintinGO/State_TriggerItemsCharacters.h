@@ -3,11 +3,14 @@
 #include "State.h"
 #include "CoreMinimal.h"
 #include "TileActor_Character_Tintin.h"
+#include "State_TriggerItemsCharacters.generated.h"
 
-class State_TriggerItemsCharacters : public State
+UCLASS()
+class UState_TriggerItemsCharacters : public UState
 {
+	GENERATED_BODY()
 public:
-	State_TriggerItemsCharacters();
+	UState_TriggerItemsCharacters();
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateExit() override;

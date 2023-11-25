@@ -1,28 +1,22 @@
 #include "State.h"
 #include "GameManager.h"
 
-State::State()
+UState::UState()
 {
 	_gameManager = AGameManager::GetInstance();
 }
 
-
-
-State::~State()
-{
-}
-
-void State::OnStateEnter()
+void UState::OnStateEnter()
 {
 
 }
 
-void State::OnStateTick(float DeltaTime)
+void UState::OnStateTick(float DeltaTime)
 {
 
 }
 
-void State::OnStateExit()
+void UState::OnStateExit()
 {
 	//_gameManager->_currentStateType = _targetStateType;
 }

@@ -67,9 +67,11 @@ void AGridManager::BeginPlay()
 				milou->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
 				character->SetActorScale3D(tile->GetActorScale3D() / 2);
 				milou->SetActorScale3D(tile->GetActorScale3D() / 2);
-				character->_currentTile = tile;
-				milou->_currentTile = tile;
-				break;
+				milou->SetCurrentTile(_gridTiles[i].Tiles[j]);
+				character->SetCurrentTile(_gridTiles[i].Tiles[j]);
+				character->SetActorLocation(character->GetCurrentTile()->GetTileActorPosition(character));
+				milou->SetActorLocation(milou->GetCurrentTile()->GetTileActorPosition(milou));
+				return;
 			}
 		}
 	}
@@ -93,7 +95,6 @@ bool AGridManager::ShouldTickIfViewportsOnly() const
 void AGridManager::MarkStepsOnGrid(ATile* CenterTile)
 {
 	check(CenterTile != nullptr);
-	UE_LOG(LogTemp, Warning, TEXT("grid %d"),_gridTiles.Num());
 	for(int i = 0; i < _gridTiles.Num(); i++)
 	{
 		for(int j = 0; j < _gridTiles[i].Tiles.Num(); j++)

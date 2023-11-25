@@ -1,46 +1,48 @@
 ﻿#include "State_MilouMove.h"
+
+#include "Barrier.h"
 #include "GameManager.h"
 #include "State_AwaitingInputs.h"
+#include "State_TC_Move.h"
 
-State_MilouMove::State_MilouMove()
+void UState_MilouMove::OnStateEnter()
 {
-	
-}
-
-void State_MilouMove::OnStateEnter()
-{
-	State::OnStateEnter();
+	UState::OnStateEnter();
 	UE_LOG(LogTemp, Warning, TEXT("Milou Move State Enter"));
+	
 	_milou = ATileActor_Character_Milou::GetInstance();
-	_milou->isBoundToTintin = false;
-	_milou->_nextTile = _milou->MilouTilePath.Last();
-	_milou->MilouTilePath[0]->SetHighlightedPath(true);
-	_interpolateValue = 0;
+
+	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
+	
+	ATile* previousMilouTile =_milou->GetCurrentTile();
+
+	previousMilouTile->_placableBodies.Remove(_milou);
+	_milou->SetCurrentTile(_milou->MilouTilePath.Last());
+	_milou->MilouTilePath.Pop(true);
+	previousMilouTile->SetHighlightedPath(false);
+	
+	_milou->ChangeTile(_barrier, previousMilouTile);
+	_barrier->OnBarrierIni(UState_TC_Move::StaticClass());
 }
 
-void State_MilouMove::OnStateTick(float DeltaTime)
+void UState_MilouMove::OnStateTick(float DeltaTime)
 {
-	State::OnStateTick(DeltaTime);
-	_interpolateValue += DeltaTime * _gameManager->speed;
-
-	FVector mStartPos = _milou->_currentTile->GetActorLocation();
-	FVector const mEndPos = _milou->_nextTile->GetActorLocation();
-	FVector const mLerpVector = mStartPos + (mEndPos - mStartPos) * _interpolateValue;
-	_milou->SetActorLocation(mLerpVector);
-
-
-	if(_interpolateValue >= 1)
+	UState::OnStateTick(DeltaTime);
+	if(_barrier->_isBarriereCompleted)
 	{
-		_milou->_currentTile = _milou->MilouTilePath.Last();
-		_milou->MilouTilePath.Last()->SetHighlightedPath(false);
-		_milou->MilouTilePath.RemoveAt(_milou->MilouTilePath.Num() - 1);
 		if(_milou->MilouTilePath.Num() > 0)
-			_gameManager->StateChange(new State_MilouMove());
-		else _gameManager->StateChange(new State_AwaitingInputs());
+		{
+			_gameManager->StateChange(NewObject<UState_MilouMove>(StaticClass()));			
+		}
+		else
+		{
+			_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
+		}
 	}
+	_barrier->OnTick(DeltaTime);
 }
 
-void State_MilouMove::OnStateExit()
+void UState_MilouMove::OnStateExit()
 {
-	State::OnStateExit();
+	UState::OnStateExit();
 }

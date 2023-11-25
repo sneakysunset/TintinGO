@@ -77,8 +77,11 @@ public:
 	UMaterialInterface* _HighlightedPathMat;
 	void SetHighlighted(bool toHightlight);
 	void SetHighlightedPath(bool toHightlight);
-	UFUNCTION(BlueprintCallable, CallInEditor)
-		void AddPlacableBodies();
+	UFUNCTION()
+	FVector GetTileActorPosition(ATileActor* tileActor);
+	UFUNCTION()
+	void AddPlacableBodies();
+	float _positionCircleRadius = 1;
 private:
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
 

@@ -111,6 +111,29 @@ void ATile::SetHighlightedPath(bool toHightlight)
 	}
 }
 
+FVector ATile::GetTileActorPosition(ATileActor* tileActor)
+{
+	if(tileActor != nullptr && !_placableBodies.Contains(tileActor))
+	{
+		_placableBodies.Add(tileActor);
+	}
+	
+	FVector destination = GetActorLocation();
+	
+	if(_placableBodies.Num() == 1)
+		return destination;
+	
+	for(int i = 0; i < _placableBodies.Num(); i++)
+	{
+		FVector direction =  GetActorForwardVector() - destination;
+		const float radAngle = FMath::DegreesToRadians(i / _placableBodies.Num() * 360) ;
+		FQuat rotation = FQuat(FVector::UpVector, radAngle);
+		destination = rotation * direction * _positionCircleRadius;
+	}
+	
+	return destination;
+}
+
 void ATile::AddPlacableBodies()
 {
 	TArray<AActor*> AttachedActors;
@@ -127,28 +150,28 @@ void ATile::AddPlacableBodies()
 		FActorSpawnParameters params;
 		FVector position = GetActorLocation();
 		FRotator rotation = FRotator(0, 0, 0);
-
+		ATileActor* tActor = nullptr;
 		switch (_TileItems[i])
 		{
 		case ETileActorType::Bone:
-			//_placableBodies.Add(GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params));
-			//_placableBodies.Last()->SetActorLabel(FString::Printf(TEXT("Item_Bone")));
+			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
+			//tActor->SetActorLabel(FString::Printf(TEXT("Item_Bone")));
 			break;
 		case ETileActorType::Clue:
-			//_placableBodies.Add(GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params));
-			//_placableBodies.Last()->SetActorLabel(FString::Printf(TEXT("Item_Clue")));
+			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
+			//tActor->SetActorLabel(FString::Printf(TEXT("Item_Clue")));
 			break;
 		case ETileActorType::Peruvien:
-			//_placableBodies.Add(GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params));
-			//_placableBodies.Last()->SetActorLabel(FString::Printf(TEXT("Enemy_Peruvien")));
+			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
+			//tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Peruvien")));
 			break;
 		case ETileActorType::Condor:
-			//_placableBodies.Add(GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params));
-			//_placableBodies.Last()->SetActorLabel(FString::Printf(TEXT("Enemy_Condor")));
+			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
+			//tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Condor")));
 		default:
 			break;
 		}
-
+		tActor->SetActorLocation(GetTileActorPosition(tActor));
 		_placableBodies.Last()->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 		_placableBodies.Last()->SetActorScale3D(GetActorScale3D() / 5);
 	}

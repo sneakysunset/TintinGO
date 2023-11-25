@@ -43,7 +43,6 @@ void AClickInputManager::SetupPlayerInputComponent(UInputComponent* PlayerInputC
     check(Subsystem);
     Subsystem->ClearAllMappings();
     Subsystem->AddMappingContext(FPC->PawnMappingContext, 0);
-	UE_LOG(LogTemp, Warning, TEXT("Click1"));
 }
 
 

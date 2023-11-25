@@ -3,12 +3,3 @@
 
 #include "State_TActor_Neutral.h"
 
-State_TActor_Neutral::State_TActor_Neutral()
-{
-}
-
-State_TActor_Neutral::State_TActor_Neutral(ATileActor* tileActor)
-{
-	_tileActor = tileActor;
-}
-

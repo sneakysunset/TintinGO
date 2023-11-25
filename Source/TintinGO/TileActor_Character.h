@@ -12,6 +12,12 @@ class TINTINGO_API ATileActor_Character : public ATileActor
 	GENERATED_BODY()
 
 public:
-	ATile* _currentTile;
+
+
+	ATile* GetNextTile() const { return _nextTile;}
+	void SetNextTile(ATile* tile){_nextTile = tile;}
+	void ChangeTile(UBarrier* barrier, ATile* previousTile);
+	
+protected:
 	ATile* _nextTile;
 };

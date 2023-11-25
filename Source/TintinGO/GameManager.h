@@ -5,10 +5,12 @@
 #include "GameFramework/Actor.h"
 #include "GameManager.generated.h"
 
-DECLARE_DELEGATE(FOnClickDelegate);
-DECLARE_DELEGATE(FUIMilouClick)
+DECLARE_DYNAMIC_DELEGATE(FOnClickDelegate);
+DECLARE_DYNAMIC_DELEGATE(FUIMilouClick);
+//DECLARE_DELEGATE(FOnClickDelegate)
+//DECLARE_DELEGATE(FUIMilouClick)
 
-class State;
+class UState;
 
 UCLASS()
 class TINTINGO_API AGameManager : public AActor
@@ -21,8 +23,8 @@ public:
 	FUIMilouClick OnMilouBoneClick;
 
 	AGameManager();
-	State* _currentStateType;
-	void StateChange(State* NewState);
+	UState* _currentStateType;
+	void StateChange(UState* NewState);
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnywhere, Category = "Tintin Parameters")

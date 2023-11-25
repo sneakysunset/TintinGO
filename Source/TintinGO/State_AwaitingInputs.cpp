@@ -2,6 +2,7 @@
 
 #include "Math/UnrealMathUtility.h"
 #include "GameManager.h"
+#include "State_AwaitingInputs_Milou.h"
 #include "State_MilouMove.h"
 #include "State_PlayerMove.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
@@ -9,38 +10,30 @@
 
 
 
-void State_AwaitingInputs::OnStateEnter()
+void UState_AwaitingInputs::OnStateEnter()
 {
-	State::OnStateEnter();
+	UState::OnStateEnter();
 	
 	gridManager = AGridManager::GetInstance();
 	_milou = ATileActor_Character_Milou::GetInstance();
 	_tintin = ATileActor_Character_Tintin::GetInstance();
-	_gameManager->OnClickD.BindRaw(this, &State_AwaitingInputs::ReceiveLeftMouseClick);
-	_gameManager->OnMilouBoneClick.BindRaw(this, &State_AwaitingInputs::ReceiveMiloClickDelegate);
+
+	_gameManager->OnClickD.BindDynamic(this,&UState_AwaitingInputs::ReceiveLeftMouseClick);
+	_gameManager->OnMilouBoneClick.BindDynamic(this, &UState_AwaitingInputs::ReceiveMiloClickDelegate);
 
 
-	isTintinInput = true;
 	UE_LOG(LogTemp, Warning, TEXT("Awaiting Inputs State Enter"));
 }
 
-void State_AwaitingInputs::OnStateTick(float DeltaTime)
+void UState_AwaitingInputs::OnStateTick(float DeltaTime)
 {
-	State::OnStateTick(DeltaTime);
-	if(_tintin == nullptr || _milou == nullptr || gridManager == nullptr)
-	{
-		gridManager = AGridManager::GetInstance();
-		_milou = ATileActor_Character_Milou::GetInstance();
-		_tintin = ATileActor_Character_Tintin::GetInstance();
-		UE_LOG(LogTemp, Warning, TEXT("NOTHING"))
-		return;
-	}
+	UState::OnStateTick(DeltaTime);
 	ProcessMousePositionInput();
 }
 
-void State_AwaitingInputs::OnStateExit()
+void UState_AwaitingInputs::OnStateExit()
 {
-	State::OnStateExit();
+	UState::OnStateExit();
 	if(_hitTile != nullptr)
 	{
 		_hitTile->SetHighlighted(false);
@@ -48,7 +41,7 @@ void State_AwaitingInputs::OnStateExit()
 	}
 }
 
-void State_AwaitingInputs::ProcessMousePositionInput()
+void UState_AwaitingInputs::ProcessMousePositionInput()
 {
 	float mouseX;
 	float mouseY;
@@ -90,20 +83,14 @@ void State_AwaitingInputs::ProcessMousePositionInput()
 		return;
 	}
 	
-	if(isTintinInput)
-	{
-		ProcessPlayerInputs(hitTile);		
-	}
-	else
-	{
-		ProcessMiloInputs(hitTile);
-	}
+
+	ProcessPlayerInputs(hitTile);		
 }
 
-void State_AwaitingInputs::ProcessPlayerInputs(ATile* hitTile)
+void UState_AwaitingInputs::ProcessPlayerInputs(ATile* hitTile)
 {
 	_tintin = ATileActor_Character_Tintin::GetInstance();
-	ATile* tintinTile = _tintin->_currentTile;
+	const ATile* tintinTile = _tintin->GetCurrentTile();
 
 	check(tintinTile);
 
@@ -115,6 +102,7 @@ void State_AwaitingInputs::ProcessPlayerInputs(ATile* hitTile)
 			|| (hitTile->_column - tintinTile->_column == -1 && !hitTile->_upLink)
 			)
 		if(_hitTile != nullptr) _hitTile->SetHighlighted(false);
+
 		DisableTiles(true, false);
 		_hitTile = hitTile;
 		_hitTile->SetHighlighted(true);
@@ -131,86 +119,33 @@ void State_AwaitingInputs::ProcessPlayerInputs(ATile* hitTile)
 	}
 }
 
-void State_AwaitingInputs::ProcessMiloInputs(ATile* hitTile)
-{
-	ATile* milouTile = _milou->_currentTile;
-	ATile* tintinTile = _tintin->_currentTile;
 
-	check(milouTile);
-
-	if (FMath::Abs(hitTile->_row - tintinTile->_row) <= _gameManager->milouBoneThrowRange && FMath::Abs(hitTile->_column - tintinTile->_column) <= _gameManager->milouBoneThrowRange && hitTile->_walkable)
-	{
-		if(_milou->MilouTilePath.Num() > 1)
-		{
-			for (int i = 0; i < _milou->MilouTilePath.Num(); i++)
-			{
-				_milou->MilouTilePath[i]->SetHighlightedPath(false);
-			}
-		}
-		if(_hitTile != nullptr) _hitTile->SetHighlighted(false);
-		if(_hitTile != hitTile)
-			hitTile->SetHighlighted(true);
-		_hitTile = hitTile;
-		isTileAccessible = true;
-
-		_milou->MilouTilePath = gridManager->GetPath(hitTile);
-		UE_LOG(LogTemp, Warning, TEXT("%d"), hitTile->_step);
-		if(_milou->MilouTilePath.Num() > 1)
-		{
-			for (int i = 1; i < _milou->MilouTilePath.Num(); i++)
-			{
-				_milou->MilouTilePath[i]->SetHighlightedPath(true);
-			}
-		}
-	}
-	else
-	{
-		if(_hitTile != nullptr && _hitTile != hitTile)
-		{
-			_hitTile->SetHighlighted(false);
-			DisableTiles(true, false);
-			_hitTile = hitTile;
-		}
-		isTileAccessible = false;
-	}
-}
-
-void State_AwaitingInputs::ReceiveLeftMouseClick()
+void UState_AwaitingInputs::ReceiveLeftMouseClick()
 {
 	if (isTileAccessible)
 	{
-		if(isTintinInput)
+		_milou = ATileActor_Character_Milou::GetInstance();
+		_tintin->SetNextTile(_hitTile);
+		if(_milou->isBoundToTintin)
 		{
-			_tintin->_nextTile = _hitTile;
-			if(_milou->isBoundToTintin) _milou->_nextTile = _hitTile;
-			_gameManager->StateChange(new State_PlayerMove());
+			_milou->SetCurrentTile(_tintin->GetCurrentTile());
+			_milou->SetNextTile(_tintin->GetNextTile());
 		}
-		else
-		{
-			_gameManager->StateChange(new State_MilouMove());
-		}
+		_gameManager->StateChange(NewObject<UState_PlayerMove>(UState_PlayerMove::StaticClass()));
 	}
 }
 
-void State_AwaitingInputs::ReceiveMiloClickDelegate()
+void UState_AwaitingInputs::ReceiveMiloClickDelegate()
 {
-	if(isTintinInput)
-	{
-		isTintinInput = false;
-		gridManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->_currentTile);
-	}
-	else
-	{
-		isTintinInput = true;
-	}
+	_gameManager->StateChange(NewObject<UState_AwaitingInputs_Milou>(UState_AwaitingInputs_Milou::StaticClass()));
 }
 
-void State_AwaitingInputs::DisableTiles(bool disablePath, bool disablePlayerTarget)
+void UState_AwaitingInputs::DisableTiles(bool disablePath, bool disablePlayerTarget)
 {
 	if(disablePlayerTarget && _hitTile != nullptr)
 	{
 		_hitTile->SetHighlighted(false);
-		_hitTile = nullptr;
+		//_hitTile = nullptr;
 	}
 	if(disablePath && _milou->MilouTilePath.Num() > 1)
 	{

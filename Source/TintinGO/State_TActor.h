@@ -4,12 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "State.h"
+#include "State_TActor.generated.h"
+class ATile;
 class ATileActor;
 
-class TINTINGO_API State_TActor : public State
+UCLASS()
+class TINTINGO_API UState_TActor : public UState
 {
+	GENERATED_BODY()
 public:
-	State_TActor();
-	State_TActor(ATileActor* tileActor);
 	ATileActor* _tileActor;
+	bool _isStateComplete;
 };

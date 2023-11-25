@@ -2,11 +2,12 @@
 
 #include "State_TActor.h"
 #include "CoreMinimal.h"
+#include "State_TActor_Neutral.generated.h"
 
-class TINTINGO_API State_TActor_Neutral : public State_TActor
+UCLASS()
+class TINTINGO_API UState_TActor_Neutral : public UState_TActor
 {
+	GENERATED_BODY()
 public:
-	State_TActor_Neutral();
-	State_TActor_Neutral(ATileActor* tileActor);
-	ATileActor* _tileActor;
+
 };
