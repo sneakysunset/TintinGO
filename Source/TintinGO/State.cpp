@@ -8,7 +8,6 @@ UState::UState()
 
 void UState::OnStateEnter()
 {
-
 }
 
 void UState::OnStateTick(float DeltaTime)

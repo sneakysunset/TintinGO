@@ -11,8 +11,6 @@ class UState_MilouMove : public UState
 GENERATED_BODY()
 	
 public:
-
-
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateExit() override;

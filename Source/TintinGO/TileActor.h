@@ -9,20 +9,22 @@ UCLASS()
 class TINTINGO_API ATileActor : public AActor
 {
 	GENERATED_BODY()
+
 	
 public:
-	ATileActor();
 	virtual void OnEndTask();
 	virtual void TriggerBody();
 
+	UPROPERTY()
 	UState_TActor* _currentState_TA;
 	void ChangeState(UState_TActor* newState);
 	virtual ATile* GetCurrentTile() const{return _currentTile;}
 	virtual void SetCurrentTile(ATile* tile){_currentTile = tile;}
 	
 	bool _isTaskOver;
-	class UStaticMeshComponent* _staticMeshComponent = nullptr;
 
+	UPROPERTY(EditAnywhere)
+	float _speed;
 	
 protected:
 	UPROPERTY()

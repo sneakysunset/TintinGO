@@ -12,7 +12,7 @@ AClickInputManagerController::AClickInputManagerController()
 
 void AClickInputManagerController::SetupInputComponent()
 {
-
+    Super::SetupInputComponent();
     PawnMappingContext = NewObject<UInputMappingContext>(this);
     LeftClickAction = NewObject<UInputAction>(this);
     LeftClickAction->ValueType = EInputActionValueType::Boolean;

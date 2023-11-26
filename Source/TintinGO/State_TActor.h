@@ -13,6 +13,15 @@ class TINTINGO_API UState_TActor : public UState
 {
 	GENERATED_BODY()
 public:
+	virtual void OnStateEnter() override;
+	virtual void OnStateTick(float DeltaTime) override;
+	
 	ATileActor* _tileActor;
 	bool _isStateComplete;
+
+protected:
+	float _interpolateValue;
+	float _speed;
+	virtual void OnStateComplete();
+	
 };

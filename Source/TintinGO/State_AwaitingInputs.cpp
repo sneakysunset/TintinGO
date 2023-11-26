@@ -67,14 +67,14 @@ void UState_AwaitingInputs::ProcessMousePositionInput()
 	else
 	{
 		isTileAccessible = false;
-		DisableTiles(true, true);
+		DisableTiles(false, true);
 		return;
 	}
 
 	if(hitTile == nullptr)
 	{
 		isTileAccessible = false;
-		DisableTiles(true, true);
+		DisableTiles(false, true);
 		return;
 	}
 	
@@ -103,7 +103,7 @@ void UState_AwaitingInputs::ProcessPlayerInputs(ATile* hitTile)
 			)
 		if(_hitTile != nullptr) _hitTile->SetHighlighted(false);
 
-		DisableTiles(true, false);
+		//DisableTiles(true, false);
 		_hitTile = hitTile;
 		_hitTile->SetHighlighted(true);
 		isTileAccessible = true;
@@ -122,7 +122,7 @@ void UState_AwaitingInputs::ProcessPlayerInputs(ATile* hitTile)
 
 void UState_AwaitingInputs::ReceiveLeftMouseClick()
 {
-	if (isTileAccessible)
+	if (isTileAccessible )
 	{
 		_milou = ATileActor_Character_Milou::GetInstance();
 		_tintin->SetNextTile(_hitTile);
@@ -147,12 +147,13 @@ void UState_AwaitingInputs::DisableTiles(bool disablePath, bool disablePlayerTar
 		_hitTile->SetHighlighted(false);
 		//_hitTile = nullptr;
 	}
-	if(disablePath && _milou->MilouTilePath.Num() > 1)
+	if(disablePath && _milou && _milou->MilouTilePath.Num() > 1)
 	{
 		for (int i = 0; i < _milou->MilouTilePath.Num(); i++)
 		{
 			_milou->MilouTilePath[i]->SetHighlightedPath(false);
 		}
+		_milou->MilouTilePath.Empty();
 	}
 }
 

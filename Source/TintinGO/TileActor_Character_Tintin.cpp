@@ -15,8 +15,5 @@ ATileActor_Character_Tintin::ATileActor_Character_Tintin()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	SingletonInstance = this;
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Cube.Cube"));
-	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
 
-	RootComponent = _staticMeshComponent;
 }

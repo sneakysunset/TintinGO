@@ -2,7 +2,8 @@
 
 #include "GameManager.h"
 #include "State_AwaitingInputs.h"
-#include "State_TC_Move.h"
+#include "State_TA_Move.h"
+#include "State_TriggerItemsCharacters.h"
 
 
 void UState_PlayerMove::OnStateEnter()
@@ -18,18 +19,18 @@ void UState_PlayerMove::OnStateEnter()
 	ATile* previousTintinTile =_tintin->GetCurrentTile();
 	ATile* previousMilouTile =_milou->GetCurrentTile();
 	
-	previousTintinTile->_placableBodies.Remove(_tintin);
+	previousTintinTile->_tileActors.Remove(_tintin);
 	_tintin->SetCurrentTile(_tintin->GetNextTile());
 	
 	if(_milou->isBoundToTintin)
 	{
-		if(previousMilouTile->_placableBodies.Contains(_milou))
-			previousMilouTile->_placableBodies.Remove(_milou);
+		if(previousMilouTile->_tileActors.Contains(_milou))
+			previousMilouTile->_tileActors.Remove(_milou);
 		_milou->SetCurrentTile(_milou->GetNextTile());
 		_milou->ChangeTile(_barrier, previousMilouTile);
 	}
 	_tintin->ChangeTile(_barrier, previousTintinTile);
-	_barrier->OnBarrierIni(UState_TC_Move::StaticClass());
+	_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 }
 
 void UState_PlayerMove::OnStateTick(float DeltaTime)

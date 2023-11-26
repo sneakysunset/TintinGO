@@ -3,6 +3,8 @@
 
 #include "UIManager.h"
 
+#include "GameManager.h"
+
 // Sets default values
 AUIManager::AUIManager()
 {
@@ -17,14 +19,14 @@ void AUIManager::BeginPlay()
 	Super::BeginPlay();
 	if (YourWidgetClass)
 	{
-		// Create the widget
-		UCoreUI* YourWidget = CreateWidget<UCoreUI>(GetWorld(), YourWidgetClass);
+		_coreUI = CreateWidget<UCoreUI>(GetWorld(), YourWidgetClass);
 
-		if (YourWidget)
+		if (_coreUI)
 		{
-			// Add the widget to the viewport
-			YourWidget->AddToViewport();
+			_coreUI->AddToViewport();
 		}
+		AGameManager::GetInstance()->OnBoneConsumed.BindDynamic(this, &AUIManager::ChangeTextValue);
+		ChangeTextValue(0, FColor::Emerald);
 	}
 }
 
@@ -35,3 +37,17 @@ void AUIManager::Tick(float DeltaTime)
 
 }
 
+void AUIManager::ChangeTextValue(int32 newValue, FColor DisabledColor)
+{
+	_coreUI->BoneNumber_Text->SetText(FText(FText::FromString("X  " + newValue)));
+	if(newValue == 0)
+	{
+		_coreUI->ButtonMilou->SetIsEnabled(false);
+		_coreUI->BoneNumber_Text->SetColorAndOpacity(DisabledColor);
+	}
+	else
+	{
+		_coreUI->ButtonMilou->SetIsEnabled(true);
+		_coreUI->BoneNumber_Text->SetColorAndOpacity(FColor::Black);
+	}
+}

@@ -18,18 +18,12 @@ AGridManager::AGridManager()
 	_rows = 10;
 	_columns = 10;
 	_tileWidth = 1;
-	_initializeGrid = false;
 	_useEditorTick = true;
-	_walkable_TileMaterial = nullptr;
-	_startPos_TileMaterial = nullptr;
-	_endPos_TileMaterial = nullptr;
-	_unwalkable_TileMaterial = nullptr;
-	_highlighted_TileMaterial = nullptr;
-	_highlightedPath_TileMaterial = nullptr;
 }
 
 void AGridManager::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 #if WITH_EDITOR
 	//UE_LOG(LogTemp, Warning, TEXT("Test"));
 	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor)
@@ -38,7 +32,6 @@ void AGridManager::Tick(float DeltaTime)
 	}
 
 #endif
-	Super::Tick(DeltaTime);
 
 }
 
@@ -58,15 +51,13 @@ void AGridManager::BeginPlay()
 				params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 				FVector position = tile->GetActorLocation();
 				FRotator rotation = FRotator(0, 0, 0);
-				ATileActor_Character_Tintin* character = GetWorld()->SpawnActor<ATileActor_Character_Tintin>(ATileActor_Character_Tintin::StaticClass(), position, rotation, params);
-				ATileActor_Character_Milou* milou = GetWorld()->SpawnActor<ATileActor_Character_Milou>(ATileActor_Character_Milou::StaticClass(), position, rotation, params);
+				ATileActor_Character_Tintin* character = GetWorld()->SpawnActor<ATileActor_Character_Tintin>(_tintinBP->GeneratedClass, position, rotation, params);
+				ATileActor_Character_Milou* milou = GetWorld()->SpawnActor<ATileActor_Character_Milou>(_milouBP->GeneratedClass, position, rotation, params);
 
 				character->SetActorLabel(FString::Printf(TEXT("Tintin")));
 				milou->SetActorLabel(FString::Printf(TEXT("Milou")));
 				character->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
 				milou->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
-				character->SetActorScale3D(tile->GetActorScale3D() / 2);
-				milou->SetActorScale3D(tile->GetActorScale3D() / 2);
 				milou->SetCurrentTile(_gridTiles[i].Tiles[j]);
 				character->SetCurrentTile(_gridTiles[i].Tiles[j]);
 				character->SetActorLocation(character->GetCurrentTile()->GetTileActorPosition(character));
@@ -178,16 +169,10 @@ ATile* AGridManager::GetNextTileInPath(ATile* tile)
 	else return nullptr;
 }
 
-
 void AGridManager::BlueprintEditorTick(float DeltaTime)
 {
-	if (_initializeGrid) 
-	{
-		InitializeGrid();
-		_initializeGrid = false;
-	}
-	
 }
+
 
 void AGridManager::InitializeGrid()
 {
@@ -214,46 +199,16 @@ void AGridManager::InitializeGrid()
 			FActorSpawnParameters SpawnParams;
 			FVector SpawnLocation = FVector(i * 100 * _tileWidth, j * 100 * _tileWidth , 0);
 			FRotator SpawnRotation = FRotator(0, 0, 0);
-			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(ATile::StaticClass(), SpawnLocation, SpawnRotation, SpawnParams);
+			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(_tileBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
 			SpawnedTile->SetActorScale3D(FVector(_tileWidth, _tileWidth, 1));
 			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), static_cast<int>(i), static_cast<int>(j)));
 			SpawnedTile->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
 			SpawnedTile->SetActorLocation(SpawnLocation);
 			SpawnedTile->_row = i;
 			SpawnedTile->_column = j;
-			SpawnedTile->_walkableMat = _walkable_TileMaterial;
-			SpawnedTile->_startPosMat = _startPos_TileMaterial;
-			SpawnedTile->_endPosMat = _endPos_TileMaterial;
-			SpawnedTile->_unwalkableMat = _unwalkable_TileMaterial;
-			SpawnedTile->_HighlightedMat = _highlighted_TileMaterial;
-			SpawnedTile->_HighlightedPathMat = _highlightedPath_TileMaterial;
-			if (UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(_walkable_TileMaterial, SpawnedTile))
-			{
-				// Set the material on the mesh component (assuming it's a UStaticMeshComponent)
-				if (UStaticMeshComponent* MeshComponent = SpawnedTile->FindComponentByClass<UStaticMeshComponent>())
-				{
-					MeshComponent->SetMaterial(0, DynamicMaterial);
-				}
-				else
-				{
-					UE_LOG(LogTemp, Warning, TEXT("No Static Mesh"));
-				}
-			}
-			else 
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Failed At Dynamic Material creation"));
-			}
-
-
-			if (SpawnedTile)
-			{
-				_gridTiles[i].Tiles.Add(SpawnedTile);
-				//UE_LOG(LogTemp, Warning, TEXT("Tile %s spawned at (%f, %f, %f)"), *SpawnedTile->GetName(), SpawnLocation.X, SpawnLocation.Y, SpawnLocation.Z);
-			}
-			else
-			{
-				UE_LOG(LogTemp, Error, TEXT("Failed to spawn tile at (%f, %f, %f)"), SpawnLocation.X, SpawnLocation.Y, SpawnLocation.Z);
-			}
+			SpawnedTile->_gridManager = this;
+			_gridTiles[i].Tiles.Add(SpawnedTile);
+			SpawnedTile->SetHighlighted(false);
 		}
 	}
 }

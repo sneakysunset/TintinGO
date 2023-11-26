@@ -6,6 +6,8 @@
 #include "Tile.h"
 #include "GridManager.generated.h"
 
+class ATileActor_Character_Peruvien;
+
 USTRUCT(BlueprintType)
 struct FTileArray
 {
@@ -26,7 +28,7 @@ public:
 
     static AGridManager* GetInstance();
 
-    UFUNCTION(BlueprintCallable, Category = "Grid")
+    UFUNCTION(CallInEditor, Category = "GridManager")
         void InitializeGrid();
 
     ATile* WorldCoordinatesToTilePosition(const FVector& worldCoordinates);
@@ -34,7 +36,12 @@ public:
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaTime) override;
     virtual bool ShouldTickIfViewportsOnly() const override;
-
+    UPROPERTY(EditAnywhere)
+    UBlueprint* _tileBP;
+    UPROPERTY(EditAnywhere)
+    UBlueprint* _tintinBP;
+    UPROPERTY(EditAnywhere)
+    UBlueprint* _milouBP;
     void MarkStepsOnGrid(ATile* CenterTile);
     void SetStepOnAdjacentsRecursive(ATile* tile);
     void SetStepOnAdjacentTile(ATile* tile, FVector2D direction);
@@ -43,12 +50,12 @@ public:
     ATile* GetNextTileInPath(ATile* tile);
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
-      bool _initializeGrid;
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
         bool _useEditorTick;
     // Add more functions as needed
     UPROPERTY()
     TArray<FTileArray> _gridTiles;
+    UPROPERTY()
+    TArray<ATileActor_Character_Peruvien*> _peruviens;
 
 private:
     static AGridManager* SingletonInstance;
@@ -58,18 +65,7 @@ private:
         int32 _columns;
     UPROPERTY(EditAnywhere, Category = "Grid Generation")
         double _tileWidth;
-    UPROPERTY(EditAnywhere, Category = "TileMaterials")
-        UMaterialInterface* _walkable_TileMaterial;
-    UPROPERTY(EditAnywhere, Category = "TileMaterials")
-        UMaterialInterface* _startPos_TileMaterial;
-    UPROPERTY(EditAnywhere, Category = "TileMaterials")
-        UMaterialInterface* _endPos_TileMaterial;
-    UPROPERTY(EditAnywhere, Category = "TileMaterials")
-        UMaterialInterface* _unwalkable_TileMaterial;
-    UPROPERTY(EditAnywhere, Category = "TileMaterials")
-        UMaterialInterface* _highlighted_TileMaterial;
-    UPROPERTY(EditAnywhere, Category = "TileMaterials")
-    UMaterialInterface* _highlightedPath_TileMaterial;
+
 
     UFUNCTION(CallInEditor, Category = "Events")
         void BlueprintEditorTick(float DeltaTime);

@@ -2,11 +2,13 @@
 
 #include "Tile.h"
 #include "CoreMinimal.h"
+#include "UIManager.h"
 #include "GameFramework/Actor.h"
 #include "GameManager.generated.h"
 
 DECLARE_DYNAMIC_DELEGATE(FOnClickDelegate);
 DECLARE_DYNAMIC_DELEGATE(FUIMilouClick);
+DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnBoneConsumed, int32, NewBoneNumber, FColor, DisabledColor);
 //DECLARE_DELEGATE(FOnClickDelegate)
 //DECLARE_DELEGATE(FUIMilouClick)
 
@@ -21,17 +23,16 @@ public:
 	static AGameManager* GetInstance();
 	FOnClickDelegate OnClickD;
 	FUIMilouClick OnMilouBoneClick;
+	FOnBoneConsumed OnBoneConsumed;
 
 	AGameManager();
 	UState* _currentStateType;
 	void StateChange(UState* NewState);
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
-	UPROPERTY(EditAnywhere, Category = "Tintin Parameters")
-	float speed;
 	UPROPERTY(EditAnywhere, Category = "Milou Parameters")
-	int32 milouBoneThrowRange;
-	ATile* hitTile;
+	int32 _milouBoneThrowRange;
+	int32 _milouBonesNumber;
 	
 	UFUNCTION(BlueprintCallable)
 	void ReceiveMilouUIClick();

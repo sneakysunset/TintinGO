@@ -5,16 +5,16 @@
 
 #include "Barrier.h"
 #include "State_TActor.h"
-#include "State_TC_Move.h"
+#include "State_TA_Move.h"
 #include "Tile.h"
 
 void ATileActor_Character::ChangeTile(UBarrier* barrier, ATile* previousTile)
 {
 	barrier->_actors.Add(this);
 	
-	for(auto body : previousTile->_placableBodies)
+	for(auto body : previousTile->_tileActors)
 	{
-		UState_TActor* state = NewObject<UState_TC_Move>(UState_TC_Move::StaticClass());
+		UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
 		if(!barrier->_actors.Contains(body))
 		{
 			body->ChangeState(state);
@@ -22,9 +22,9 @@ void ATileActor_Character::ChangeTile(UBarrier* barrier, ATile* previousTile)
 		}
 	}
 
-	for(auto body : this->_currentTile->_placableBodies)
+	for(auto body : this->_currentTile->_tileActors)
 	{
-		UState_TActor* state = NewObject<UState_TC_Move>(UState_TC_Move::StaticClass());
+		UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
 		if(!barrier->_actors.Contains(body))
 		{
 			body->ChangeState(state);

@@ -5,6 +5,8 @@
 #include "TileActor_Character.h"
 #include "Tile.generated.h"
 
+class AGridManager;
+
 UENUM(BlueprintType)
 enum class ETileType : uint8
 {
@@ -50,9 +52,15 @@ public:
 		TArray<ETileActorType> _TileItems;
 	
 	UPROPERTY()
-		TArray<ATileActor*> _placableBodies;
+		TArray<ATileActor*> _tileActors;
 
+	UFUNCTION(CallInEditor , Category = "Spawn TileActors")
+		void AddTileActors();
 	
+	UPROPERTY(EditAnywhere, Category = "Spawn TileActors")
+		UBlueprint* _milouBoneBP;
+	UPROPERTY(EditAnywhere, Category = "Spawn TileActors")
+		UBlueprint* _peruvienBP;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 		bool _useEditorTick = true;
@@ -63,25 +71,24 @@ public:
 	int32 _column;
 	UPROPERTY(EditAnywhere)
 	int32 _step;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _walkableMat;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _unwalkableMat;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _startPosMat;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _endPosMat;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _HighlightedMat;
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _HighlightedPathMat;
-	void SetHighlighted(bool toHightlight);
-	void SetHighlightedPath(bool toHightlight);
+	void SetHighlighted(bool toHightlight) const;
+	void SetHighlightedPath(bool toHightlight) const;
 	UFUNCTION()
 	FVector GetTileActorPosition(ATileActor* tileActor);
-	UFUNCTION()
-	void AddPlacableBodies();
 	float _positionCircleRadius = 1;
+	AGridManager* _gridManager;
 private:
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
 

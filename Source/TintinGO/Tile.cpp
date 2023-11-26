@@ -3,6 +3,10 @@
 
 #include "Tile.h"
 
+#include "GridManager.h"
+#include "TileActor_Character_Peruvien.h"
+#include "TileActor_MilouBone.h"
+
 ATile::ATile() 
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -20,6 +24,7 @@ ATile::ATile()
 
 void ATile::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 #if WITH_EDITOR
 	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor)
 	{
@@ -27,7 +32,6 @@ void ATile::Tick(float DeltaTime)
 	}
 
 #endif
-	Super::Tick(DeltaTime);
 }
 
 bool ATile::ShouldTickIfViewportsOnly() const
@@ -65,7 +69,7 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 	}
 }
 
-void ATile::SetHighlighted(bool toHightlight)
+void ATile::SetHighlighted(bool toHightlight) const
 {
 	if(toHightlight)
 	{
@@ -88,7 +92,7 @@ void ATile::SetHighlighted(bool toHightlight)
 	}
 }
 
-void ATile::SetHighlightedPath(bool toHightlight)
+void ATile::SetHighlightedPath(bool toHightlight) const
 {
 	if(toHightlight)
 	{
@@ -113,20 +117,21 @@ void ATile::SetHighlightedPath(bool toHightlight)
 
 FVector ATile::GetTileActorPosition(ATileActor* tileActor)
 {
-	if(tileActor != nullptr && !_placableBodies.Contains(tileActor))
+
+	if(IsValid(tileActor) && !_tileActors.Contains(tileActor))
 	{
-		_placableBodies.Add(tileActor);
+		_tileActors.Add(tileActor);
 	}
 	
-	FVector destination = GetActorLocation();
+	FVector destination = GetActorLocation() + tileActor->GetActorScale().Z * 50 * FVector::UpVector;
 	
-	if(_placableBodies.Num() == 1)
+	if(_tileActors.Num() == 1)
 		return destination;
 	
-	for(int i = 0; i < _placableBodies.Num(); i++)
+	for(int i = 0; i < _tileActors.Num(); i++)
 	{
 		FVector direction =  GetActorForwardVector() - destination;
-		const float radAngle = FMath::DegreesToRadians(i / _placableBodies.Num() * 360) ;
+		const float radAngle = FMath::DegreesToRadians(i / _tileActors.Num() * 360) ;
 		FQuat rotation = FQuat(FVector::UpVector, radAngle);
 		destination = rotation * direction * _positionCircleRadius;
 	}
@@ -134,7 +139,7 @@ FVector ATile::GetTileActorPosition(ATileActor* tileActor)
 	return destination;
 }
 
-void ATile::AddPlacableBodies()
+void ATile::AddTileActors()
 {
 	TArray<AActor*> AttachedActors;
 	GetAttachedActors(AttachedActors);
@@ -143,9 +148,9 @@ void ATile::AddPlacableBodies()
 		Attached->Destroy();
 	}
 
-	_placableBodies.Empty();
+	_tileActors.Empty();
 
-	for (int i = 0; i < _placableBodies.Num(); i++)
+	for (int i = 0; i < _TileItems.Num(); i++)
 	{
 		FActorSpawnParameters params;
 		FVector position = GetActorLocation();
@@ -154,26 +159,26 @@ void ATile::AddPlacableBodies()
 		switch (_TileItems[i])
 		{
 		case ETileActorType::Bone:
-			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
-			//tActor->SetActorLabel(FString::Printf(TEXT("Item_Bone")));
+			tActor = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP->GeneratedClass, position, rotation, params);
+			tActor->SetActorLabel(FString::Printf(TEXT("Item_Bone")));
 			break;
 		case ETileActorType::Clue:
 			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
 			//tActor->SetActorLabel(FString::Printf(TEXT("Item_Clue")));
-			break;
+			return;
 		case ETileActorType::Peruvien:
-			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
-			//tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Peruvien")));
+			tActor = GetWorld()->SpawnActor<ATileActor_Character_Peruvien>(_peruvienBP->GeneratedClass, position, rotation, params);
+			tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Peruvien")));
 			break;
 		case ETileActorType::Condor:
 			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
 			//tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Condor")));
+			return;
 		default:
 			break;
 		}
 		tActor->SetActorLocation(GetTileActorPosition(tActor));
-		_placableBodies.Last()->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-		_placableBodies.Last()->SetActorScale3D(GetActorScale3D() / 5);
+		tActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 	}
 }
 

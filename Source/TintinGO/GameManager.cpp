@@ -8,16 +8,17 @@ AGameManager* AGameManager::SingletonInstance = nullptr;
 AGameManager::AGameManager()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	speed = 1;
-	milouBoneThrowRange = 2;
+	_milouBoneThrowRange = 2;
+	_milouBonesNumber = 0;
+	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 }
 
 void AGameManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
-
-	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
+	if(!IsValid(_currentStateType))
+		_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 	_currentStateType->OnStateEnter();
 }
 
@@ -32,7 +33,10 @@ void AGameManager::ReceiveMilouUIClick()
 void AGameManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	_currentStateType->OnStateTick(DeltaTime);
+	if(IsValid(this))
+	{
+		_currentStateType->OnStateTick(DeltaTime);
+	}
 }
 
 void AGameManager::StateChange(UState* newState)

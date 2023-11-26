@@ -20,4 +20,6 @@ public:
 	
 protected:
 	ATile* _nextTile;
+
+	virtual void OnEndTask() override{}
 };

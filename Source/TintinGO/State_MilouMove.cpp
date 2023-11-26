@@ -3,7 +3,7 @@
 #include "Barrier.h"
 #include "GameManager.h"
 #include "State_AwaitingInputs.h"
-#include "State_TC_Move.h"
+#include "State_TA_Move.h"
 
 void UState_MilouMove::OnStateEnter()
 {
@@ -16,13 +16,13 @@ void UState_MilouMove::OnStateEnter()
 	
 	ATile* previousMilouTile =_milou->GetCurrentTile();
 
-	previousMilouTile->_placableBodies.Remove(_milou);
+	previousMilouTile->_tileActors.Remove(_milou);
 	_milou->SetCurrentTile(_milou->MilouTilePath.Last());
 	_milou->MilouTilePath.Pop(true);
 	previousMilouTile->SetHighlightedPath(false);
 	
 	_milou->ChangeTile(_barrier, previousMilouTile);
-	_barrier->OnBarrierIni(UState_TC_Move::StaticClass());
+	_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 }
 
 void UState_MilouMove::OnStateTick(float DeltaTime)

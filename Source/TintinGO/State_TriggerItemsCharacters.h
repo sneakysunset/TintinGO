@@ -10,7 +10,6 @@ class UState_TriggerItemsCharacters : public UState
 {
 	GENERATED_BODY()
 public:
-	UState_TriggerItemsCharacters();
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateExit() override;

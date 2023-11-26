@@ -4,19 +4,15 @@
 #include "State_AwaitingInputs.h"
 
 
-UState_TriggerItemsCharacters::UState_TriggerItemsCharacters()
-{
-}
-
 void UState_TriggerItemsCharacters::OnStateEnter()
 {
 	UState::OnStateEnter();
 	UE_LOG(LogTemp, Warning, TEXT("Trigger Items / Characters State Enter"));
 	_tintin = ATileActor_Character_Tintin::GetInstance();
-	for(int i = 0; i < _tintin->GetCurrentTile()->_placableBodies.Num(); i++)
+	for(int i = 0; i < _tintin->GetCurrentTile()->_tileActors.Num(); i++)
 	{
-		_tintin->GetCurrentTile()->_placableBodies[i]->TriggerBody();
-		_tileActors.Add(_tintin->GetCurrentTile()->_placableBodies[i]);
+		_tileActors.Add(_tintin->GetCurrentTile()->_tileActors[i]);
+		_tintin->GetCurrentTile()->_tileActors[i]->TriggerBody();
 	}
 }
 
@@ -35,7 +31,7 @@ void UState_TriggerItemsCharacters::OnStateTick(float DeltaTime)
 
 	if(_tileActors.Num() == 0)
 	{
-		_gameManager->StateChange(NewObject<UState>(UState_AwaitingInputs::StaticClass()));
+		_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 	}
 }
 

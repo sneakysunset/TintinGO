@@ -19,7 +19,7 @@ void UState_AwaitingInputs_Milou::ProcessPlayerInputs(ATile* hitTile)
 
 	check(milouTile);
 
-	if (FMath::Abs(hitTile->_row - tintinTile->_row) <= _gameManager->milouBoneThrowRange && FMath::Abs(hitTile->_column - tintinTile->_column) <= _gameManager->milouBoneThrowRange && hitTile->_walkable)
+	if (FMath::Abs(hitTile->_row - tintinTile->_row) <= _gameManager->_milouBoneThrowRange && FMath::Abs(hitTile->_column - tintinTile->_column) <= _gameManager->_milouBoneThrowRange && hitTile->_walkable)
 	{
 		if(_milou->MilouTilePath.Num() > 1)
 		{
@@ -68,6 +68,10 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 
 void UState_AwaitingInputs_Milou::ReceiveMiloClickDelegate()
 {
+	if(_gameManager->OnBoneConsumed.IsBound())
+	{
+		_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
+	}
 	_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 }
 
