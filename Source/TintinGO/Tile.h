@@ -75,10 +75,17 @@ public:
 	UMaterialInterface* _HighlightedMat;
 	UPROPERTY()
 	UMaterialInterface* _HighlightedPathMat;
+	UPROPERTY()
+	UMaterialParameterCollection* collection;
+	
 	void SetHighlighted(bool toHightlight);
 	void SetHighlightedPath(bool toHightlight);
 	UFUNCTION(BlueprintCallable, CallInEditor)
 		void AddPlacableBodies();
+
+	UFUNCTION(BlueprintCallable, CallInEditor)
+	void RefreshLinks();
+	
 private:
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
 

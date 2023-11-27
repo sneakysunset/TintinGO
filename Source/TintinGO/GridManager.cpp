@@ -226,6 +226,7 @@ void AGridManager::InitializeGrid()
 			SpawnedTile->_unwalkableMat = _unwalkable_TileMaterial;
 			SpawnedTile->_HighlightedMat = _highlighted_TileMaterial;
 			SpawnedTile->_HighlightedPathMat = _highlightedPath_TileMaterial;
+			
 			if (UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(_walkable_TileMaterial, SpawnedTile))
 			{
 				// Set the material on the mesh component (assuming it's a UStaticMeshComponent)

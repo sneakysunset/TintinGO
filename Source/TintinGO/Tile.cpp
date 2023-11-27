@@ -6,15 +6,19 @@
 ATile::ATile() 
 {
 	PrimaryActorTick.bCanEverTick = true;
-	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
+	
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Plane.Plane"));
+	
+	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
 	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
 	_staticMeshComponent->SupportsDefaultCollision();
+
 	RootComponent = _staticMeshComponent;
-	_rightLink = true;
-	_leftLink = true;
-	_upLink = true;
-	_downLink = true;
+	
+	_rightLink = false;
+	_leftLink = false;
+	_upLink = false;
+	_downLink = false;
 	_step = -1;
 }
 
@@ -46,6 +50,7 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 {
 	if (_walkable != _walkableChecker || _tileType != _tileTypeChecker) {
 		if (_walkable) {
+			
 			switch (_tileType) {
 			case ETileType::Neutral:
 				_staticMeshComponent->SetMaterial(0, _walkableMat);
@@ -154,6 +159,30 @@ void ATile::AddPlacableBodies()
 	}
 }
 
+void ATile::RefreshLinks()
+{
+	UMaterialInstanceDynamic* dynamicMaterial = UMaterialInstanceDynamic::Create(_startPosMat , nullptr );
+	
+	if(_leftLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Left"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Left"), 0);
+
+	if(_upLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Top"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Top"), 0);
+
+	if(_rightLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Right"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Right"), 0);
+
+	if(_downLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Bot"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Bot"), 0);
+}
 
 
 

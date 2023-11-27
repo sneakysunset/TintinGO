@@ -69,7 +69,7 @@ private:
     UPROPERTY(EditAnywhere, Category = "TileMaterials")
         UMaterialInterface* _highlighted_TileMaterial;
     UPROPERTY(EditAnywhere, Category = "TileMaterials")
-    UMaterialInterface* _highlightedPath_TileMaterial;
+        UMaterialInterface* _highlightedPath_TileMaterial;
 
     UFUNCTION(CallInEditor, Category = "Events")
         void BlueprintEditorTick(float DeltaTime);
