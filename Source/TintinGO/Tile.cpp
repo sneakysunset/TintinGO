@@ -48,25 +48,44 @@ bool ATile::ShouldTickIfViewportsOnly() const
 
 void ATile::BlueprintEditorTick(float DeltaTime)
 {
-	if (_walkable != _walkableChecker || _tileType != _tileTypeChecker) {
-		if (_walkable) {
+	UMaterialInstanceDynamic* dynamicMaterial = UMaterialInstanceDynamic::Create(_walkableMat , nullptr);
+	
+	if(_leftLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Left"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Left"), 0);
+
+	if(_upLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Top"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Top"), 0);
+
+	if(_rightLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Right"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Right"), 0);
+
+	if(_downLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Bot"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Bot"), 0);
+	
+	if (_walkable) {
 			
-			switch (_tileType) {
-			case ETileType::Neutral:
-				_staticMeshComponent->SetMaterial(0, _walkableMat);
-				break;
-			case ETileType::StartingPosition:
-				_staticMeshComponent->SetMaterial(0, _startPosMat);
-				break;
-			case ETileType::EndingPosition:
-				_staticMeshComponent->SetMaterial(0, _endPosMat);
-				break;
-			}
+		switch (_tileType) {
+		case ETileType::Neutral:
+			_staticMeshComponent->SetMaterial(0, dynamicMaterial);
+			break;
+		case ETileType::StartingPosition:
+			_staticMeshComponent->SetMaterial(0, _startPosMat);
+			break;
+		case ETileType::EndingPosition:
+			_staticMeshComponent->SetMaterial(0, _endPosMat);
+			break;
 		}
-		else {
-			_staticMeshComponent->SetMaterial(0, _unwalkableMat);
-		}
-		_walkableChecker = _walkable;
+	}
+	else {
+		_staticMeshComponent->SetMaterial(0, _unwalkableMat);
 	}
 }
 
@@ -161,27 +180,6 @@ void ATile::AddPlacableBodies()
 
 void ATile::RefreshLinks()
 {
-	UMaterialInstanceDynamic* dynamicMaterial = UMaterialInstanceDynamic::Create(_startPosMat , nullptr );
-	
-	if(_leftLink == true)
-		dynamicMaterial->SetScalarParameterValue(FName("Left"), 1);
-	else
-		dynamicMaterial->SetScalarParameterValue(FName("Left"), 0);
-
-	if(_upLink == true)
-		dynamicMaterial->SetScalarParameterValue(FName("Top"), 1);
-	else
-		dynamicMaterial->SetScalarParameterValue(FName("Top"), 0);
-
-	if(_rightLink == true)
-		dynamicMaterial->SetScalarParameterValue(FName("Right"), 1);
-	else
-		dynamicMaterial->SetScalarParameterValue(FName("Right"), 0);
-
-	if(_downLink == true)
-		dynamicMaterial->SetScalarParameterValue(FName("Bot"), 1);
-	else
-		dynamicMaterial->SetScalarParameterValue(FName("Bot"), 0);
 }
 
 

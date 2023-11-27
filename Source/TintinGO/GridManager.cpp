@@ -226,24 +226,15 @@ void AGridManager::InitializeGrid()
 			SpawnedTile->_unwalkableMat = _unwalkable_TileMaterial;
 			SpawnedTile->_HighlightedMat = _highlighted_TileMaterial;
 			SpawnedTile->_HighlightedPathMat = _highlightedPath_TileMaterial;
-			
-			if (UMaterialInstanceDynamic* DynamicMaterial = UMaterialInstanceDynamic::Create(_walkable_TileMaterial, SpawnedTile))
-			{
-				// Set the material on the mesh component (assuming it's a UStaticMeshComponent)
-				if (UStaticMeshComponent* MeshComponent = SpawnedTile->FindComponentByClass<UStaticMeshComponent>())
-				{
-					MeshComponent->SetMaterial(0, DynamicMaterial);
-				}
-				else
-				{
-					UE_LOG(LogTemp, Warning, TEXT("No Static Mesh"));
-				}
-			}
-			else 
-			{
-				UE_LOG(LogTemp, Warning, TEXT("Failed At Dynamic Material creation"));
-			}
 
+			if (UStaticMeshComponent* MeshComponent = SpawnedTile->FindComponentByClass<UStaticMeshComponent>())
+			{
+				MeshComponent->SetMaterial(0, _walkable_TileMaterial);
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("No Static Mesh"));
+			}
 
 			if (SpawnedTile)
 			{
