@@ -10,13 +10,6 @@ AUIManager::AUIManager()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-}
-
-// Called when the game starts or when spawned
-void AUIManager::BeginPlay()
-{
-	Super::BeginPlay();
 	if (YourWidgetClass)
 	{
 		_coreUI = CreateWidget<UCoreUI>(GetWorld(), YourWidgetClass);
@@ -28,6 +21,12 @@ void AUIManager::BeginPlay()
 		AGameManager::GetInstance()->OnBoneConsumed.BindDynamic(this, &AUIManager::ChangeTextValue);
 		ChangeTextValue(0, FColor::Emerald);
 	}
+}
+
+// Called when the game starts or when spawned
+void AUIManager::BeginPlay()
+{
+	Super::BeginPlay();
 }
 
 // Called every frame

@@ -1,8 +1,8 @@
+#include "GameManager.h"
 #include "ClickInputManager.h"
 #include "ClickInputManagerController.h"
 #include "State.h"
 #include "State_AwaitingInputs.h"
-#include "GameManager.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
