@@ -89,6 +89,9 @@ public:
 	FVector GetTileActorPosition(ATileActor* tileActor);
 	float _positionCircleRadius = 1;
 	AGridManager* _gridManager;
+	UFUNCTION(BlueprintCallable, CallInEditor)
+	void RefreshLinks();
+
 private:
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
 

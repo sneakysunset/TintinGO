@@ -66,7 +66,6 @@ private:
     UPROPERTY(EditAnywhere, Category = "Grid Generation")
         double _tileWidth;
 
-
     UFUNCTION(CallInEditor, Category = "Events")
         void BlueprintEditorTick(float DeltaTime);
 };
