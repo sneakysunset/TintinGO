@@ -26,12 +26,12 @@ void UState_TA_Move::OnStateEnter()
 void UState_TA_Move::OnStateTick(float DeltaTime)
 {
 	_tileActor->SetActorLocation(_startPosition + (_endPosition - _startPosition) * _interpolateValue);
-	Super::OnStateTick(DeltaTime);
+	UState_TActor::OnStateTick(DeltaTime);
 }
 
 void UState_TA_Move::OnStateComplete()
 {
-	Super::OnStateComplete();
+	UState_TActor::OnStateComplete();
 	_tileActor->SetActorLocation(_endPosition);
 }
 
