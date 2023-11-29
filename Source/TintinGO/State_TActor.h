@@ -5,8 +5,8 @@
 #include "CoreMinimal.h"
 #include "State.h"
 #include "State_TActor.generated.h"
-class ATile;
 class ATileActor;
+class ATile;
 
 UCLASS()
 class TINTINGO_API UState_TActor : public UState
@@ -15,11 +15,17 @@ class TINTINGO_API UState_TActor : public UState
 public:
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
-	
-	ATileActor* _tileActor;
+	virtual void SetTileActor(ATileActor* tileActor) {
+		_tileActor = tileActor;
+	}
+	virtual ATileActor* GetTileActor() {
+		return _tileActor;
+	}
 	bool _isStateComplete;
 
 protected:
+	UPROPERTY()
+	ATileActor* _tileActor;
 	float _interpolateValue;
 	float _speed;
 	virtual void OnStateComplete();

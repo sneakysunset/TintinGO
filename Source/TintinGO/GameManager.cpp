@@ -17,7 +17,7 @@ void AGameManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
-	if(!IsValid(_currentStateType))
+	//if(!IsValid(_currentStateType))
 		_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 	_currentStateType->OnStateEnter();
 }

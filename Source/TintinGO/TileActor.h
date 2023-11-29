@@ -1,9 +1,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
 #include "State_TActor.h"
+#include "GameFramework/Actor.h"
 #include "TileActor.generated.h"
+
 
 UCLASS()
 class TINTINGO_API ATileActor : public AActor

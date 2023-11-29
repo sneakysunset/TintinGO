@@ -1,6 +1,7 @@
 #include "TileActor.h"
 
 #include "State_TA_Neutral.h"
+#include "State_TActor.h"
 
 
 
@@ -17,9 +18,9 @@ void ATileActor::TriggerBody()
 
 void ATileActor::ChangeState(UState_TActor* newState)
 {
-	newState->_tileActor = this;
 	_currentState_TA->OnStateExit();
 	_currentState_TA = newState;
+	newState->SetTileActor(this);
 	_currentState_TA->OnStateEnter();
 }
 

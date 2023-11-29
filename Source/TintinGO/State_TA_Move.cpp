@@ -1,7 +1,7 @@
 ﻿#include "State_TA_Move.h"
 
 #include "Tile.h"
-#include "TileActor_Character.h"
+#include "TileActor.h"
 
 void UState_TA_Move::OnStateEnter()
 {
@@ -13,8 +13,8 @@ void UState_TA_Move::OnStateEnter()
 		UE_LOG(LogTemp, Error, TEXT("Not Valid Actor for move"));
 		return;
 	}
-	ATile* tile =  _tileActor->GetCurrentTile();
-	if(_tileActor  != nullptr)
+	ATile* tile = _tileActor->GetCurrentTile();
+	if(_tileActor == nullptr)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Not Valid Actor for move"));
 		return;
