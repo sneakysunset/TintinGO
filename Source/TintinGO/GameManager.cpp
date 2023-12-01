@@ -22,6 +22,12 @@ void AGameManager::BeginPlay()
 	_currentStateType->OnStateEnter();
 }
 
+void AGameManager::Destroyed()
+{
+	Super::Destroyed();
+	SingletonInstance = nullptr;
+}
+
 void AGameManager::ReceiveMilouUIClick()
 {
 	if(OnMilouBoneClick.IsBound())

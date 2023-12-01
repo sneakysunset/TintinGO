@@ -38,7 +38,7 @@ void UState_PlayerMove::OnStateTick(float DeltaTime)
 	UState::OnStateTick(DeltaTime);
 	if(_barrier->_isBarriereCompleted)
 	{
-		_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
+		_gameManager->StateChange(NewObject<UState_TriggerItemsCharacters>(UState_TriggerItemsCharacters::StaticClass()));
 	}
 	_barrier->OnTick(DeltaTime);
 }

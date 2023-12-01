@@ -203,6 +203,8 @@ void ATile::AddTileActors()
 		}
 		tActor->SetActorLocation(GetTileActorPosition(tActor));
 		tActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+		tActor->SetCurrentTile(this);
+		_tileActors.Add(tActor);
 	}
 }
 

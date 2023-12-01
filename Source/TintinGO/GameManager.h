@@ -30,6 +30,7 @@ public:
 	void StateChange(UState* NewState);
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
+	virtual void Destroyed() override;
 	UPROPERTY(EditAnywhere, Category = "Milou Parameters")
 	int32 _milouBoneThrowRange;
 	int32 _milouBonesNumber;
