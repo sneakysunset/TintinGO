@@ -16,10 +16,10 @@ public class TintinGO : ModuleRules
 			"EnhancedInput"
 		});
 
-		PublicIncludePaths.AddRange(new string[]
-		{
-			"EnhancedInput/Public"
-		});
+		//PublicIncludePaths.AddRange(new string[]
+		//{
+		//	"EnhancedInput/Public"
+		//});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

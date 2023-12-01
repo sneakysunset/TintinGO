@@ -25,7 +25,10 @@
 		},
 		{
 			"Name": "EnhancedInput",
-			"Enabled":true
+			"Enabled": true
 		}
+	],
+	"TargetPlatforms": [
+		"Windows"
 	]
 }

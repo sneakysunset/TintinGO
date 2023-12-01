@@ -39,7 +39,7 @@ void AGameManager::ReceiveMilouUIClick()
 void AGameManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if(IsValid(this))
+	if(IsValid(this) && IsValid(_currentStateType))
 	{
 		_currentStateType->OnStateTick(DeltaTime);
 	}

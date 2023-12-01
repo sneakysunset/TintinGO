@@ -33,23 +33,24 @@ void UState_AwaitingInputs::OnStateTick(float DeltaTime)
 
 void UState_AwaitingInputs::OnStateExit()
 {
-	UState::OnStateExit();
+	_gameManager->OnClickD.Unbind();
+	_gameManager->OnMilouBoneClick.Unbind();
 	if(_hitTile != nullptr)
 	{
 		_hitTile->SetHighlighted(false);
 		_hitTile = nullptr;
 	}
+	UState::OnStateExit();
 }
 
 void UState_AwaitingInputs::ProcessMousePositionInput()
 {
 	float mouseX;
 	float mouseY;
-	check (_gameManager)
 	APlayerController* pc = UGameplayStatics::GetPlayerController(_gameManager->GetWorld(), 0);
-	check(pc)
 	pc->GetMousePosition(mouseX, mouseY);
-
+	check(pc)
+	
 	FVector MouseWorldPosition;
 	FVector MouseWorldDirection;
 	pc->DeprojectScreenPositionToWorld(mouseX, mouseY, MouseWorldPosition, MouseWorldDirection);
@@ -77,13 +78,18 @@ void UState_AwaitingInputs::ProcessMousePositionInput()
 		DisableTiles(false, true);
 		return;
 	}
+
 	
 	if(_hitTile == hitTile)
 	{
 		return;
 	}
 	
-
+	if(_hitTile == nullptr)
+	{
+		_hitTile = hitTile;
+	}
+	
 	ProcessPlayerInputs(hitTile);		
 }
 
@@ -93,7 +99,7 @@ void UState_AwaitingInputs::ProcessPlayerInputs(ATile* hitTile)
 	const ATile* tintinTile = _tintin->GetCurrentTile();
 
 	check(tintinTile);
-
+	
 	if (FMath::Abs(hitTile->_row - tintinTile->_row) + FMath::Abs(hitTile->_column - tintinTile->_column) == 1 && hitTile->_walkable)
 	{
 		if((hitTile->_row - tintinTile->_row == 1 && !hitTile->_leftLink)
@@ -147,11 +153,14 @@ void UState_AwaitingInputs::DisableTiles(bool disablePath, bool disablePlayerTar
 		_hitTile->SetHighlighted(false);
 		//_hitTile = nullptr;
 	}
-	if(disablePath && _milou && _milou->MilouTilePath.Num() > 1)
+	if(disablePath && IsValid(_milou) && _milou->MilouTilePath.Num() > 1)
 	{
 		for (int i = 0; i < _milou->MilouTilePath.Num(); i++)
 		{
-			_milou->MilouTilePath[i]->SetHighlightedPath(false);
+			if(IsValid(_milou->MilouTilePath[i]))
+			{
+				_milou->MilouTilePath[i]->SetHighlightedPath(false);
+			}
 		}
 		_milou->MilouTilePath.Empty();
 	}
