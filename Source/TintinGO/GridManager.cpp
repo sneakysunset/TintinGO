@@ -211,6 +211,20 @@ void AGridManager::InitializeGrid()
 			SpawnedTile->SetHighlighted(false);
 		}
 	}
+
+	_rows = _gridTiles.Num();
+	_columns = _gridTiles[0].Tiles.Num();
+}
+
+void AGridManager::UpdateLinks()
+{
+	for(auto tile : _gridTiles)
+	{
+		for(auto gtile : tile.Tiles)
+		{
+			gtile->RefreshLinks();
+		}
+	}
 }
 
 ATile* AGridManager::WorldCoordinatesToTilePosition(const FVector& worldCoordinates)
@@ -221,6 +235,16 @@ ATile* AGridManager::WorldCoordinatesToTilePosition(const FVector& worldCoordina
 		return _gridTiles[x].Tiles[y];
 	else
 		return nullptr;
+}
+
+ATile* AGridManager::GetTile(int32 i, int32 j)
+{
+	if (i >= 0 && i < _gridTiles.Num() && j >= 0 && j < _gridTiles[0].Tiles.Num())
+	{
+		return _gridTiles[i].Tiles[j];
+	}
+
+	return nullptr;
 }
 
 

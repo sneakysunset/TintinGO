@@ -97,6 +97,8 @@ private:
 
 	bool _walkableChecker = true;
 
+	UMaterialInstanceDynamic* DynamicMat(UMaterialInterface* mat);
+
 	ETileType _tileTypeChecker {ETileType::Neutral};
 	
 	virtual bool ShouldTickIfViewportsOnly() const override;

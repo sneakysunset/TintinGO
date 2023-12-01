@@ -38,6 +38,8 @@ void ATile::Tick(float DeltaTime)
 #endif
 }
 
+
+
 bool ATile::ShouldTickIfViewportsOnly() const
 {
 	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor && _useEditorTick)
@@ -52,39 +54,18 @@ bool ATile::ShouldTickIfViewportsOnly() const
 
 void ATile::BlueprintEditorTick(float DeltaTime)
 {
-	UMaterialInstanceDynamic* dynamicMaterial = UMaterialInstanceDynamic::Create(_walkableMat , nullptr);
-	
-	if(_leftLink == true)
-		dynamicMaterial->SetScalarParameterValue(FName("Left"), 1);
-	else
-		dynamicMaterial->SetScalarParameterValue(FName("Left"), 0);
-
-	if(_upLink == true)
-		dynamicMaterial->SetScalarParameterValue(FName("Top"), 1);
-	else
-		dynamicMaterial->SetScalarParameterValue(FName("Top"), 0);
-
-	if(_rightLink == true)
-		dynamicMaterial->SetScalarParameterValue(FName("Right"), 1);
-	else
-		dynamicMaterial->SetScalarParameterValue(FName("Right"), 0);
-
-	if(_downLink == true)
-		dynamicMaterial->SetScalarParameterValue(FName("Bot"), 1);
-	else
-		dynamicMaterial->SetScalarParameterValue(FName("Bot"), 0);
 	
 	if (_walkable) {
 			
 		switch (_tileType) {
 		case ETileType::Neutral:
-			_staticMeshComponent->SetMaterial(0, dynamicMaterial);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
 			break;
 		case ETileType::StartingPosition:
-			_staticMeshComponent->SetMaterial(0, _startPosMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat));
 			break;
 		case ETileType::EndingPosition:
-			_staticMeshComponent->SetMaterial(0, _endPosMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
 			break;
 		}
 	}
@@ -206,8 +187,59 @@ void ATile::AddTileActors()
 	}
 }
 
+UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat)
+{
+	UMaterialInstanceDynamic* dynamicMaterial = UMaterialInstanceDynamic::Create(mat , nullptr);
+
+	if(_leftLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Left"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Left"), 0);
+
+	if(_upLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Top"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Top"), 0);
+
+	if(_rightLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Right"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Right"), 0);
+
+	if(_downLink == true)
+		dynamicMaterial->SetScalarParameterValue(FName("Bot"), 1);
+	else
+		dynamicMaterial->SetScalarParameterValue(FName("Bot"), 0);
+	
+	return dynamicMaterial;
+}
+
 void ATile::RefreshLinks()
 {
+	ATile* leftTile = _gridManager->GetTile(_row, _column - 1);
+	ATile* rightTile = _gridManager->GetTile(_row, _column + 1);
+	ATile* upTile = _gridManager->GetTile(_row + 1, _column);
+	ATile* downTile = _gridManager->GetTile(_row - 1, _column);
+
+	if(leftTile == nullptr || !leftTile->_walkable || !leftTile->_rightLink)
+	{
+		_leftLink = false;
+	}
+
+	if(rightTile == nullptr || !rightTile->_walkable || !rightTile->_leftLink)
+	{
+		_rightLink = false;
+	}
+
+	if(upTile == nullptr || !upTile->_walkable || !upTile->_downLink)
+	{
+		_upLink = false;
+	}
+
+	if(downTile == nullptr || !downTile->_walkable || !downTile->_upLink)
+	{
+		_downLink = false;
+	}
 }
 
 

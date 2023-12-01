@@ -11,29 +11,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18a00cf5-8619-465a-9e48-0ecda5c9207c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Materials/EndTileWithLinks.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/HighlightWithLinks.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/StartTileWithLinks.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Materials/WalkableWithLinks.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BluePrints/GridManager_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/GridManager_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Tintin_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Tintin_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_MilouBone_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_MilouBone_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BluePrints/Tile_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/Tile_BP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/BotLink.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/DotCenterStartPos_Mat.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/DotCenterStartPos_Mat.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/LeftLink.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Line.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Line.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Link.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Link1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Link1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/NoLink.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/RightLink.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/TopLink.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TA_Move.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TA_Move.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -218,6 +201,7 @@
       <workItem from="1701107364907" duration="85000" />
       <workItem from="1701421755116" duration="496000" />
       <workItem from="1701427935679" duration="5612000" />
+      <workItem from="1701445660903" duration="5528000" />
     </task>
     <servers />
   </component>
