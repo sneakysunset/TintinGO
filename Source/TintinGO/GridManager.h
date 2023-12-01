@@ -31,6 +31,9 @@ public:
     UFUNCTION(CallInEditor, Category = "GridManager")
         void InitializeGrid();
 
+    UFUNCTION(CallInEditor, Category = "GridManager")
+    void UpdateLinks();
+    
     ATile* WorldCoordinatesToTilePosition(const FVector& worldCoordinates);
 
     virtual void BeginPlay() override;
@@ -48,6 +51,7 @@ public:
     bool TileIsAvailable(ATile* tile, FVector2D direction);
     TArray<ATile*> GetPath(ATile* endTile);
     ATile* GetNextTileInPath(ATile* tile);
+    ATile* GetTile(int32 i, int32 j);
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
         bool _useEditorTick;
@@ -68,4 +72,5 @@ private:
 
     UFUNCTION(CallInEditor, Category = "Events")
         void BlueprintEditorTick(float DeltaTime);
+
 };
