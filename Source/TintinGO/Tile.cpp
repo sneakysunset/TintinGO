@@ -78,20 +78,20 @@ void ATile::SetHighlighted(bool toHightlight) const
 {
 	if(toHightlight)
 	{
-		_staticMeshComponent->SetMaterial(0, _HighlightedMat);
+		_staticMeshComponent->SetMaterial(0, DynamicMat(_HighlightedMat));
 	}
 	else
 	{
 		switch (_tileType)
 		{
 		case ETileType::Neutral:
-			_staticMeshComponent->SetMaterial(0, _walkableMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
 			break;
 		case ETileType::StartingPosition:
-			_staticMeshComponent->SetMaterial(0, _startPosMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat));
 			break;
 		case ETileType::EndingPosition:
-			_staticMeshComponent->SetMaterial(0, _endPosMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
 			break;
 		}
 	}
@@ -101,20 +101,20 @@ void ATile::SetHighlightedPath(bool toHightlight) const
 {
 	if(toHightlight)
 	{
-		_staticMeshComponent->SetMaterial(0, _HighlightedPathMat);
+		_staticMeshComponent->SetMaterial(0, DynamicMat(_HighlightedPathMat));
 	}
 	else
 	{
 		switch (_tileType)
 		{
 		case ETileType::Neutral:
-			_staticMeshComponent->SetMaterial(0, _walkableMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
 			break;
 		case ETileType::StartingPosition:
-			_staticMeshComponent->SetMaterial(0, _startPosMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat));
 			break;
 		case ETileType::EndingPosition:
-			_staticMeshComponent->SetMaterial(0, _endPosMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
 			break;
 		}
 	}
@@ -187,7 +187,7 @@ void ATile::AddTileActors()
 	}
 }
 
-UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat)
+UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat) const
 {
 	UMaterialInstanceDynamic* dynamicMaterial = UMaterialInstanceDynamic::Create(mat , nullptr);
 

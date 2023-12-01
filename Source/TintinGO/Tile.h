@@ -97,7 +97,7 @@ private:
 
 	bool _walkableChecker = true;
 
-	UMaterialInstanceDynamic* DynamicMat(UMaterialInterface* mat);
+	UMaterialInstanceDynamic* DynamicMat(UMaterialInterface* mat) const; 
 
 	ETileType _tileTypeChecker {ETileType::Neutral};
 	
