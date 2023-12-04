@@ -17,5 +17,5 @@ void UState::OnStateTick(float DeltaTime)
 
 void UState::OnStateExit()
 {
-	//_gameManager->_currentStateType = _targetStateType;
+	this->ConditionalBeginDestroy();
 }

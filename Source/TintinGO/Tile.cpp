@@ -123,11 +123,10 @@ void ATile::SetHighlightedPath(bool toHightlight) const
 FVector ATile::GetTileActorPosition(ATileActor* tileActor)
 {
 
-	if(IsValid(tileActor) /*&& !_tileActors.Contains(tileActor)*/)
+	if(IsValid(tileActor) && !_tileActors.Contains(tileActor))
 	{
-		//_tileActors.Add(tileActor);
+		_tileActors.Add(tileActor);
 	}
-return GetActorLocation() /*+ tileActor->GetActorScale().Z * 50 * FVector::UpVector;*/;
 	FVector destination = GetActorLocation() + tileActor->GetActorScale().Z * 50 * FVector::UpVector;
 	
 	if(_tileActors.Num() == 1)
@@ -184,6 +183,8 @@ void ATile::AddTileActors()
 		}
 		tActor->SetActorLocation(GetTileActorPosition(tActor));
 		tActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+		tActor->SetCurrentTile(this);
+		_tileActors.Add(tActor);
 	}
 }
 

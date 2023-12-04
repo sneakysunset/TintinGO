@@ -14,7 +14,9 @@ void ATileActor_Character::ChangeTile(UBarrier* barrier, ATile* previousTile)
 	
 	for(auto body : previousTile->_tileActors)
 	{
+		if(body == nullptr) continue;
 		UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
+		
 		if(!barrier->_actors.Contains(body))
 		{
 			body->ChangeState(state);
@@ -24,6 +26,7 @@ void ATileActor_Character::ChangeTile(UBarrier* barrier, ATile* previousTile)
 
 	for(auto body : this->_currentTile->_tileActors)
 	{
+		if(body == nullptr) continue;
 		UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
 		if(!barrier->_actors.Contains(body))
 		{

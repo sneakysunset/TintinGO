@@ -20,7 +20,11 @@ public:
 	UState_TActor* _currentState_TA;
 	void ChangeState(UState_TActor* newState);
 	virtual ATile* GetCurrentTile() const{return _currentTile;}
-	virtual void SetCurrentTile(ATile* tile){_currentTile = tile;}
+	virtual void SetCurrentTile(ATile* tile)
+	{
+		check(tile != nullptr);
+		_currentTile = tile;
+	}
 	
 	bool _isTaskOver;
 

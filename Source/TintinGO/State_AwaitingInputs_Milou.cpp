@@ -18,7 +18,8 @@ void UState_AwaitingInputs_Milou::ProcessPlayerInputs(ATile* hitTile)
 	ATile* tintinTile = _tintin->GetCurrentTile();
 
 	check(milouTile);
-
+	check(tintinTile);
+	check(_gameManager);
 	if (FMath::Abs(hitTile->_row - tintinTile->_row) <= _gameManager->_milouBoneThrowRange && FMath::Abs(hitTile->_column - tintinTile->_column) <= _gameManager->_milouBoneThrowRange && hitTile->_walkable)
 	{
 		if(_milou->MilouTilePath.Num() > 1)

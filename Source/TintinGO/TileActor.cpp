@@ -2,13 +2,15 @@
 
 #include "State_TA_Neutral.h"
 #include "State_TActor.h"
-
+#include "Tile.h"
 
 
 
 void ATileActor::OnEndTask()
 {
-	//this->Destroy();
+	UE_LOG(LogTemp, Warning, TEXT("DESTROY"));
+	_currentTile->_tileActors.Remove(this);
+	this->Destroy();
 }
 
 void ATileActor::TriggerBody()

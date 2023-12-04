@@ -15,7 +15,10 @@ public:
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateExit() override;
 private:
+	UPROPERTY()
 	ATileActor_Character_Tintin* _tintin;
+	UPROPERTY()
 	ATileActor_Character_Milou* _milou;
+	UPROPERTY()
 	UBarrier* _barrier;
 };
