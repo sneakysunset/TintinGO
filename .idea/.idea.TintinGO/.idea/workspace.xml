@@ -11,13 +11,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18a00cf5-8619-465a-9e48-0ecda5c9207c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Content/Levels/TestFlo1.umap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TriggerItemsCharacters.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TriggerItemsCharacters.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +46,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;links&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;nouveauMerge&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -202,6 +203,9 @@
       <workItem from="1701421755116" duration="496000" />
       <workItem from="1701427935679" duration="5612000" />
       <workItem from="1701445660903" duration="5528000" />
+      <workItem from="1701709187456" duration="1479000" />
+      <workItem from="1701722726232" duration="2152000" />
+      <workItem from="1701725323786" duration="1930000" />
     </task>
     <servers />
   </component>

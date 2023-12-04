@@ -39,31 +39,46 @@ void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
+
+	ATile* startTile = nullptr;
+	
 	for (int i = 0; i < _gridTiles.Num(); i++)
 	{
 		for (int j = 0; j < _gridTiles[i].Tiles.Num(); j++)
 		{
 			if(_gridTiles[i].Tiles[j]->_tileType == ETileType::StartingPosition)
 			{
-				ATile* tile = _gridTiles[i].Tiles[j];
+				startTile = _gridTiles[i].Tiles[j];
 				FActorSpawnParameters params;
 				params.bNoFail = true;
 				params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				FVector position = tile->GetActorLocation();
+				FVector position = startTile->GetActorLocation();
 				FRotator rotation = FRotator(0, 0, 0);
 				ATileActor_Character_Tintin* character = GetWorld()->SpawnActor<ATileActor_Character_Tintin>(_tintinBP->GeneratedClass, position, rotation, params);
 				ATileActor_Character_Milou* milou = GetWorld()->SpawnActor<ATileActor_Character_Milou>(_milouBP->GeneratedClass, position, rotation, params);
 
 				character->SetActorLabel(FString::Printf(TEXT("Tintin")));
 				milou->SetActorLabel(FString::Printf(TEXT("Milou")));
-				character->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
-				milou->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
+				character->AttachToActor(startTile, FAttachmentTransformRules::KeepWorldTransform);
+				milou->AttachToActor(startTile, FAttachmentTransformRules::KeepWorldTransform);
 				milou->SetCurrentTile(_gridTiles[i].Tiles[j]);
 				character->SetCurrentTile(_gridTiles[i].Tiles[j]);
 				character->SetActorLocation(character->GetCurrentTile()->GetTileActorPosition(character));
 				milou->SetActorLocation(milou->GetCurrentTile()->GetTileActorPosition(milou));
-				return;
+
+				if(_endTile != nullptr)
+					return;
 			}
+
+			if (_gridTiles[i].Tiles[j]->_tileType == ETileType::EndingPosition)
+			{
+				_endTile = _gridTiles[i].Tiles[j];
+				UE_LOG(LogTemp, Warning, TEXT("%d, %d"), _endTile->_row, _endTile->_column);
+
+				if(startTile != nullptr)
+					return;
+			}
+				
 		}
 	}
 }

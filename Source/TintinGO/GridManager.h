@@ -52,6 +52,8 @@ public:
     TArray<ATile*> GetPath(ATile* endTile);
     ATile* GetNextTileInPath(ATile* tile);
     ATile* GetTile(int32 i, int32 j);
+    ATile* _endTile;
+    ATile* GetEndTile() const{return _endTile;}
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
         bool _useEditorTick;
