@@ -1,5 +1,6 @@
 #include "GridManager.h"
 #include "Tile.h"
+#include "TileActor_Character_Condor.h"
 #include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Tintin.h"
 #include "Math/UnrealMathUtility.h"
@@ -65,20 +66,39 @@ void AGridManager::BeginPlay()
 				character->SetCurrentTile(_gridTiles[i].Tiles[j]);
 				character->SetActorLocation(character->GetCurrentTile()->GetTileActorPosition(character));
 				milou->SetActorLocation(milou->GetCurrentTile()->GetTileActorPosition(milou));
-
-				if(_endTile != nullptr)
-					return;
 			}
+			else if (_gridTiles[i].Tiles[j]->_tileType == ETileType::Nest1Position)
+			{
+				FActorSpawnParameters params;
+				params.bNoFail = true;
+				params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				FVector position = _gridTiles[i].Tiles[j]->GetActorLocation();
+				FRotator rotation = FRotator(0, 0, 0);
+				ATileActor_Character_Condor* condor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP->GeneratedClass, position, rotation, params);
 
-			if (_gridTiles[i].Tiles[j]->_tileType == ETileType::EndingPosition)
+				condor->SetActorLabel(FString::Printf(TEXT("Condor")));
+				condor->AttachToActor(_gridTiles[i].Tiles[j], FAttachmentTransformRules::KeepWorldTransform);
+				condor->SetCurrentTile(_gridTiles[i].Tiles[j]);
+				condor->SetActorLocation(condor->GetCurrentTile()->GetTileActorPosition(condor));
+
+				_nest1Tile = _gridTiles[i].Tiles[j];
+			}
+			else if (_gridTiles[i].Tiles[j]->_tileType == ETileType::EndNest1Position)
+			{
+				_endNest1Tile = _gridTiles[i].Tiles[j];
+			}
+			else if (_gridTiles[i].Tiles[j]->_tileType == ETileType::Nest2Position)
+			{
+				_nest2Tile = _gridTiles[i].Tiles[j];
+			}
+			else if (_gridTiles[i].Tiles[j]->_tileType == ETileType::EndNest2Position)
+			{
+				_endNest2Tile = _gridTiles[i].Tiles[j];
+			}
+			else if (_gridTiles[i].Tiles[j]->_tileType == ETileType::EndingPosition)
 			{
 				_endTile = _gridTiles[i].Tiles[j];
-				UE_LOG(LogTemp, Warning, TEXT("%d, %d"), _endTile->_row, _endTile->_column);
-
-				if(startTile != nullptr)
-					return;
 			}
-				
 		}
 	}
 }

@@ -39,24 +39,34 @@ public:
     virtual void BeginPlay() override;
     virtual void Tick(float DeltaTime) override;
     virtual bool ShouldTickIfViewportsOnly() const override;
+
     UPROPERTY(EditAnywhere)
     UBlueprint* _tileBP;
     UPROPERTY(EditAnywhere)
     UBlueprint* _tintinBP;
     UPROPERTY(EditAnywhere)
     UBlueprint* _milouBP;
+    UPROPERTY(EditAnywhere)
+    UBlueprint* _condorBP;
+    
     void MarkStepsOnGrid(ATile* CenterTile);
     void SetStepOnAdjacentsRecursive(ATile* tile);
     void SetStepOnAdjacentTile(ATile* tile, FVector2D direction);
     bool TileIsAvailable(ATile* tile, FVector2D direction);
+
     TArray<ATile*> GetPath(ATile* endTile);
     ATile* GetNextTileInPath(ATile* tile);
     ATile* GetTile(int32 i, int32 j);
     ATile* _endTile;
     ATile* GetEndTile() const{return _endTile;}
+
+    ATile* _nest1Tile;
+    ATile* _endNest1Tile;
+    ATile* _nest2Tile;
+    ATile* _endNest2Tile;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
-        bool _useEditorTick;
+    bool _useEditorTick;
     // Add more functions as needed
     UPROPERTY()
     TArray<FTileArray> _gridTiles;

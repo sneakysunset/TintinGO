@@ -14,4 +14,10 @@ class TINTINGO_API ATileActor_Character_Condor : public ATileActor_Character
 {
 	GENERATED_BODY()
 	
+	ATileActor_Character_Condor();
+public:
+	static ATileActor_Character_Condor* GetInstance();
+	static ATileActor_Character_Condor* SingletonInstance;
+
+	bool isWaitLastRound;
 };

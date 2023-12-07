@@ -14,6 +14,7 @@ void UState_AwaitingInputs::OnStateEnter()
 {
 	UState::OnStateEnter();
 	
+	isTileAccessible = false;
 	gridManager = AGridManager::GetInstance();
 	_milou = ATileActor_Character_Milou::GetInstance();
 	_tintin = ATileActor_Character_Tintin::GetInstance();
@@ -137,6 +138,8 @@ void UState_AwaitingInputs::ReceiveLeftMouseClick()
 			_milou->SetCurrentTile(_tintin->GetCurrentTile());
 			_milou->SetNextTile(_tintin->GetNextTile());
 		}
+
+		UE_LOG(LogTemp, Warning, TEXT("UState_AwaitingInputs"));
 		_gameManager->StateChange(NewObject<UState_PlayerMove>(UState_PlayerMove::StaticClass()));
 	}
 }

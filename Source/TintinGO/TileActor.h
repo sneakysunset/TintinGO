@@ -19,6 +19,7 @@ public:
 	UPROPERTY()
 	UState_TActor* _currentState_TA;
 	void ChangeState(UState_TActor* newState);
+	
 	virtual ATile* GetCurrentTile() const{return _currentTile;}
 	virtual void SetCurrentTile(ATile* tile)
 	{
@@ -26,12 +27,16 @@ public:
 		_currentTile = tile;
 	}
 	
+	ATile* GetNextTile() const { return _nextTile;}
+	void SetNextTile(ATile* tile){_nextTile = tile;}
+	
 	bool _isTaskOver;
 
 	UPROPERTY(EditAnywhere)
 	float _speed;
 	
 protected:
+	ATile* _nextTile;
 	UPROPERTY()
 	ATile* _currentTile;
 	virtual void BeginPlay() override;

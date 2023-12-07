@@ -11,14 +11,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18a00cf5-8619-465a-9e48-0ecda5c9207c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Levels/TestFlo1.umap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Condor_BP.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorAttack.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorAttack.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorWait.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorWait.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_MilouBone_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_MilouBone_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/TestFlo1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestFlo1.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Barrier.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Barrier.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_AwaitingInputs.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_AwaitingInputs.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TA_Move.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TA_Move.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TA_Neutral.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TA_Neutral.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TA_Neutral.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TA_Neutral.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TActor.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TriggerItemsCharacters.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TriggerItemsCharacters.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Condor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Condor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Condor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Condor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_MilouBone.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_MilouBone.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,6 +225,9 @@
       <workItem from="1701709187456" duration="1479000" />
       <workItem from="1701722726232" duration="2152000" />
       <workItem from="1701725323786" duration="1930000" />
+      <workItem from="1701796305862" duration="2720000" />
+      <workItem from="1701869188215" duration="977000" />
+      <workItem from="1701965489364" duration="14315000" />
     </task>
     <servers />
   </component>

@@ -10,4 +10,7 @@ class TINTINGO_API UState_TA_Neutral : public UState_TActor
 	GENERATED_BODY()
 public:
 
+	virtual void OnStateEnter() override;
+	//virtual void OnStateTick(float DeltaTime) override;
+	//virtual void OnStateComplete() override;
 };

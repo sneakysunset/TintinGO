@@ -1,8 +1,10 @@
-#include "Math/UnrealMathUtility.h"
 #include "State_CheckWinConditions.h"
 #include "GameManager.h"
 #include "GridManager.h"
 #include "State_AwaitingInputs.h"
+#include "State_CondorAttack.h"
+#include "State_CondorWait.h"
+#include "TileActor_Character_Condor.h"
 
 void UState_CheckWinConditions::OnStateEnter()
 {
@@ -18,7 +20,17 @@ void UState_CheckWinConditions::OnStateEnter()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%d, %d"), _tintin->GetCurrentTile()->_row, gridManager->GetEndTile()->_row);
-		_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
+		//_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
+		
+		if (ATileActor_Character_Condor::GetInstance()->isWaitLastRound == true)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("UState_CondorAttack"));
+			_gameManager->StateChange(NewObject<UState_CondorAttack>(UState_CondorAttack::StaticClass()));
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("UState_CondorWait"));
+			_gameManager->StateChange(NewObject<UState_CondorWait>(UState_CondorWait::StaticClass()));
+		}
 	}
 }

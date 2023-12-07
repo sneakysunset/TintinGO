@@ -116,6 +116,9 @@ void ATile::SetHighlightedPath(bool toHightlight) const
 		case ETileType::EndingPosition:
 			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
 			break;
+		default:
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
+			break;
 		}
 	}
 }
@@ -128,6 +131,8 @@ FVector ATile::GetTileActorPosition(ATileActor* tileActor)
 		_tileActors.Add(tileActor);
 	}
 	FVector destination = GetActorLocation() + tileActor->GetActorScale().Z * 50 * FVector::UpVector;
+
+	return destination;
 	
 	if(_tileActors.Num() == 1)
 		return destination;
@@ -165,6 +170,7 @@ void ATile::AddTileActors()
 		case ETileActorType::Bone:
 			tActor = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP->GeneratedClass, position, rotation, params);
 			tActor->SetActorLabel(FString::Printf(TEXT("Item_Bone")));
+			tActor->SetCurrentTile(this);
 			break;
 		case ETileActorType::Clue:
 			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
@@ -173,6 +179,7 @@ void ATile::AddTileActors()
 		case ETileActorType::Peruvien:
 			tActor = GetWorld()->SpawnActor<ATileActor_Character_Peruvien>(_peruvienBP->GeneratedClass, position, rotation, params);
 			tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Peruvien")));
+			tActor->SetCurrentTile(this);
 			break;
 		case ETileActorType::Condor:
 			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
@@ -183,7 +190,7 @@ void ATile::AddTileActors()
 		}
 		tActor->SetActorLocation(GetTileActorPosition(tActor));
 		tActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-		tActor->SetCurrentTile(this);
+		
 		_tileActors.Add(tActor);
 	}
 }
