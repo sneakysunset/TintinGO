@@ -45,16 +45,18 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 				{
 					peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 				}
-				else if(peruvien->GetCurrentTile() == peruvien->_startingTile)
+				else if(peruvien->GetCurrentTile() != peruvien->_startingTile)
 				{
 					gridManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
-					peruvien->PeruvienTilePath = gridManager->GetPath(peruvien->_startingTile);
+					peruvien->PeruvienTilePath = gridManager->GetPath(peruvien->_startingTile, false);
+					peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 				}
 				else
 				{
 					peruvien->SetNextTile(nullptr);
 				}
 			}
+			
 		}
 		_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 	}

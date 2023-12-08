@@ -108,47 +108,48 @@ void ATile::AddTintin()
 	milou->SetActorLocation(GetTileActorPosition(milou));
 }
 
-void ATile::SetHighlighted(bool toHightlight) const
+void ATile::SetHighlighted(bool toHightlight)
 {
 	if(toHightlight)
 	{
-		_staticMeshComponent->SetMaterial(0, _HighlightedMat);
+		_staticMeshComponent->SetMaterial(0, DynamicMat( _HighlightedMat));
 	}
 	else
 	{
 		switch (_tileType)
 		{
 		case ETileType::Neutral:
-			_staticMeshComponent->SetMaterial(0, _walkableMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
 			break;
 		case ETileType::StartingPosition:
-			_staticMeshComponent->SetMaterial(0, _startPosMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat));
 			break;
 		case ETileType::EndingPosition:
-			_staticMeshComponent->SetMaterial(0, _endPosMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
 			break;
 		}
 	}
 }
 
-void ATile::SetHighlightedPath(bool toHightlight) const
+void ATile::SetHighlightedPath(bool toHightlight) 
 {
+
 	if(toHightlight)
 	{
-		_staticMeshComponent->SetMaterial(0, _HighlightedPathMat);
+		_staticMeshComponent->SetMaterial(0, DynamicMat(_HighlightedPathMat));
 	}
 	else
 	{
 		switch (_tileType)
 		{
 		case ETileType::Neutral:
-			_staticMeshComponent->SetMaterial(0, _walkableMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
 			break;
 		case ETileType::StartingPosition:
-			_staticMeshComponent->SetMaterial(0, _startPosMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat));
 			break;
 		case ETileType::EndingPosition:
-			_staticMeshComponent->SetMaterial(0, _endPosMat);
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
 			break;
 		}
 	}
@@ -195,6 +196,7 @@ void ATile::AddTileActors()
 		FVector position = GetActorLocation();
 		FRotator rotation = FRotator(0, 0, 0);
 		ATileActor* tActor = nullptr;
+		ATileActor_Character_Peruvien* peruvienCasted = nullptr;
 		switch (_TileItems[i])
 		{
 		case ETileActorType::Bone:
@@ -209,8 +211,9 @@ void ATile::AddTileActors()
 			return;
 		case ETileActorType::Peruvien:
 			tActor = GetWorld()->SpawnActor<ATileActor_Character_Peruvien>(_peruvienBP->GeneratedClass, position, rotation, params);
-			_gridManager->_peruviens.Add(Cast<ATileActor_Character_Peruvien>(tActor));
-			UE_LOG(LogTemp, Warning, TEXT("peruviens num : %d"),_gridManager->_peruviens.Num());
+			peruvienCasted = Cast<ATileActor_Character_Peruvien>(tActor);
+			_gridManager->_peruviens.Add(peruvienCasted);
+			peruvienCasted->_startingTile = this;
 #if WITH_EDITOR
 			tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Peruvien")));
 #endif

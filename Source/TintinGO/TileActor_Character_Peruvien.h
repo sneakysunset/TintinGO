@@ -8,9 +8,9 @@
 #include "TileActor_Character_Peruvien.generated.h"
 
 class AGridManager;
-/**
- * 
- */
+
+
+
 UCLASS()
 class TINTINGO_API ATileActor_Character_Peruvien : public ATileActor_Character
 {
@@ -18,8 +18,16 @@ class TINTINGO_API ATileActor_Character_Peruvien : public ATileActor_Character
 
 	ATileActor_Character_Peruvien();
 public:
+	UPROPERTY()
 	TArray<ATile*> PeruvienTilePath;
+
+	UPROPERTY()
 	ATile* _startingTile;
+
+	UFUNCTION()
+	void Detection();
+	
+protected:
 	virtual void BeginPlay() override;
 
 };

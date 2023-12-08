@@ -28,7 +28,8 @@ void ATileActor_MilouBone::OnEndTask()
 	UE_LOG(LogTemp, Warning, TEXT("Milou Bone Triggered"));
 	AGameManager* gameManager = AGameManager::GetInstance();
 	gameManager->_milouBonesNumber++;
-	gameManager->OnBoneConsumed.Execute(gameManager->_milouBonesNumber, FColor::Emerald);
+	if(gameManager->OnBoneConsumed.IsBound())
+		gameManager->OnBoneConsumed.Execute(gameManager->_milouBonesNumber, FColor::Emerald);
 	//UE_LOG(LogTemp, Warning, TEXT("Milou bone task end"));
 	//return;
 	Super::OnEndTask();

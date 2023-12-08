@@ -3,3 +3,8 @@
 
 #include "TileActor_Character.h"
 
+void ATileActor_Character::BeginPlay()
+{
+	Super::BeginPlay();
+	angle = EAngle::Right;
+}

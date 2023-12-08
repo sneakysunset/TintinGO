@@ -24,16 +24,11 @@ void AGameManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
-	//if(!IsValid(_currentStateType))
-		_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
+	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 	_currentStateType->OnStateEnter();
 }
 
-void AGameManager::Destroyed()
-{
-	Super::Destroyed();
-	SingletonInstance = nullptr;
-}
+
 
 void AGameManager::ReceiveMilouUIClick()
 {
@@ -48,7 +43,7 @@ void AGameManager::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if(IsValid(this) && IsValid(_currentStateType) && _currentStateType != nullptr)
 	{
-		UE_LOG(LogTemp, Error, TEXT("%s"), *_currentStateType->GetName())
+		//UE_LOG(LogTemp, Error, TEXT("%s"), *_currentStateType->GetName())
 		_currentStateType->OnStateTick(DeltaTime);
 	}
 }

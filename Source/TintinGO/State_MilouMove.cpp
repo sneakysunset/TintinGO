@@ -72,7 +72,13 @@ void UState_MilouMove::PeruvienDetection(int32 x, int32 y, bool isLinkActive) co
 			if(tActor->IsA(ATileActor_Character_Peruvien::StaticClass()))
 			{
 				ATileActor_Character_Peruvien* peruvien = Cast<ATileActor_Character_Peruvien>(tActor);
+				gridM->MarkStepsOnGrid(peruvien->GetCurrentTile());
+				TArray<ATile*> tempList = gridM->GetPath(_milou->GetCurrentTile(), false);
 				peruvien->PeruvienTilePath = _milou->MilouTilePath;
+				for (int32 i = 0; i < tempList.Num(); i++)
+				{
+					peruvien->PeruvienTilePath.Add(tempList[i]);
+				}
 				peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 				UE_LOG(LogTemp, Warning, TEXT("Peruvien detected milou"));
 			}

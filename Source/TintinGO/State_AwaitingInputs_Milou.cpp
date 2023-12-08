@@ -12,7 +12,7 @@ void UState_AwaitingInputs_Milou::OnStateEnter()
 	gridManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
 }
 
-void UState_AwaitingInputs_Milou::ProcessPlayerInputs(ATile* hitTile)
+void UState_AwaitingInputs_Milou::ProcessPlayerInputs()
 {
 	ATile* milouTile = _milou->GetCurrentTile();
 	ATile* tintinTile = _tintin->GetCurrentTile();
@@ -20,7 +20,7 @@ void UState_AwaitingInputs_Milou::ProcessPlayerInputs(ATile* hitTile)
 	check(milouTile);
 	check(tintinTile);
 	check(_gameManager);
-	if (FMath::Abs(hitTile->_row - tintinTile->_row) <= _gameManager->_milouBoneThrowRange && FMath::Abs(hitTile->_column - tintinTile->_column) <= _gameManager->_milouBoneThrowRange && hitTile->_walkable)
+	if (FMath::Abs(_hitTile->_row - tintinTile->_row) <= _gameManager->_milouBoneThrowRange && FMath::Abs(_hitTile->_column - tintinTile->_column) <= _gameManager->_milouBoneThrowRange && _hitTile->_walkable)
 	{
 		if(_milou->MilouTilePath.Num() > 1)
 		{
@@ -29,13 +29,10 @@ void UState_AwaitingInputs_Milou::ProcessPlayerInputs(ATile* hitTile)
 				_milou->MilouTilePath[i]->SetHighlightedPath(false);
 			}
 		}
-		if(_hitTile != nullptr) _hitTile->SetHighlighted(false);
-		if(_hitTile != hitTile)
-			hitTile->SetHighlighted(true);
-		_hitTile = hitTile;
+		_hitTile->SetHighlighted(true);
 		isTileAccessible = true;
 
-		_milou->MilouTilePath = gridManager->GetPath(hitTile);
+		_milou->MilouTilePath = gridManager->GetPath(_hitTile, true);
 		if(_milou->MilouTilePath.Num() > 1)
 		{
 			for (int i = 1; i < _milou->MilouTilePath.Num(); i++)
@@ -46,12 +43,9 @@ void UState_AwaitingInputs_Milou::ProcessPlayerInputs(ATile* hitTile)
 	}
 	else
 	{
-		if(_hitTile != nullptr && _hitTile != hitTile)
-		{
-			_hitTile->SetHighlighted(false);
-			DisableTiles(true, false);
-			_hitTile = hitTile;
-		}
+		check(_hitTile);
+		_hitTile->SetHighlighted(false);
+		DisableTiles(true, false);
 		isTileAccessible = false;
 	}
 }

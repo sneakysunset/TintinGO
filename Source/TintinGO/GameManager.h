@@ -27,17 +27,21 @@ public:
 
 	AGameManager();
 	virtual ~AGameManager() override;
+	UPROPERTY()
 	UState* _currentStateType;
+	UFUNCTION()
 	void StateChange(UState* NewState);
-	virtual void Tick(float DeltaTime) override;
-	virtual void BeginPlay() override;
-	virtual void Destroyed() override;
 	UPROPERTY(EditAnywhere, Category = "Milou Parameters")
 	int32 _milouBoneThrowRange;
+	UPROPERTY()
 	int32 _milouBonesNumber;
 	
 	UFUNCTION(BlueprintCallable)
 	void ReceiveMilouUIClick();
+
+protected:
+	virtual void Tick(float DeltaTime) override;
+	virtual void BeginPlay() override;
 	
 private:
 	// Called when the game starts or when spawned

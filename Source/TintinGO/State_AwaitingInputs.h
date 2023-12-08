@@ -18,7 +18,7 @@ public:
 	virtual void OnStateExit() override;
 	void ProcessMousePositionInput();
 	
-	virtual void ProcessPlayerInputs(ATile* hitTile);
+	virtual void ProcessPlayerInputs();
 	UFUNCTION()
 	virtual void ReceiveLeftMouseClick();
 	UFUNCTION()
@@ -29,5 +29,6 @@ protected:
 	ATile* _hitTile;
 	ATileActor_Character_Milou* _milou;
 	ATileActor_Character_Tintin* _tintin;
+	APlayerController* pc;
 	bool isTileAccessible;
 };

@@ -144,12 +144,14 @@ bool AGridManager::TileIsAvailable(ATile* tile, FVector2D direction)
 	}
 }
 
-TArray<ATile*> AGridManager::GetPath(ATile* endTile)
+TArray<ATile*> AGridManager::GetPath(ATile* endTile, bool getCurrentTile)
 {
 	TArray<ATile*> path;
 	ATile* currentTile = endTile;
 	path.Add(currentTile);
-	while(currentTile->_step > 0)
+	int32 lastStep = 0;
+	if(!getCurrentTile) lastStep = 1;
+	while(currentTile->_step > lastStep)
 	{
 		currentTile = GetNextTileInPath(currentTile);
 		path.Add(currentTile);
