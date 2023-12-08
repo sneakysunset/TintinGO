@@ -68,6 +68,8 @@ public:
     TArray<FTileArray> _gridTiles;
     UPROPERTY()
     TArray<ATileActor_Character_Peruvien*> _peruviens;
+    UPROPERTY()
+    TArray<ATileActor_Character_Condor*> _condors;
 
 private:
     static AGridManager* SingletonInstance;

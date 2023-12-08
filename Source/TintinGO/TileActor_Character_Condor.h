@@ -16,8 +16,17 @@ class TINTINGO_API ATileActor_Character_Condor : public ATileActor_Character
 	
 	ATileActor_Character_Condor();
 public:
-	static ATileActor_Character_Condor* GetInstance();
-	static ATileActor_Character_Condor* SingletonInstance;
+	UPROPERTY(EditAnywhere)
+	ATile* nest1Tile;
+	
+	UPROPERTY(EditAnywhere)
+	ATile* endNest1Tile;
+	
+	UPROPERTY(EditAnywhere)
+	ATile* nest2Tile;
+	
+	UPROPERTY(EditAnywhere)
+	ATile* endNest2Tile;
 
 	bool isWaitLastRound;
 };

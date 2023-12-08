@@ -23,6 +23,8 @@ void UState_CheckWinConditions::OnStateEnter()
 		//_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 		if (ATileActor_Character_Condor::GetInstance() != nullptr)
 		{
+			UE_LOG(LogTemp, Warning, TEXT("ATileActor_Character_Condor != null"));
+			
 			if (ATileActor_Character_Condor::GetInstance()->isWaitLastRound == true)
 			{
 				UE_LOG(LogTemp, Warning, TEXT("UState_CondorAttack"));

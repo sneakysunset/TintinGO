@@ -142,8 +142,9 @@ void ATile::AddCondor()
 	condor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 	condor->SetCurrentTile(this);
 	condor->SetActorLocation(condor->GetCurrentTile()->GetTileActorPosition(condor));
-
+	ATileActor_Character_Condor::SingletonInstance = condor;
 	AGridManager::GetInstance()->_nest1Tile = this;
+	UE_LOG(LogTemp, Warning, TEXT("ATileActor_Character_Condor != null"));
 }
 
 void ATile::SetHighlighted(bool toHightlight) const
@@ -259,7 +260,8 @@ void ATile::AddTileActors()
 #endif
 			break;
 		case ETileActorType::Condor:
-			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
+			tActor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP->GeneratedClass, position, rotation, params);
+			_gridManager->_condors.Add(Cast<ATileActor_Character_Condor>(tActor));
 			//tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Condor")));
 			return;
 		default:

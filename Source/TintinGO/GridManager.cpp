@@ -3,9 +3,7 @@
 #include "Barrier.h"
 #include "State_TA_Move.h"
 #include "Tile.h"
-#include "TileActor_Character_Condor.h"
 #include "TileActor_Character_Milou.h"
-#include "TileActor_Character_Tintin.h"
 #include "Math/UnrealMathUtility.h"
 #include "Engine/World.h"
 
