@@ -18,4 +18,7 @@ public:
 private:
 	ATileActor_Character_Milou* _milou;
 	UBarrier* _barrier;
+
+	void PeruvienDetectionAllDirection() const;
+	void PeruvienDetection(int32 x, int32 y, bool isLinkActive) const;
 };

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "TileActor.h"
-#include "Barrier.h"
 #include "TileActor_Character.generated.h"
 class ATile;
 UCLASS()
@@ -14,7 +13,10 @@ class TINTINGO_API ATileActor_Character : public ATileActor
 
 public:
 	void ChangeTile(UBarrier* barrier, ATile* previousTile);
+	ATile* GetNextTile() const { return _nextTile;}
+	void SetNextTile(ATile* tile){_nextTile = tile;}
 	
 protected:
+	ATile* _nextTile;
 	virtual void OnEndTask() override{}
 };

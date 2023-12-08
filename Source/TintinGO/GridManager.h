@@ -49,6 +49,7 @@ public:
     UPROPERTY(EditAnywhere)
     UBlueprint* _condorBP;
     
+    void ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile);
     void MarkStepsOnGrid(ATile* CenterTile);
     void SetStepOnAdjacentsRecursive(ATile* tile);
     void SetStepOnAdjacentTile(ATile* tile, FVector2D direction);

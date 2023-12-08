@@ -3,5 +3,13 @@
 
 #include "CoreUI.h"
 
+#include "GameManager.h"
+
+
+void UCoreUI::NativeConstruct()
+{
+	Super::NativeConstruct();
+
+}
 
 

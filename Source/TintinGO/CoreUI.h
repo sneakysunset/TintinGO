@@ -16,12 +16,13 @@ class TINTINGO_API UCoreUI : public UUserWidget
 {
 	GENERATED_BODY()
 public:
+	virtual void NativeConstruct() override;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UButton> ButtonMilou;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UCanvasPanel> Canvas;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UTextBlock> BoneNumber_Text;
-
+	void ChangeTextValue(int32 newValue, FColor DisabledColor);
 
 };

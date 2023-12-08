@@ -16,11 +16,6 @@ public class TintinGO : ModuleRules
 			"EnhancedInput"
 		});
 
-		//PublicIncludePaths.AddRange(new string[]
-		//{
-		//	"EnhancedInput/Public"
-		//});
-
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
 		// Uncomment if you are using Slate UI

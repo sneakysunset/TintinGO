@@ -2,7 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "TileActor_Character.h"
 #include "Tile.generated.h"
 
 class AGridManager;
@@ -38,7 +37,7 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		ETileType _tileType {ETileType::Neutral};
-	
+	virtual void BeginPlay() override;
 	
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		bool _walkable = true;
@@ -111,5 +110,9 @@ private:
 	UFUNCTION(CallInEditor)
 		void BlueprintEditorTick(float DeltaTime);
 
-	
+	void AddTintin();
+	UPROPERTY(EditAnywhere)
+	UBlueprint* _tintinBP;
+	UPROPERTY(EditAnywhere)
+	UBlueprint* _milouBP;
 };
