@@ -3,8 +3,12 @@
 
 #include "Tile.h"
 
+#include "Barrier.h"
 #include "GridManager.h"
+#include "State_TA_Move.h"
+#include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Peruvien.h"
+#include "TileActor_Character_Tintin.h"
 #include "TileActor_MilouBone.h"
 
 ATile::ATile() 
@@ -24,6 +28,14 @@ ATile::ATile()
 	_upLink = false;
 	_downLink = false;
 	_step = -1;
+}
+
+void ATile::BeginPlay()
+{
+	Super::BeginPlay();
+	AddTileActors();
+	if(_tileType == ETileType::StartingPosition)
+		AddTintin();
 }
 
 void ATile::Tick(float DeltaTime)
@@ -72,6 +84,28 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 	else {
 		_staticMeshComponent->SetMaterial(0, _unwalkableMat);
 	}
+}
+
+void ATile::AddTintin()
+{
+	FActorSpawnParameters params;
+	params.bNoFail = true;
+	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	const FVector position = GetActorLocation();
+	const FRotator rotation = FRotator(0, 0, 0);
+	ATileActor_Character_Tintin* character = GetWorld()->SpawnActor<ATileActor_Character_Tintin>(_tintinBP->GeneratedClass, position, rotation, params);
+	ATileActor_Character_Milou* milou = GetWorld()->SpawnActor<ATileActor_Character_Milou>(_milouBP->GeneratedClass, position, rotation, params);
+
+#if WITH_EDITOR
+	character->SetActorLabel(FString::Printf(TEXT("Tintin")));
+	milou->SetActorLabel(FString::Printf(TEXT("Milou")));
+#endif
+	character->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+	milou->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+	milou->SetCurrentTile(this);
+	character->SetCurrentTile(this);
+	character->SetActorLocation(GetTileActorPosition(character));
+	milou->SetActorLocation(GetTileActorPosition(milou));
 }
 
 void ATile::SetHighlighted(bool toHightlight) const
@@ -129,7 +163,7 @@ FVector ATile::GetTileActorPosition(ATileActor* tileActor)
 	}
 	FVector destination = GetActorLocation() + tileActor->GetActorScale().Z * 50 * FVector::UpVector;
 	
-	if(_tileActors.Num() == 1)
+	//if(_tileActors.Num() == 1)
 		return destination;
 	
 	for(int i = 0; i < _tileActors.Num(); i++)
@@ -146,6 +180,7 @@ FVector ATile::GetTileActorPosition(ATileActor* tileActor)
 void ATile::AddTileActors()
 {
 	TArray<AActor*> AttachedActors;
+	_gridManager = AGridManager::GetInstance();
 	GetAttachedActors(AttachedActors);
 	for (auto* Attached : AttachedActors)
 	{
@@ -164,7 +199,9 @@ void ATile::AddTileActors()
 		{
 		case ETileActorType::Bone:
 			tActor = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP->GeneratedClass, position, rotation, params);
+#if WITH_EDITOR
 			tActor->SetActorLabel(FString::Printf(TEXT("Item_Bone")));
+#endif
 			break;
 		case ETileActorType::Clue:
 			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
@@ -172,7 +209,11 @@ void ATile::AddTileActors()
 			return;
 		case ETileActorType::Peruvien:
 			tActor = GetWorld()->SpawnActor<ATileActor_Character_Peruvien>(_peruvienBP->GeneratedClass, position, rotation, params);
+			_gridManager->_peruviens.Add(Cast<ATileActor_Character_Peruvien>(tActor));
+			UE_LOG(LogTemp, Warning, TEXT("peruviens num : %d"),_gridManager->_peruviens.Num());
+#if WITH_EDITOR
 			tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Peruvien")));
+#endif
 			break;
 		case ETileActorType::Condor:
 			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
@@ -181,10 +222,11 @@ void ATile::AddTileActors()
 		default:
 			break;
 		}
+		_tileActors.Add(tActor);
 		tActor->SetActorLocation(GetTileActorPosition(tActor));
 		tActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 		tActor->SetCurrentTile(this);
-		_tileActors.Add(tActor);
+		//_tileActors.Add(tActor);
 	}
 }
 
@@ -242,6 +284,7 @@ void ATile::RefreshLinks()
 		_downLink = false;
 	}
 }
+
 
 
 

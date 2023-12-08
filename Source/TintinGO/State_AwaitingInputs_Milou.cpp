@@ -63,16 +63,14 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 		if(_milou->isBoundToTintin)
 			_milou->isBoundToTintin = false;
 		_gameManager->StateChange(NewObject<UState_MilouMove>(UState_MilouMove::StaticClass()));
+		_gameManager->_milouBonesNumber--;
+		_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
 	}
 
 }
 
 void UState_AwaitingInputs_Milou::ReceiveMiloClickDelegate()
 {
-	if(_gameManager->OnBoneConsumed.IsBound())
-	{
-		_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
-	}
 	_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 }
 

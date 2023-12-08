@@ -9,6 +9,7 @@
 void UState_PlayerMove::OnStateEnter()
 {
 	UState::OnStateEnter();
+	AGridManager* gridManager = AGridManager::GetInstance();
 	UE_LOG(LogTemp, Warning, TEXT("Player Move State Enter"));
 	
 	_tintin = ATileActor_Character_Tintin::GetInstance();
@@ -19,17 +20,15 @@ void UState_PlayerMove::OnStateEnter()
 	ATile* previousTintinTile =_tintin->GetCurrentTile();
 	ATile* previousMilouTile =_milou->GetCurrentTile();
 	
-	previousTintinTile->_tileActors.Remove(_tintin);
+	//previousTintinTile->_tileActors.Remove(_tintin);
 	_tintin->SetCurrentTile(_tintin->GetNextTile());
 	
 	if(_milou->isBoundToTintin)
 	{
-		if(previousMilouTile->_tileActors.Contains(_milou))
-			previousMilouTile->_tileActors.Remove(_milou);
 		_milou->SetCurrentTile(_milou->GetNextTile());
-		_milou->ChangeTile(_barrier, previousMilouTile);
+		gridManager->ChangeTile(_barrier, previousMilouTile, _milou->GetCurrentTile());
 	}
-	_tintin->ChangeTile(_barrier, previousTintinTile);
+	gridManager->ChangeTile(_barrier, previousTintinTile, _tintin->GetCurrentTile());
 	_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 }
 

@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "State_TActor.h"
+#include "Tile.h"
 #include "GameFramework/Actor.h"
 #include "TileActor.generated.h"
 
@@ -15,6 +16,7 @@ class TINTINGO_API ATileActor : public AActor
 public:
 	virtual void OnEndTask();
 	virtual void TriggerBody();
+	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY()
 	UState_TActor* _currentState_TA;
@@ -23,7 +25,15 @@ public:
 	virtual void SetCurrentTile(ATile* tile)
 	{
 		check(tile != nullptr);
+		if(IsValid(_currentTile) && _currentTile->_tileActors.Contains(this))
+		{
+			_currentTile->_tileActors.Remove(this);
+		}
 		_currentTile = tile;
+		if(!tile->_tileActors.Contains(this))
+		{
+			tile->_tileActors.Add(this);
+		}
 	}
 	
 	bool _isTaskOver;
@@ -37,6 +47,5 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	virtual void Tick(float DeltaTime) override;
-
+	
 };

@@ -10,16 +10,14 @@ AUIManager::AUIManager()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	if (YourWidgetClass)
+	if (IsValid(YourWidgetClass))
 	{
 		_coreUI = CreateWidget<UCoreUI>(GetWorld(), YourWidgetClass);
 
-		if (_coreUI)
+		if (IsValid(_coreUI))
 		{
 			_coreUI->AddToViewport();
 		}
-		AGameManager::GetInstance()->OnBoneConsumed.BindDynamic(this, &AUIManager::ChangeTextValue);
-		ChangeTextValue(0, FColor::Emerald);
 	}
 }
 
@@ -27,18 +25,24 @@ AUIManager::AUIManager()
 void AUIManager::BeginPlay()
 {
 	Super::BeginPlay();
-}
-
-// Called every frame
-void AUIManager::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
+	//ChangeTextValue(0, FColor::Emerald);
+	if (IsValid(YourWidgetClass))
+	{
+		_coreUI = CreateWidget<UCoreUI>(GetWorld(), YourWidgetClass);
+	}
+	_coreUI->AddToViewport(9999);
+	AGameManager* gameManager = AGameManager::GetInstance();
+	gameManager->OnBoneConsumed.BindDynamic(this, &AUIManager::ChangeTextValue);
+	if(gameManager->OnBoneConsumed.IsBound())
+	{
+		gameManager->OnBoneConsumed.Execute(0, FColor::Emerald);
+	}
 }
 
 void AUIManager::ChangeTextValue(int32 newValue, FColor DisabledColor)
 {
 	_coreUI->BoneNumber_Text->SetText(FText(FText::FromString("X  " + newValue)));
+	UE_LOG(LogTemp, Warning, TEXT("boneNumber %d"), newValue);
 	if(newValue == 0)
 	{
 		_coreUI->ButtonMilou->SetIsEnabled(false);
@@ -50,3 +54,6 @@ void AUIManager::ChangeTextValue(int32 newValue, FColor DisabledColor)
 		_coreUI->BoneNumber_Text->SetColorAndOpacity(FColor::Black);
 	}
 }
+
+
+

@@ -26,6 +26,7 @@ public:
 	FOnBoneConsumed OnBoneConsumed;
 
 	AGameManager();
+	virtual ~AGameManager() override;
 	UState* _currentStateType;
 	void StateChange(UState* NewState);
 	virtual void Tick(float DeltaTime) override;

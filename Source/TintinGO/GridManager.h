@@ -41,10 +41,7 @@ public:
     virtual bool ShouldTickIfViewportsOnly() const override;
     UPROPERTY(EditAnywhere)
     UBlueprint* _tileBP;
-    UPROPERTY(EditAnywhere)
-    UBlueprint* _tintinBP;
-    UPROPERTY(EditAnywhere)
-    UBlueprint* _milouBP;
+    void ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile);
     void MarkStepsOnGrid(ATile* CenterTile);
     void SetStepOnAdjacentsRecursive(ATile* tile);
     void SetStepOnAdjacentTile(ATile* tile, FVector2D direction);

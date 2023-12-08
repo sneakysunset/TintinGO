@@ -2,6 +2,7 @@
 
 #include "GameManager.h"
 #include "State_AwaitingInputs.h"
+#include "State_PeruviensMove.h"
 
 
 void UState_TriggerItemsCharacters::OnStateEnter()
@@ -31,7 +32,7 @@ void UState_TriggerItemsCharacters::OnStateTick(float DeltaTime)
 
 	if(_tileActors.Num() == 0)
 	{
-		_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
+		_gameManager->StateChange(NewObject<UState_PeruviensMove>(UState_PeruviensMove::StaticClass()));
 	}
 }
 

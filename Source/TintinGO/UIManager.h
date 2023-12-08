@@ -15,14 +15,13 @@ public:
 	// Sets default values for this actor's properties
 	AUIManager();
 	UPROPERTY(EditAnywhere, Category = "UI")
-	TSubclassOf<class UCoreUI> YourWidgetClass;
+	TSubclassOf<UCoreUI> YourWidgetClass;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	UCoreUI* _coreUI;
 public:	
 	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 	UFUNCTION()
 	void ChangeTextValue(int32 newValue, FColor DisabledColor);
 };

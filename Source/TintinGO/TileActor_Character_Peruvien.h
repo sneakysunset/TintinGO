@@ -17,10 +17,9 @@ class TINTINGO_API ATileActor_Character_Peruvien : public ATileActor_Character
 	GENERATED_BODY()
 
 	ATileActor_Character_Peruvien();
+public:
+	TArray<ATile*> PeruvienTilePath;
+	ATile* _startingTile;
+	virtual void BeginPlay() override;
 
-	virtual void BeginPlay() override
-	{
-		Super::BeginPlay();
-		AGridManager::GetInstance()->_peruviens.Add(this);
-	}
 };

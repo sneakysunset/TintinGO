@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Tintin_GO.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Tintin_GO.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\Tintin_GOEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\Tintin_GO">
+      <UniqueIdentifier>{286F0BCC-51A1-3C89-9E03-D13610FF7065}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Tintin_GO\Tintin_GO.Build.cs">
+      <Filter>Source\Tintin_GO</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Tintin_GO\Tintin_GO.cpp">
+      <Filter>Source\Tintin_GO</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Tintin_GO\Tintin_GO.h">
+      <Filter>Source\Tintin_GO</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,4 +1,7 @@
 #include "GridManager.h"
+
+#include "Barrier.h"
+#include "State_TA_Move.h"
 #include "Tile.h"
 #include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Tintin.h"
@@ -39,33 +42,7 @@ void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
-	for (int i = 0; i < _gridTiles.Num(); i++)
-	{
-		for (int j = 0; j < _gridTiles[i].Tiles.Num(); j++)
-		{
-			if(_gridTiles[i].Tiles[j]->_tileType == ETileType::StartingPosition)
-			{
-				ATile* tile = _gridTiles[i].Tiles[j];
-				FActorSpawnParameters params;
-				params.bNoFail = true;
-				params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				FVector position = tile->GetActorLocation();
-				FRotator rotation = FRotator(0, 0, 0);
-				ATileActor_Character_Tintin* character = GetWorld()->SpawnActor<ATileActor_Character_Tintin>(_tintinBP->GeneratedClass, position, rotation, params);
-				ATileActor_Character_Milou* milou = GetWorld()->SpawnActor<ATileActor_Character_Milou>(_milouBP->GeneratedClass, position, rotation, params);
-
-				character->SetActorLabel(FString::Printf(TEXT("Tintin")));
-				milou->SetActorLabel(FString::Printf(TEXT("Milou")));
-				character->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
-				milou->AttachToActor(tile, FAttachmentTransformRules::KeepWorldTransform);
-				milou->SetCurrentTile(_gridTiles[i].Tiles[j]);
-				character->SetCurrentTile(_gridTiles[i].Tiles[j]);
-				character->SetActorLocation(character->GetCurrentTile()->GetTileActorPosition(character));
-				milou->SetActorLocation(milou->GetCurrentTile()->GetTileActorPosition(milou));
-				return;
-			}
-		}
-	}
+	//UE_LOG(LogTemp, Warning , TEXT("gridTiles num = %d"), _gridTiles.Num());
 }
 
 bool AGridManager::ShouldTickIfViewportsOnly() const
@@ -81,7 +58,31 @@ bool AGridManager::ShouldTickIfViewportsOnly() const
 }
 
 
+void AGridManager::ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile)
+{
+	for(auto body : previousTile->_tileActors)
+	{
+		if(body == nullptr) continue;
+		UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
+		
+		if(!barrier->_actors.Contains(body))
+		{
+			body->ChangeState(state);
+			barrier->_actors.Add(body);
+		}
+	}
 
+	for(auto body : currentTile->_tileActors)
+	{
+		if(body == nullptr) continue;
+		UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
+		if(!barrier->_actors.Contains(body))
+		{
+			body->ChangeState(state);
+			barrier->_actors.Add(body);
+		}
+	}
+}
 
 void AGridManager::MarkStepsOnGrid(ATile* CenterTile)
 {
@@ -201,7 +202,9 @@ void AGridManager::InitializeGrid()
 			FRotator SpawnRotation = FRotator(0, 0, 0);
 			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(_tileBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
 			SpawnedTile->SetActorScale3D(FVector(_tileWidth, _tileWidth, 1));
+#if WITH_EDITOR
 			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), static_cast<int>(i), static_cast<int>(j)));
+#endif
 			SpawnedTile->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
 			SpawnedTile->SetActorLocation(SpawnLocation);
 			SpawnedTile->_row = i;
@@ -218,11 +221,14 @@ void AGridManager::InitializeGrid()
 
 void AGridManager::UpdateLinks()
 {
-	for(auto tile : _gridTiles)
+
+	//UE_LOG(LogTemp, Warning, TEXT("grid tiles size %d"), tile.Tiles.Num());
+	for(int32 i = 0; i < _gridTiles.Num(); i++)
 	{
-		for(auto gtile : tile.Tiles)
+		for (int32 j = 0; j < _gridTiles[i].Tiles.Num(); j++)
 		{
-			gtile->RefreshLinks();
+			_gridTiles[i].Tiles[j]->_gridManager = this;
+			_gridTiles[i].Tiles[j]->RefreshLinks();
 		}
 	}
 }
@@ -239,7 +245,7 @@ ATile* AGridManager::WorldCoordinatesToTilePosition(const FVector& worldCoordina
 
 ATile* AGridManager::GetTile(int32 i, int32 j)
 {
-	if (i >= 0 && i < _gridTiles.Num() && j >= 0 && j < _gridTiles[0].Tiles.Num())
+	if (i >= 0 && i < _gridTiles.Num() && j >= 0 && j < _gridTiles[i].Tiles.Num())
 	{
 		return _gridTiles[i].Tiles[j];
 	}

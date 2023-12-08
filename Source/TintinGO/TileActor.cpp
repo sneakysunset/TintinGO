@@ -9,8 +9,10 @@
 void ATileActor::OnEndTask()
 {
 	UE_LOG(LogTemp, Warning, TEXT("DESTROY"));
-	_currentTile->_tileActors.Remove(this);
-	this->Destroy();
+	if(_currentTile->_tileActors.Contains(this))
+		_currentTile->_tileActors.Remove(this);
+	
+	Destroy();
 }
 
 void ATileActor::TriggerBody()
@@ -22,6 +24,7 @@ void ATileActor::ChangeState(UState_TActor* newState)
 {
 	_currentState_TA->OnStateExit();
 	_currentState_TA = newState;
+
 	newState->SetTileActor(this);
 	_currentState_TA->OnStateEnter();
 }
