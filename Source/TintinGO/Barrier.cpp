@@ -25,10 +25,16 @@ void UBarrier::OnTick(float DeltaTime)
 		if(_actors[i] == nullptr || _actors[i]->_currentState_TA->_isStateComplete)
 		{
 			_actors[i]->ChangeState(NewObject<UState_TA_Neutral>(UState_TA_Neutral::StaticClass()));
+
 			UE_LOG(LogTemp, Warning, TEXT("Barrier num %d %s on Tile : %d %d"), _actors.Num(), *_actors[i]->GetName(), _actors[i]->GetCurrentTile()->_row,_actors[i]->GetCurrentTile()->_column);
 			_actors.RemoveAt(i);
 			i--;
 		}
 	}
-	if(_actors.Num() == 0) _isBarriereCompleted = true;
+	if(_actors.Num() == 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Barrier Complete"));
+		_isBarriereCompleted = true;
+	}
+	
 }

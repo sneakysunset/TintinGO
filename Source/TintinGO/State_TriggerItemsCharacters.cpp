@@ -2,6 +2,7 @@
 
 #include "GameManager.h"
 #include "State_AwaitingInputs.h"
+#include "State_CheckWinConditions.h"
 #include "State_PeruviensMove.h"
 
 
@@ -15,11 +16,26 @@ void UState_TriggerItemsCharacters::OnStateEnter()
 		_tileActors.Add(_tintin->GetCurrentTile()->_tileActors[i]);
 		_tintin->GetCurrentTile()->_tileActors[i]->TriggerBody();
 	}
+
+	if (_tileActors.Num() > 0)
+	{
+		for(int i = _tileActors.Num() - 1; i >= 0; i--)
+		{
+			if(_tileActors[i]->_isTaskOver)
+			{
+				_tileActors[i]->OnEndTask();
+				_tileActors.RemoveAt(i);
+			}
+		}
+	}
+
+	_gameManager->StateChange(NewObject<UState_CheckWinConditions>(UState_CheckWinConditions::StaticClass()));
 }
 
 void UState_TriggerItemsCharacters::OnStateTick(float DeltaTime)
 {
 	UState::OnStateTick(DeltaTime);
+
 	for(int i = 0; i < _tileActors.Num(); i++)
 	{
 		if(_tileActors[i]->_isTaskOver)

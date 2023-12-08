@@ -9,9 +9,13 @@ class AGridManager;
 UENUM(BlueprintType)
 enum class ETileType : uint8
 {
-	Neutral = 0b0000 UMETA(DisplayName = "Neutral"),
-	StartingPosition = 0b0001 UMETA(DisplayName = "Starting Position"),
-	EndingPosition = 0b0010 UMETA(DisplayName = "Ending Position")
+	Neutral = 0 UMETA(DisplayName = "Neutral"),
+	StartingPosition = 1 UMETA(DisplayName = "Starting Position"),
+	EndingPosition = 2 UMETA(DisplayName = "Ending Position"),
+	Nest1Position = 4 UMETA(DisplayName = "Nest1"),
+	EndNest1Position = 8 UMETA(DisplayName = "End Nest1"),
+	Nest2Position = 16 UMETA(DisplayName = "Nest2"),
+	EndNest2Position = 32 UMETA(DisplayName = "End Nest2")
 };
 
 UENUM(BlueprintType)
@@ -119,7 +123,7 @@ private:
 	bool _walkableChecker = true;
 
 	UPROPERTY()
-	UMaterialInstanceDynamic* DynamicMat(UMaterialInterface* mat);
+	UMaterialInstanceDynamic* DynamicMat(UMaterialInterface* mat) const;
 
 	UPROPERTY()
 	ETileType _tileTypeChecker {ETileType::Neutral};
@@ -133,15 +137,20 @@ private:
 	UFUNCTION()
 	void AddTintin();
 
+	void AddCondor();
+
 	UPROPERTY(EditAnywhere)
 	UBlueprint* _tintinBP;
 	
 	UPROPERTY(EditAnywhere)
 	UBlueprint* _milouBP;
+
 	
 protected:
 	virtual void BeginPlay() override;
 	
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere)
+	UBlueprint* _condorBP;
 };

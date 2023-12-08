@@ -11,13 +11,58 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18a00cf5-8619-465a-9e48-0ecda5c9207c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Content/Models/Corps.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/Museau.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/cactus.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/condor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/condor_vol.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/herbe_1_Plane_016.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/herbe_2_Plane_018.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/herbe_3_Plane_019.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/herbe_4_Plane_020.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/milou_Retopo_Sphere.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/milou_Sphere_008.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/milou_Sphere_009.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/nid_condor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/os.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/peruvien.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/plante.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/plateau.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_1.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_2.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_3.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_4.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_5.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_6.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/Condor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/CondorVol.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/NidCondor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/Peruvien.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/Plateau.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/Tintin.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/Tour.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/condor_DefaultMaterial_BaseColor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/condor_vol_DefaultMaterial_BaseColor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/nid_condor_DefaultMaterial_BaseColor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/peruvien_yeux_BaseColor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/plateau_DefaultMaterial_BaseColor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/tintin_DefaultMaterial_BaseColor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/textures/tour_DefaultMaterial_BaseColor.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/tintin.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/tour.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/yeux.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Models/yeux_001.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestFlo.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEditor.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEditor.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Condor_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Condor_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Peruvien_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Peruvien_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Tintin_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Tintin_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/FirstMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/FirstMap.umap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Condor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Condor.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +90,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;links&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;nouveauMerge&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -202,6 +247,15 @@
       <workItem from="1701421755116" duration="496000" />
       <workItem from="1701427935679" duration="5612000" />
       <workItem from="1701445660903" duration="5528000" />
+      <workItem from="1701709187456" duration="1479000" />
+      <workItem from="1701722726232" duration="2152000" />
+      <workItem from="1701725323786" duration="1930000" />
+      <workItem from="1701796305862" duration="2720000" />
+      <workItem from="1701869188215" duration="977000" />
+      <workItem from="1701965489364" duration="14315000" />
+      <workItem from="1702027680352" duration="767000" />
+      <workItem from="1702028648911" duration="8174000" />
+      <workItem from="1702056240931" duration="1323000" />
     </task>
     <servers />
   </component>

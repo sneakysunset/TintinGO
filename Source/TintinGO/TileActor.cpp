@@ -9,6 +9,7 @@
 void ATileActor::OnEndTask()
 {
 	UE_LOG(LogTemp, Warning, TEXT("DESTROY"));
+
 	if(_currentTile->_tileActors.Contains(this))
 		_currentTile->_tileActors.Remove(this);
 	

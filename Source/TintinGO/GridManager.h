@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Tile.h"
+#include "Barrier.h"
 #include "GridManager.generated.h"
 
 class ATileActor_Character_Peruvien;
@@ -62,19 +63,32 @@ public:
 
     UFUNCTION()
     ATile* GetTile(int32 i, int32 j);
+    ATile* GetEndTile() const{return _endTile;}
+    
+    ATile* _endTile;
+    ATile* _nest1Tile;
+    ATile* _endNest1Tile;
+    ATile* _nest2Tile;
+    ATile* _endNest2Tile;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
     bool _useEditorTick;
-    
+
+
     UPROPERTY()
     TArray<FTileArray> _gridTiles;
     
     UPROPERTY()
     TArray<ATileActor_Character_Peruvien*> _peruviens;
+
+    UPROPERTY()
+    TArray<ATileActor_Character_Condor*> _condors;
     
 protected:
     virtual void BeginPlay() override;
+
     virtual void Tick(float DeltaTime) override;
+
     virtual bool ShouldTickIfViewportsOnly() const override;
     
 private:

@@ -21,21 +21,21 @@ public:
 	UPROPERTY()
 	UState_TActor* _currentState_TA;
 	void ChangeState(UState_TActor* newState);
+	
 	virtual ATile* GetCurrentTile() const{return _currentTile;}
 	virtual void SetCurrentTile(ATile* tile)
 	{
-		check(tile != nullptr);
 		if(IsValid(_currentTile) && _currentTile->_tileActors.Contains(this))
 		{
 			_currentTile->_tileActors.Remove(this);
 		}
 		_currentTile = tile;
-		if(!tile->_tileActors.Contains(this))
+		
+		if(IsValid(tile) && !tile->_tileActors.Contains(this))
 		{
 			tile->_tileActors.Add(this);
 		}
 	}
-	
 	bool _isTaskOver;
 
 	UPROPERTY(EditAnywhere)

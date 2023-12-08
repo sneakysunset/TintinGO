@@ -14,4 +14,19 @@ class TINTINGO_API ATileActor_Character_Condor : public ATileActor_Character
 {
 	GENERATED_BODY()
 	
+	ATileActor_Character_Condor();
+public:
+	UPROPERTY(EditAnywhere)
+	ATile* nest1Tile;
+	
+	UPROPERTY(EditAnywhere)
+	ATile* endNest1Tile;
+	
+	UPROPERTY(EditAnywhere)
+	ATile* nest2Tile;
+	
+	UPROPERTY(EditAnywhere)
+	ATile* endNest2Tile;
+
+	bool isWaitLastRound;
 };

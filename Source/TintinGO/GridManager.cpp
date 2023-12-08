@@ -4,7 +4,6 @@
 #include "State_TA_Move.h"
 #include "Tile.h"
 #include "TileActor_Character_Milou.h"
-#include "TileActor_Character_Tintin.h"
 #include "Math/UnrealMathUtility.h"
 #include "Engine/World.h"
 
@@ -42,7 +41,6 @@ void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
-	//UE_LOG(LogTemp, Warning , TEXT("gridTiles num = %d"), _gridTiles.Num());
 }
 
 bool AGridManager::ShouldTickIfViewportsOnly() const

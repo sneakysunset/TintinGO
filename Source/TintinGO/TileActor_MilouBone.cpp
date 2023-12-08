@@ -25,7 +25,7 @@ void ATileActor_MilouBone::Tick(float DeltaTime)
 
 void ATileActor_MilouBone::OnEndTask()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Milou Bone Triggered"));
+	UE_LOG(LogTemp, Warning, TEXT("Milou Bone Triggered : %p"), _currentTile);
 	AGameManager* gameManager = AGameManager::GetInstance();
 	gameManager->_milouBonesNumber++;
 	if(gameManager->OnBoneConsumed.IsBound())
