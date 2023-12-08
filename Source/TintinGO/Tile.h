@@ -111,8 +111,11 @@ private:
 		void BlueprintEditorTick(float DeltaTime);
 
 	void AddTintin();
+	void AddCondor();
 	UPROPERTY(EditAnywhere)
 	UBlueprint* _tintinBP;
 	UPROPERTY(EditAnywhere)
 	UBlueprint* _milouBP;
+	UPROPERTY(EditAnywhere)
+	UBlueprint* _condorBP;
 };

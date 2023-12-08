@@ -43,67 +43,6 @@ void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
-
-	ATile* startTile = nullptr;
-	
-	for (int i = 0; i < _gridTiles.Num(); i++)
-	{
-		for (int j = 0; j < _gridTiles[i].Tiles.Num(); j++)
-		{
-			if(_gridTiles[i].Tiles[j]->_tileType == ETileType::StartingPosition)
-			{
-				startTile = _gridTiles[i].Tiles[j];
-				FActorSpawnParameters params;
-				params.bNoFail = true;
-				params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				FVector position = startTile->GetActorLocation();
-				FRotator rotation = FRotator(0, 0, 0);
-				ATileActor_Character_Tintin* character = GetWorld()->SpawnActor<ATileActor_Character_Tintin>(_tintinBP->GeneratedClass, position, rotation, params);
-				ATileActor_Character_Milou* milou = GetWorld()->SpawnActor<ATileActor_Character_Milou>(_milouBP->GeneratedClass, position, rotation, params);
-
-				character->SetActorLabel(FString::Printf(TEXT("Tintin")));
-				milou->SetActorLabel(FString::Printf(TEXT("Milou")));
-				character->AttachToActor(startTile, FAttachmentTransformRules::KeepWorldTransform);
-				milou->AttachToActor(startTile, FAttachmentTransformRules::KeepWorldTransform);
-				milou->SetCurrentTile(_gridTiles[i].Tiles[j]);
-				character->SetCurrentTile(_gridTiles[i].Tiles[j]);
-				character->SetActorLocation(character->GetCurrentTile()->GetTileActorPosition(character));
-				milou->SetActorLocation(milou->GetCurrentTile()->GetTileActorPosition(milou));
-			}
-			else if (_gridTiles[i].Tiles[j]->_tileType == ETileType::Nest1Position)
-			{
-				FActorSpawnParameters params;
-				params.bNoFail = true;
-				params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				FVector position = _gridTiles[i].Tiles[j]->GetActorLocation();
-				FRotator rotation = FRotator(0, 0, 0);
-				ATileActor_Character_Condor* condor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP->GeneratedClass, position, rotation, params);
-
-				condor->SetActorLabel(FString::Printf(TEXT("Condor")));
-				condor->AttachToActor(_gridTiles[i].Tiles[j], FAttachmentTransformRules::KeepWorldTransform);
-				condor->SetCurrentTile(_gridTiles[i].Tiles[j]);
-				condor->SetActorLocation(condor->GetCurrentTile()->GetTileActorPosition(condor));
-
-				_nest1Tile = _gridTiles[i].Tiles[j];
-			}
-			else if (_gridTiles[i].Tiles[j]->_tileType == ETileType::EndNest1Position)
-			{
-				_endNest1Tile = _gridTiles[i].Tiles[j];
-			}
-			else if (_gridTiles[i].Tiles[j]->_tileType == ETileType::Nest2Position)
-			{
-				_nest2Tile = _gridTiles[i].Tiles[j];
-			}
-			else if (_gridTiles[i].Tiles[j]->_tileType == ETileType::EndNest2Position)
-			{
-				_endNest2Tile = _gridTiles[i].Tiles[j];
-			}
-			else if (_gridTiles[i].Tiles[j]->_tileType == ETileType::EndingPosition)
-			{
-				_endTile = _gridTiles[i].Tiles[j];
-			}
-		}
-	}
 }
 
 bool AGridManager::ShouldTickIfViewportsOnly() const

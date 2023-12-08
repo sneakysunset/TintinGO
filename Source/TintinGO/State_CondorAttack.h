@@ -26,6 +26,4 @@ private:
 	ATileActor_Character_Condor* _condor;
 	UPROPERTY()
 	UBarrier* _barrier;
-	UPROPERTY()
-	AGridManager* _gridManager;
 };

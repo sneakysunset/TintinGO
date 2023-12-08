@@ -27,6 +27,7 @@ public:
 
 	AGameManager();
 	virtual ~AGameManager() override;
+	UPROPERTY()
 	UState* _currentStateType;
 	void StateChange(UState* NewState);
 	virtual void Tick(float DeltaTime) override;

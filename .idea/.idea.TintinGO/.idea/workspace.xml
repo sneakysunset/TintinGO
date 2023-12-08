@@ -11,183 +11,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18a00cf5-8619-465a-9e48-0ecda5c9207c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Models/Corps.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/Museau.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/milou_Retopo_Sphere.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/milou_Sphere_001.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/milou_Sphere_002.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/os.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/peruvien.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/tintin.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/yeux.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_EnemiesMove.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_EnemiesMove.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/.vsconfig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Binaries/Win64/Tintin_GOEditor.target" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Binaries/Win64/UnrealEditor-Tintin_GO.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Binaries/Win64/UnrealEditor.modules" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Config/DefaultEditor.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Config/DefaultEngine.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Config/DefaultGame.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Config/DefaultInput.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/BuildRules/Tintin_GOModuleRules.pdb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/BuildRules/Tintin_GOModuleRulesManifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/BuildRulesProjects/Tintin_GOModuleRules/Tintin_GOModuleRules.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/SourceFileCache.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/ActionHistory.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/Tintin_GOEditor/Development/Tintin_GOEditor.deps" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/Tintin_GOEditor/Development/Tintin_GOEditor.uhtmanifest" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/Tintin_GOEditor/Development/Tintin_GOEditor.uhtpath" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/ActionHistory.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedDefinitions.Core.Cpp17.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedDefinitions.Core.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedDefinitions.Core.RTTI.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedPCH.Core.Cpp17.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedPCH.Core.Cpp17.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedPCH.Core.Cpp17.h.obj.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedPCH.Core.Cpp20.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedPCH.Core.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedPCH.Core.Cpp20.h.obj.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedPCH.Core.RTTI.Cpp20.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedPCH.Core.RTTI.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Core/SharedPCH.Core.RTTI.Cpp20.h.obj.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/CoreUObject/SharedDefinitions.CoreUObject.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/CoreUObject/SharedDefinitions.CoreUObject.RTTI.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/CoreUObject/SharedPCH.CoreUObject.Cpp20.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/CoreUObject/SharedPCH.CoreUObject.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/CoreUObject/SharedPCH.CoreUObject.Cpp20.h.obj.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/CoreUObject/SharedPCH.CoreUObject.RTTI.Cpp20.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/CoreUObject/SharedPCH.CoreUObject.RTTI.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/CoreUObject/SharedPCH.CoreUObject.RTTI.Cpp20.h.obj.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Engine/SharedDefinitions.Engine.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Engine/SharedPCH.Engine.Cpp20.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Engine/SharedPCH.Engine.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Engine/SharedPCH.Engine.Cpp20.h.dep.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Engine/SharedPCH.Engine.Cpp20.h.obj.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Makefile.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Slate/SharedDefinitions.Slate.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Slate/SharedPCH.Slate.Cpp20.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Slate/SharedPCH.Slate.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/Slate/SharedPCH.Slate.Cpp20.h.obj.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/TargetMetadata.dat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/UnrealEd/SharedDefinitions.UnrealEd.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/UnrealEd/SharedDefinitions.UnrealEd.RTTI.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/UnrealEd/SharedPCH.UnrealEd.Cpp20.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/UnrealEd/SharedPCH.UnrealEd.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/UnrealEd/SharedPCH.UnrealEd.Cpp20.h.obj.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/UnrealEd/SharedPCH.UnrealEd.RTTI.Cpp20.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/UnrealEd/SharedPCH.UnrealEd.RTTI.Cpp20.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/Tintin_GOEditor/Development/UnrealEd/SharedPCH.UnrealEd.RTTI.Cpp20.h.obj.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/ActionHistory.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/Default.rc2.res" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/Default.rc2.res.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/Definitions.Tintin_GO.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/LiveCodingInfo.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/Tintin_GO.Shared.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/Tintin_GO.cpp.dep.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/Tintin_GO.cpp.obj.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/UnrealEditor-Tintin_GO.dll.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/UnrealEditor-Tintin_GO.exp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/UnrealEditor-Tintin_GO.lib.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/Win64/x64/UnrealEditor/Development/Tintin_GO/UnrealEditor-Tintin_GO.sup.exp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Build/XmlConfigCache.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/CachedAssetRegistry_0.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Config/CoalescedSourceConfigs/Crypto.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Config/CoalescedSourceConfigs/GameUserSettings.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Config/CoalescedSourceConfigs/InternationalizationExport.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Config/CoalescedSourceConfigs/LocalizationServiceSettings.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Config/CoalescedSourceConfigs/ObjectMixer.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Config/CoalescedSourceConfigs/ObjectMixerSerializedData.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Config/CoalescedSourceConfigs/TranslationPickerSettings.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/Config/CoalescedSourceConfigs/UnrealInsightsSettings.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ProjectFiles/AutomationTool.csproj.References" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ProjectFiles/Tintin_GO.vcxproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ProjectFiles/Tintin_GO.vcxproj.filters" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ProjectFiles/Tintin_GO.vcxproj.user" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ProjectFiles/UE5.vcxproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ProjectFiles/UE5.vcxproj.filters" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ProjectFiles/UE5.vcxproj.user" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ProjectFiles/UECommon.props" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ReimportCache/3688439234.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ShaderAutogen/PCD3D_SM5/AutogenShaderHeaders.ush" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/ShaderAutogen/PCD3D_SM6/AutogenShaderHeaders.ush" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Intermediate/TargetInfo.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/AutoScreenshot.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Autosaves/PackageRestoreData.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/CrashReportClient/UECC-Windows-74902EFE42C87B5350F94EB0557D3E43/CrashReportClient.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Compat.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/ControlRig.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/DatasmithContent.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/DeviceProfiles.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Editor.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/EditorScriptingUtilities.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Engine.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/EnhancedInput.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/FullBodyIK.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/GLTFExporter.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Game.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/GameUserSettings.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Hardware.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/IKRig.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Input.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/InstallBundle.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Interchange.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Lightmass.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Metasound.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Niagara.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Paper2D.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/RuntimeOptions.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Scalability.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/StructUtils.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/Synthesis.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/ToolPresets.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/TraceDataFilters.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/TraceUtilities.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Config/WindowsEditor/VariantManagerContent.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/Logs/Tintin_GO.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Saved/UnrealBuildTool/BuildConfiguration.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Source/Tintin_GO.Target.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Source/Tintin_GO/Tintin_GO.Build.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Source/Tintin_GO/Tintin_GO.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Source/Tintin_GO/Tintin_GO.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Source/Tintin_GOEditor.Target.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Tintin_GO/Tintin_GO.uproject" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Milou_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Milou_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_MilouBone_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_MilouBone_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/FirstMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/FirstMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Barrier.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Barrier.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/CoreUI.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/CoreUI.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/CoreUI.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/CoreUI.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/GridManager_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/GridManager_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/Tile_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/Tile_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/TestFlo1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestFlo1.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Models/Corps.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Models/Museau.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Models/milou_Retopo_Sphere.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Models/milou_Sphere_001.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Models/milou_Sphere_002.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Models/os.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Models/peruvien.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Models/tintin.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Models/yeux.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GameManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GameManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GameManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GameManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_AwaitingInputs_Milou.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_AwaitingInputs_Milou.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_MilouMove.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_MilouMove.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_MilouMove.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_MilouMove.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_PeruviensMove.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_PeruviensMove.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_PeruviensMove.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_PeruviensMove.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_PlayerMove.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_PlayerMove.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TA_Move.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TA_Move.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TriggerItemsCharacters.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TriggerItemsCharacters.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CondorAttack.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorAttack.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CondorAttack.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorAttack.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CondorWait.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorWait.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Peruvien.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Peruvien.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Peruvien.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Peruvien.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_MilouBone.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_MilouBone.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_MilouBone.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_MilouBone.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TintinGO.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TintinGO.Build.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/UIManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/UIManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/UIManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/UIManager.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TintinGO.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/TintinGO.uproject" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,7 +63,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "Merging nouveauMerge",
+    "git-widget-placeholder": "nouveauMerge",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -378,7 +226,8 @@
       <workItem from="1701796305862" duration="2720000" />
       <workItem from="1701869188215" duration="977000" />
       <workItem from="1701965489364" duration="14315000" />
-      <workItem from="1702027680352" duration="717000" />
+      <workItem from="1702027680352" duration="767000" />
+      <workItem from="1702028648911" duration="8174000" />
     </task>
     <servers />
   </component>

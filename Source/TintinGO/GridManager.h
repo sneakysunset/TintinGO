@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Tile.h"
+#include "Barrier.h"
 #include "GridManager.generated.h"
 
 class ATileActor_Character_Peruvien;
@@ -42,12 +43,6 @@ public:
 
     UPROPERTY(EditAnywhere)
     UBlueprint* _tileBP;
-    UPROPERTY(EditAnywhere)
-    UBlueprint* _tintinBP;
-    UPROPERTY(EditAnywhere)
-    UBlueprint* _milouBP;
-    UPROPERTY(EditAnywhere)
-    UBlueprint* _condorBP;
     
     void ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile);
     void MarkStepsOnGrid(ATile* CenterTile);
@@ -58,9 +53,9 @@ public:
     TArray<ATile*> GetPath(ATile* endTile);
     ATile* GetNextTileInPath(ATile* tile);
     ATile* GetTile(int32 i, int32 j);
-    ATile* _endTile;
     ATile* GetEndTile() const{return _endTile;}
-
+    
+    ATile* _endTile;
     ATile* _nest1Tile;
     ATile* _endNest1Tile;
     ATile* _nest2Tile;

@@ -48,7 +48,6 @@ void AGameManager::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if(IsValid(this) && IsValid(_currentStateType) && _currentStateType != nullptr)
 	{
-		UE_LOG(LogTemp, Error, TEXT("%s"), *_currentStateType->GetName())
 		_currentStateType->OnStateTick(DeltaTime);
 	}
 }

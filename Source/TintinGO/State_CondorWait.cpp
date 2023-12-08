@@ -11,8 +11,12 @@ void UState_CondorWait::OnStateEnter()
 {
 	UState::OnStateEnter();
 	UE_LOG(LogTemp, Warning, TEXT("Condor Wait State Enter"));
-	_condor = ATileActor_Character_Condor::GetInstance();
-	_condor->isWaitLastRound = true;
+
+	if (ATileActor_Character_Condor::GetInstance() != nullptr)
+	{
+		_condor = ATileActor_Character_Condor::GetInstance();
+		_condor->isWaitLastRound = true;
+	}
 
 	_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 }

@@ -21,16 +21,23 @@ void UState_CheckWinConditions::OnStateEnter()
 	else
 	{
 		//_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
-		
-		if (ATileActor_Character_Condor::GetInstance()->isWaitLastRound == true)
+		if (ATileActor_Character_Condor::GetInstance() != nullptr)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("UState_CondorAttack"));
-			_gameManager->StateChange(NewObject<UState_CondorAttack>(UState_CondorAttack::StaticClass()));
+			if (ATileActor_Character_Condor::GetInstance()->isWaitLastRound == true)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("UState_CondorAttack"));
+				_gameManager->StateChange(NewObject<UState_CondorAttack>(UState_CondorAttack::StaticClass()));
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("UState_CondorWait"));
+				_gameManager->StateChange(NewObject<UState_CondorWait>(UState_CondorWait::StaticClass()));
+			}
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("UState_CondorWait"));
-			_gameManager->StateChange(NewObject<UState_CondorWait>(UState_CondorWait::StaticClass()));
+			_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 		}
+		
 	}
 }

@@ -6,6 +6,7 @@
 #include "Barrier.h"
 #include "GridManager.h"
 #include "State_TA_Move.h"
+#include "TileActor_Character_Condor.h"
 #include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Peruvien.h"
 #include "TileActor_Character_Tintin.h"
@@ -34,8 +35,28 @@ void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 	AddTileActors();
+	
 	if(_tileType == ETileType::StartingPosition)
 		AddTintin();
+
+	if (_tileType == ETileType::EndingPosition)
+		AGridManager::GetInstance()->_endTile = this;
+
+	if (_tileType == ETileType::Nest1Position)
+		AddCondor();
+	else
+	{
+		ATileActor_Character_Condor::SingletonInstance = nullptr;
+	}
+
+	if (_tileType == ETileType::EndNest1Position)
+		AGridManager::GetInstance()->_endNest1Tile = this;
+
+	if (_tileType == ETileType::Nest2Position)
+		AGridManager::GetInstance()->_nest2Tile = this;
+
+	if (_tileType == ETileType::EndNest2Position)
+		AGridManager::GetInstance()->_endNest2Tile = this;
 }
 
 void ATile::Tick(float DeltaTime)
@@ -106,6 +127,23 @@ void ATile::AddTintin()
 	character->SetCurrentTile(this);
 	character->SetActorLocation(GetTileActorPosition(character));
 	milou->SetActorLocation(GetTileActorPosition(milou));
+}
+
+void ATile::AddCondor()
+{
+	FActorSpawnParameters params;
+	params.bNoFail = true;
+	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	FVector position =  GetActorLocation();
+	FRotator rotation = FRotator(0, 0, 0);
+	ATileActor_Character_Condor* condor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP->GeneratedClass, position, rotation, params);
+
+	condor->SetActorLabel(FString::Printf(TEXT("Condor")));
+	condor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+	condor->SetCurrentTile(this);
+	condor->SetActorLocation(condor->GetCurrentTile()->GetTileActorPosition(condor));
+
+	AGridManager::GetInstance()->_nest1Tile = this;
 }
 
 void ATile::SetHighlighted(bool toHightlight) const
