@@ -1,9 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "State_TActor.h"
 #include "Tile.h"
 #include "GameFramework/Actor.h"
+#include "State_TActor.h"
 #include "TileActor.generated.h"
 
 
@@ -20,6 +20,7 @@ public:
 
 	UPROPERTY()
 	UState_TActor* _currentState_TA;
+	
 	void ChangeState(UState_TActor* newState);
 	
 	virtual ATile* GetCurrentTile() const{return _currentTile;}

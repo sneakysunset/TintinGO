@@ -15,5 +15,4 @@ ATileActor_Character_Tintin::ATileActor_Character_Tintin()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	SingletonInstance = this;
-
 }

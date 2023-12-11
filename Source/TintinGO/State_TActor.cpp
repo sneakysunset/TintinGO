@@ -1,7 +1,6 @@
 #include "State_TActor.h"
 #include "TileActor.h"
 
-
 void UState_TActor::OnStateEnter()
 {
 	UState::OnStateEnter();

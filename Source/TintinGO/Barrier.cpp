@@ -33,7 +33,6 @@ void UBarrier::OnTick(float DeltaTime)
 	}
 	if(_actors.Num() == 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Barrier Complete"));
 		_isBarriereCompleted = true;
 	}
 	

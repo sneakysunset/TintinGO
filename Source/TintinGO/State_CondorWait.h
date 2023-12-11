@@ -19,7 +19,7 @@ public:
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateExit() override;
+
 private:
-	UPROPERTY()
-	ATileActor_Character_Condor* _condor;
+	AGridManager* _gridManager;
 };

@@ -1,9 +1,8 @@
 #pragma once
 
-
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Tile.h"
+#include "TileActor_Character_Condor.h"
 #include "Barrier.h"
 #include "GridManager.generated.h"
 
@@ -56,10 +55,6 @@ public:
     ATile* GetEndTile() const{return _endTile;}
     
     ATile* _endTile;
-    ATile* _nest1Tile;
-    ATile* _endNest1Tile;
-    ATile* _nest2Tile;
-    ATile* _endNest2Tile;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
     bool _useEditorTick;
@@ -70,13 +65,16 @@ public:
     TArray<ATileActor_Character_Peruvien*> _peruviens;
     UPROPERTY()
     TArray<ATileActor_Character_Condor*> _condors;
+    UPROPERTY()
+    TArray<ATile*> _nests;
 
+    UPROPERTY(EditAnywhere, Category = "Grid Generation")
+    int32 _rows;
+    UPROPERTY(EditAnywhere, Category = "Grid Generation")
+    int32 _columns;
+    
 private:
     static AGridManager* SingletonInstance;
-    UPROPERTY(EditAnywhere, Category = "Grid Generation")
-        int32 _rows;
-    UPROPERTY(EditAnywhere, Category = "Grid Generation")
-        int32 _columns;
     UPROPERTY(EditAnywhere, Category = "Grid Generation")
         double _tileWidth;
 

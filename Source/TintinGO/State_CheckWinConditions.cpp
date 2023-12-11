@@ -2,8 +2,7 @@
 #include "GameManager.h"
 #include "GridManager.h"
 #include "State_AwaitingInputs.h"
-#include "State_CondorAttack.h"
-#include "State_CondorWait.h"
+#include "State_CondorChoice.h"
 #include "TileActor_Character_Condor.h"
 
 void UState_CheckWinConditions::OnStateEnter()
@@ -20,26 +19,6 @@ void UState_CheckWinConditions::OnStateEnter()
 	}
 	else
 	{
-		//_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
-		if (ATileActor_Character_Condor::GetInstance() != nullptr)
-		{
-			UE_LOG(LogTemp, Warning, TEXT("ATileActor_Character_Condor != null"));
-			
-			if (ATileActor_Character_Condor::GetInstance()->isWaitLastRound == true)
-			{
-				UE_LOG(LogTemp, Warning, TEXT("UState_CondorAttack"));
-				_gameManager->StateChange(NewObject<UState_CondorAttack>(UState_CondorAttack::StaticClass()));
-			}
-			else
-			{
-				UE_LOG(LogTemp, Warning, TEXT("UState_CondorWait"));
-				_gameManager->StateChange(NewObject<UState_CondorWait>(UState_CondorWait::StaticClass()));
-			}
-		}
-		else
-		{
-			_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
-		}
-		
+		_gameManager->StateChange(NewObject<UState_CondorChoice>(UState_CondorChoice::StaticClass()));
 	}
 }

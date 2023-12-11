@@ -2,9 +2,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+class AGridManager;
 #include "Tile.generated.h"
 
-class AGridManager;
+
 
 UENUM(BlueprintType)
 enum class ETileType : uint8
@@ -12,10 +13,16 @@ enum class ETileType : uint8
 	Neutral = 0 UMETA(DisplayName = "Neutral"),
 	StartingPosition = 1 UMETA(DisplayName = "Starting Position"),
 	EndingPosition = 2 UMETA(DisplayName = "Ending Position"),
-	Nest1Position = 4 UMETA(DisplayName = "Nest1"),
-	EndNest1Position = 8 UMETA(DisplayName = "End Nest1"),
-	Nest2Position = 16 UMETA(DisplayName = "Nest2"),
-	EndNest2Position = 32 UMETA(DisplayName = "End Nest2")
+	NestPosition = 4 UMETA(DisplayName = "Nest")
+};
+
+UENUM(BlueprintType)
+enum class ENestDirection : uint8
+{
+	Left = 0 UMETA(DisplayName = "Left"),
+	Right = 1 UMETA(DisplayName = "Right"),
+	Top = 2 UMETA(DisplayName = "Top"),
+	Down = 4 UMETA(DisplayName = "Down")
 };
 
 UENUM(BlueprintType)
@@ -38,6 +45,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		ETileType _tileType {ETileType::Neutral};
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
+	ENestDirection _nestDirection = ENestDirection::Left;
 	
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 		bool _walkable = true;
@@ -82,6 +92,8 @@ public:
 	UMaterialInterface* _startPosMat;
 	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _endPosMat;
+	UPROPERTY(EditAnywhere, Category = "TileMaterials")
+	UMaterialInterface* _nestMat;
 	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _HighlightedMat;
 	UPROPERTY(EditAnywhere, Category = "TileMaterials")

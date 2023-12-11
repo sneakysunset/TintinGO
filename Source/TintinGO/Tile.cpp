@@ -41,22 +41,9 @@ void ATile::BeginPlay()
 
 	if (_tileType == ETileType::EndingPosition)
 		AGridManager::GetInstance()->_endTile = this;
-
-	if (_tileType == ETileType::Nest1Position)
-		AddCondor();
-	else
-	{
-		ATileActor_Character_Condor::SingletonInstance = nullptr;
-	}
-
-	if (_tileType == ETileType::EndNest1Position)
-		AGridManager::GetInstance()->_endNest1Tile = this;
-
-	if (_tileType == ETileType::Nest2Position)
-		AGridManager::GetInstance()->_nest2Tile = this;
-
-	if (_tileType == ETileType::EndNest2Position)
-		AGridManager::GetInstance()->_endNest2Tile = this;
+		
+	if (_tileType == ETileType::NestPosition)
+		AGridManager::GetInstance()->_nests.Add(this);
 }
 
 void ATile::Tick(float DeltaTime)
@@ -100,6 +87,9 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 		case ETileType::EndingPosition:
 			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
 			break;
+		case ETileType::NestPosition:
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_nestMat));
+			break;
 		}
 	}
 	else {
@@ -142,8 +132,7 @@ void ATile::AddCondor()
 	condor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 	condor->SetCurrentTile(this);
 	condor->SetActorLocation(condor->GetCurrentTile()->GetTileActorPosition(condor));
-	ATileActor_Character_Condor::SingletonInstance = condor;
-	AGridManager::GetInstance()->_nest1Tile = this;
+	_gridManager->_condors.Add(condor);
 	UE_LOG(LogTemp, Warning, TEXT("ATileActor_Character_Condor != null"));
 }
 
@@ -165,6 +154,9 @@ void ATile::SetHighlighted(bool toHightlight) const
 			break;
 		case ETileType::EndingPosition:
 			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
+			break;
+		case ETileType::NestPosition:
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_nestMat));
 			break;
 		}
 	}
@@ -188,6 +180,9 @@ void ATile::SetHighlightedPath(bool toHightlight) const
 			break;
 		case ETileType::EndingPosition:
 			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
+			break;
+		case ETileType::NestPosition:
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_nestMat));
 			break;
 		default:
 			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
@@ -260,9 +255,7 @@ void ATile::AddTileActors()
 #endif
 			break;
 		case ETileActorType::Condor:
-			tActor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP->GeneratedClass, position, rotation, params);
-			_gridManager->_condors.Add(Cast<ATileActor_Character_Condor>(tActor));
-			//tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Condor")));
+			AddCondor();
 			return;
 		default:
 			break;
