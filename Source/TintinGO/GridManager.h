@@ -8,6 +8,7 @@
 #include "GridManager.generated.h"
 
 class ATileActor_Character_Peruvien;
+class ATileActor_Character_Condor;
 
 USTRUCT(BlueprintType)
 struct FTileArray
@@ -64,11 +65,20 @@ public:
     UFUNCTION()
     ATile* GetTile(int32 i, int32 j);
     ATile* GetEndTile() const{return _endTile;}
-    
+
+    UPROPERTY()
     ATile* _endTile;
+    
+    UPROPERTY()
     ATile* _nest1Tile;
+    
+    UPROPERTY()
     ATile* _endNest1Tile;
+    
+    UPROPERTY()
     ATile* _nest2Tile;
+    
+    UPROPERTY()
     ATile* _endNest2Tile;
     
     UPROPERTY(BlueprintReadWrite, EditAnywhere)

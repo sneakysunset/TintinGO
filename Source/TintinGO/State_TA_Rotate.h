@@ -1,21 +1,22 @@
 ﻿#pragma once
-#include "Barrier.h"
+#include "TileActor.h"
 #include "State_TActor.h"
-#include "State_TA_Move.generated.h"
+#include "State_TA_Rotate.generated.h"
 
 UCLASS()
-class UState_TA_Move : public UState_TActor
+class UState_TA_Rotate : public UState_TActor
 {
 	GENERATED_BODY()
+public:
 public:
 	ATileActor* tActor;
 	
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateComplete() override;
-	float _actorSpeed;
 
 private:
-	FVector _startPosition;
-	FVector _endPosition;
+	
+	FRotator _startRotation;
+	FRotator _endRotation;
 };

@@ -4,19 +4,29 @@
 
 #include "CoreMinimal.h"
 #include "State.h"
-#include "State_PeruviensRotate.generated.h"
+#include "State_MilouRotate.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TINTINGO_API UState_PeruviensRotate : public UState
+class TINTINGO_API UState_MilouRotate : public UState
 {
 	GENERATED_BODY()
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateExit() override;
 
+private:
 	UPROPERTY()
-	UBarrier* _barrier;
+	FRotator _startRotation;
+
+	UPROPERTY()
+	FRotator _endRotation;
+
+	UPROPERTY()
+	ATileActor_Character_Milou* _milou;
+
+	UPROPERTY()
+	float _interpolateValue;
 };

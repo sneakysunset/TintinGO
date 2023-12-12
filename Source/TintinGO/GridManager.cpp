@@ -6,6 +6,7 @@
 #include "TileActor_Character_Milou.h"
 #include "Math/UnrealMathUtility.h"
 #include "Engine/World.h"
+#include "Kismet/GameplayStatics.h"
 
 AGridManager* AGridManager::SingletonInstance = nullptr;
 
@@ -41,6 +42,12 @@ void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
+	TArray<AActor*> ActorsToFind;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATileActor::StaticClass(), ActorsToFind);
+	for(auto actor : ActorsToFind)
+	{
+		Destroy(actor);
+	}
 }
 
 bool AGridManager::ShouldTickIfViewportsOnly() const
@@ -54,7 +61,6 @@ bool AGridManager::ShouldTickIfViewportsOnly() const
 		return false;
 	}
 }
-
 
 void AGridManager::ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile)
 {
@@ -100,7 +106,7 @@ void AGridManager::MarkStepsOnGrid(ATile* CenterTile)
 
 void AGridManager::SetStepOnAdjacentsRecursive(ATile* tile)
 {
-	//Droite -> Gauche -> Haut -> Bas
+	//Haut-> Bas -> Droite -> Gauche
 	SetStepOnAdjacentTile(tile, FVector2D(1, 0));
 	SetStepOnAdjacentTile(tile, FVector2D(-1, 0));
 	SetStepOnAdjacentTile(tile, FVector2D(0, 1));
@@ -117,17 +123,16 @@ void AGridManager::SetStepOnAdjacentTile(ATile* tile, FVector2D direction)
 	}
 }
 
-
 bool AGridManager::TileIsAvailable(ATile* tile, FVector2D direction)
 {
 	if(tile->_row + direction.X >= 0 && tile->_row + direction.X < _gridTiles.Num() &&
 		tile->_column + direction.Y >= 0 && tile->_column + direction.Y < _gridTiles[0].Tiles.Num())
 	{
 		ATile* adjTile = _gridTiles[tile->_row + direction.X].Tiles[tile->_column + direction.Y];
-		bool directionalCondition = direction.X == 1 ? adjTile->_rightLink : false;
-		directionalCondition = direction.X == -1 ? adjTile ->_leftLink : directionalCondition;
-		directionalCondition = direction.Y == 1 ? adjTile ->_upLink : directionalCondition;
-		directionalCondition = direction.Y == -1 ? adjTile ->_downLink : directionalCondition;
+		bool directionalCondition = direction.X == 1 ? tile->_upLink : false;
+		directionalCondition = direction.X == -1 ? tile ->_downLink : directionalCondition;
+		directionalCondition = direction.Y == 1 ? tile ->_rightLink : directionalCondition;
+		directionalCondition = direction.Y == -1 ? tile ->_leftLink : directionalCondition;
 		
 		if(adjTile->_walkable && directionalCondition && (adjTile->_step == -1 || adjTile->_step > tile->_step + 1))
 		{
@@ -174,8 +179,7 @@ void AGridManager::BlueprintEditorTick(float DeltaTime)
 {
 }
 
-
-void AGridManager::InitializeGrid()
+void AGridManager::InitializeGrid()	
 {
 	for (auto& row : _gridTiles)
 	{
@@ -201,7 +205,6 @@ void AGridManager::InitializeGrid()
 			FVector SpawnLocation = FVector(i * 100 * _tileWidth, j * 100 * _tileWidth , 0);
 			FRotator SpawnRotation = FRotator(0, 0, 0);
 			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(_tileBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
-			SpawnedTile->SetActorScale3D(FVector(_tileWidth, _tileWidth, 1));
 #if WITH_EDITOR
 			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), static_cast<int>(i), static_cast<int>(j)));
 #endif
@@ -210,8 +213,9 @@ void AGridManager::InitializeGrid()
 			SpawnedTile->_row = i;
 			SpawnedTile->_column = j;
 			SpawnedTile->_gridManager = this;
+			SpawnedTile->SetActorScale3D(FVector(_tileWidth, _tileWidth, 1));
 			_gridTiles[i].Tiles.Add(SpawnedTile);
-			SpawnedTile->SetHighlighted(false);
+			//SpawnedTile->SetHighlighted(false);
 		}
 	}
 
@@ -221,7 +225,6 @@ void AGridManager::InitializeGrid()
 
 void AGridManager::UpdateLinks()
 {
-
 	//UE_LOG(LogTemp, Warning, TEXT("grid tiles size %d"), tile.Tiles.Num());
 	for(int32 i = 0; i < _gridTiles.Num(); i++)
 	{
@@ -237,6 +240,7 @@ ATile* AGridManager::WorldCoordinatesToTilePosition(const FVector& worldCoordina
 {
 	const int32 x = FMath::RoundToInt32( static_cast<float>(FMath::CeilToInt32(worldCoordinates.X)) / _tileWidth / 100.0f) ;
 	const int32 y = FMath::RoundToInt32( static_cast<float>(FMath::CeilToInt32(worldCoordinates.Y)) / _tileWidth / 100.0f) ;
+
 	if (x >= 0 && x < _rows && y >= 0 && y < _columns && _gridTiles[x].Tiles[y]->_walkable)
 		return _gridTiles[x].Tiles[y];
 	else

@@ -2,7 +2,6 @@
 
 #include "Tile.h"
 #include "CoreMinimal.h"
-#include "UIManager.h"
 #include "GameFramework/Actor.h"
 #include "GameManager.generated.h"
 
@@ -26,21 +25,42 @@ public:
 	FOnBoneConsumed OnBoneConsumed;
 
 	AGameManager();
+	
 	virtual ~AGameManager() override;
+	
 	UPROPERTY()
 	UState* _currentStateType;
+	
 	UFUNCTION()
 	void StateChange(UState* NewState);
+	
 	UPROPERTY(EditAnywhere, Category = "Milou Parameters")
 	int32 _milouBoneThrowRange;
+	
 	UPROPERTY()
 	int32 _milouBonesNumber;
 	
 	UFUNCTION(BlueprintCallable)
 	void ReceiveMilouUIClick();
 
+	UPROPERTY()
+	int32 _clueNumber;
+
+	UPROPERTY(EditAnywhere)
+	float _inTileMoveSpeed;
+	
+	UPROPERTY(EditAnywhere)
+	float _rotateSpeed;
+
+	UPROPERTY(EditAnywhere)
+	EAngle _tintinAngle;
+
+
+	
+	
 protected:
 	virtual void Tick(float DeltaTime) override;
+	
 	virtual void BeginPlay() override;
 	
 private:

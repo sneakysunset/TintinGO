@@ -3,6 +3,7 @@
 #include "Barrier.h"
 #include "GameManager.h"
 #include "State_AwaitingInputs.h"
+#include "State_MilouRotate.h"
 #include "State_TA_Move.h"
 #include "TileActor_Character_Peruvien.h"
 
@@ -24,6 +25,8 @@ void UState_MilouMove::OnStateEnter()
 	
 	AGridManager::GetInstance()->ChangeTile(_barrier, previousMilouTile, _milou->GetCurrentTile());
 	_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
+	Cast<UState_TA_Move>(_milou->_currentState_TA)->_actorSpeed = _milou->_boneSpeed;
+	Cast<UState_TA_Move>(_milou->_currentState_TA)->_speed = _milou->_boneSpeed;
 }
 
 void UState_MilouMove::OnStateTick(float DeltaTime)
@@ -34,10 +37,11 @@ void UState_MilouMove::OnStateTick(float DeltaTime)
 		if(_milou->MilouTilePath.Num() > 0)
 		{
 			PeruvienDetectionAllDirection();
-			_gameManager->StateChange(NewObject<UState_MilouMove>(StaticClass()));			
+			_gameManager->StateChange(NewObject<UState_MilouRotate>(UState_MilouRotate::StaticClass()));			
 		}
 		else
 		{
+			PeruvienDetectionAllDirection();
 			_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 		}
 	}
@@ -72,15 +76,18 @@ void UState_MilouMove::PeruvienDetection(int32 x, int32 y, bool isLinkActive) co
 			if(tActor->IsA(ATileActor_Character_Peruvien::StaticClass()))
 			{
 				ATileActor_Character_Peruvien* peruvien = Cast<ATileActor_Character_Peruvien>(tActor);
-				gridM->MarkStepsOnGrid(peruvien->GetCurrentTile());
-				TArray<ATile*> tempList = gridM->GetPath(_milou->GetCurrentTile(), false);
-				peruvien->PeruvienTilePath = _milou->MilouTilePath;
-				for (int32 i = 0; i < tempList.Num(); i++)
+				if(peruvien->Detection(_milou->GetCurrentTile()))
 				{
-					peruvien->PeruvienTilePath.Add(tempList[i]);
+					gridM->MarkStepsOnGrid(peruvien->GetCurrentTile());
+					TArray<ATile*> tempList = gridM->GetPath(_milou->GetCurrentTile(), false);
+					peruvien->PeruvienTilePath = _milou->MilouTilePath;
+					for (int32 i = 0; i < tempList.Num(); i++)
+					{
+						peruvien->PeruvienTilePath.Add(tempList[i]);
+					}
+					peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
+					peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingMilou;
 				}
-				peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
-				UE_LOG(LogTemp, Warning, TEXT("Peruvien detected milou"));
 			}
 		}
 	}

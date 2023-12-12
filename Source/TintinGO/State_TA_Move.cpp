@@ -6,8 +6,12 @@
 void UState_TA_Move::OnStateEnter()
 {
 	UState_TActor::OnStateEnter();
-	//UE_LOG(LogTemp, Warning, TEXT("On State TC Move Enter"));
-	_startPosition = _tileActor->GetCurrentTile()->GetActorLocation();
+	if(_actorSpeed != 0)
+	{
+		_speed = _actorSpeed;
+		UE_LOG(LogTemp, Warning, TEXT("YO %f"), _speed);
+	}
+	_startPosition = _tileActor->GetActorLocation();
 	if(!IsValid(_tileActor))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Not Valid Actor for move"));
@@ -16,18 +20,16 @@ void UState_TA_Move::OnStateEnter()
 	ATile* tile = _tileActor->GetCurrentTile();
 	if(tile == nullptr)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Not Valid tile for move"));
+		//UE_LOG(LogTemp, Error, TEXT("Not Valid tile for move"));
 		return;
 	}
 	_endPosition = tile->GetTileActorPosition(_tileActor);
-	UE_LOG(LogTemp, Warning, TEXT("actor %s tile %d %d , Destination = %f, %f"), *_tileActor->GetName(),tile->_row, tile->_column, _endPosition.X, _endPosition.Y)
 }
 
 
 void UState_TA_Move::OnStateTick(float DeltaTime)
 {
 	_tileActor->SetActorLocation(_startPosition + (_endPosition - _startPosition) * _interpolateValue);
-	//UE_LOG(LogTemp, Warning, TEXT("%s interpolateValue = %f"), *_tileActor->GetName(), _interpolateValue);
 	UState_TActor::OnStateTick(DeltaTime);
 }
 

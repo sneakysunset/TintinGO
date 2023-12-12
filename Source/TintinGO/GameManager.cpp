@@ -1,7 +1,10 @@
 #include "GameManager.h"
+
+#include "GlobalGameManager.h"
 #include "State.h"
 #include "State_AwaitingInputs.h"
-
+#include "UIManager.h"
+#include "Kismet/GameplayStatics.h"
 
 AGameManager* AGameManager::SingletonInstance = nullptr;
 
@@ -26,9 +29,9 @@ void AGameManager::BeginPlay()
 	SingletonInstance = this;
 	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 	_currentStateType->OnStateEnter();
+	Cast<UGlobalGameManager>(UGameplayStatics::GetGameInstance(GetWorld()))->OnLevelLoad();
+	AUIManager::GetInstance()->CustomInit();
 }
-
-
 
 void AGameManager::ReceiveMilouUIClick()
 {

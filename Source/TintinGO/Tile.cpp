@@ -3,26 +3,18 @@
 
 #include "Tile.h"
 
-#include "Barrier.h"
+#include "GameManager.h"
 #include "GridManager.h"
-#include "State_TA_Move.h"
 #include "TileActor_Character_Condor.h"
 #include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Peruvien.h"
 #include "TileActor_Character_Tintin.h"
+#include "TileActor_Clue.h"
 #include "TileActor_MilouBone.h"
 
 ATile::ATile() 
 {
 	PrimaryActorTick.bCanEverTick = true;
-	
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>meshFinder(TEXT("/Engine/BasicShapes/Plane.Plane"));
-	
-	_staticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Visual"));
-	_staticMeshComponent->SetStaticMesh(meshFinder.Object);
-	_staticMeshComponent->SupportsDefaultCollision();
-
-	RootComponent = _staticMeshComponent;
 	
 	_rightLink = false;
 	_leftLink = false;
@@ -34,7 +26,24 @@ ATile::ATile()
 void ATile::BeginPlay()
 {
 	Super::BeginPlay();
+
+	TArray<UStaticMeshComponent*> Components;
+	GetComponents<UStaticMeshComponent>(Components);
+	if(Components.Num() > 0)
+	{
+		_staticMeshComponent = Components[0];
+	}
+	else
+	{
+		return;
+	}
+	
 	AddTileActors();
+
+	if(!_walkable)
+	{
+		SetActorHiddenInGame(true);
+	}
 	
 	if(_tileType == ETileType::StartingPosition)
 		AddTintin();
@@ -42,21 +51,21 @@ void ATile::BeginPlay()
 	if (_tileType == ETileType::EndingPosition)
 		AGridManager::GetInstance()->_endTile = this;
 
-	if (_tileType == ETileType::Nest1Position)
+	/*if (_tileType == ETileType::Nest1Position)
 		AddCondor();
 	else
 	{
 		ATileActor_Character_Condor::SingletonInstance = nullptr;
-	}
+	}*/
 
-	if (_tileType == ETileType::EndNest1Position)
+	/*if (_tileType == ETileType::EndNest1Position)
 		AGridManager::GetInstance()->_endNest1Tile = this;
 
 	if (_tileType == ETileType::Nest2Position)
 		AGridManager::GetInstance()->_nest2Tile = this;
 
 	if (_tileType == ETileType::EndNest2Position)
-		AGridManager::GetInstance()->_endNest2Tile = this;
+		AGridManager::GetInstance()->_endNest2Tile = this;*/
 }
 
 void ATile::Tick(float DeltaTime)
@@ -87,6 +96,16 @@ bool ATile::ShouldTickIfViewportsOnly() const
 
 void ATile::BlueprintEditorTick(float DeltaTime)
 {
+	TArray<UStaticMeshComponent*> Components;
+	GetComponents<UStaticMeshComponent>(Components);
+	if(Components.Num() > 0)
+	{
+		_staticMeshComponent = Components[0];
+	}
+	else
+	{
+		return;
+	}
 	
 	if (_walkable) {
 			
@@ -143,13 +162,14 @@ void ATile::AddCondor()
 	condor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 	condor->SetCurrentTile(this);
 	condor->SetActorLocation(condor->GetCurrentTile()->GetTileActorPosition(condor));
-	ATileActor_Character_Condor::SingletonInstance = condor;
-	AGridManager::GetInstance()->_nest1Tile = this;
+	//ATileActor_Character_Condor::SingletonInstance = condor;
+	//AGridManager::GetInstance()->_nest1Tile = this;
 	UE_LOG(LogTemp, Warning, TEXT("ATileActor_Character_Condor != null"));
 }
 
 void ATile::SetHighlighted(bool toHightlight)
 {
+	if(!_walkable) return;
 	if(toHightlight)
 	{
 		_staticMeshComponent->SetMaterial(0, DynamicMat(_HighlightedMat));
@@ -167,16 +187,16 @@ void ATile::SetHighlighted(bool toHightlight)
 		case ETileType::EndingPosition:
 			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
 			break;
+		default: ;
 		}
 	}
 }
 
-void ATile::SetHighlightedPath(bool toHightlight) 
+void ATile::SetTilesInBoneRangeMat(bool toBone)
 {
-
-	if(toHightlight)
+	if(toBone)
 	{
-		_staticMeshComponent->SetMaterial(0, DynamicMat(_HighlightedPathMat));
+		_staticMeshComponent->SetMaterial(0, DynamicMat(_InBoneRangeMat));
 	}
 	else
 	{
@@ -191,10 +211,20 @@ void ATile::SetHighlightedPath(bool toHightlight)
 		case ETileType::EndingPosition:
 			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
 			break;
-		default:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
-			break;
+		default: ;
 		}
+	}
+}
+
+void ATile::SetHighlightedPath(bool toHightlight) 
+{
+	if(toHightlight)
+	{
+		_staticMeshComponent->SetMaterial(0, DynamicMat(_HighlightedPathMat));
+	}
+	else
+	{
+		_staticMeshComponent->SetMaterial(0, DynamicMat(_InBoneRangeMat));
 	}
 }
 
@@ -205,19 +235,25 @@ FVector ATile::GetTileActorPosition(ATileActor* tileActor)
 	{
 		_tileActors.Add(tileActor);
 	}
-	FVector destination = GetActorLocation() + tileActor->GetActorScale().Z * 50 * FVector::UpVector;
-
-	return destination;
 	
-	//if(_tileActors.Num() == 1)
+	FVector destination = GetActorLocation() /*+ tileActor->GetActorScale().Z * 50 * FVector::UpVector*/;
+
+	if(_tileActors.Num() == 1)
 		return destination;
 	
 	for(int i = 0; i < _tileActors.Num(); i++)
 	{
-		FVector direction =  GetActorForwardVector() - destination;
-		const float radAngle = FMath::DegreesToRadians(i / _tileActors.Num() * 360) ;
-		FQuat rotation = FQuat(FVector::UpVector, radAngle);
-		destination = rotation * direction * _positionCircleRadius;
+		if(_tileActors[i] == tileActor)
+		{
+			float Angle = FMath::DegreesToRadians(static_cast<float>(i) / static_cast<float>(_tileActors.Num()) * 360);
+			// Calculate the position of the element around the circle
+			destination = FVector(
+				destination.X + 20 * FMath::Cos(Angle),
+				destination.Y + 20 * FMath::Sin(Angle),
+				destination.Z
+			);
+			break;
+		}
 	}
 	
 	return destination;
@@ -234,15 +270,16 @@ void ATile::AddTileActors()
 	}
 
 	_tileActors.Empty();
-
+	ATileActor_Clue* clueCasted = nullptr;
+	ATileActor_Character_Peruvien* peruvienCasted = nullptr;
+	AGameManager* gameManager = AGameManager::GetInstance();
 	for (int i = 0; i < _TileItems.Num(); i++)
 	{
 		FActorSpawnParameters params;
 		FVector position = GetActorLocation();
 		FRotator rotation = FRotator(0, 0, 0);
 		ATileActor* tActor = nullptr;
-		ATileActor_Character_Peruvien* peruvienCasted = nullptr;
-		switch (_TileItems[i])
+		switch (_TileItems[i].actorType)
 		{
 		case ETileActorType::Bone:
 			tActor = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP->GeneratedClass, position, rotation, params);
@@ -251,14 +288,19 @@ void ATile::AddTileActors()
 #endif
 			break;
 		case ETileActorType::Clue:
-			//tActor = GetWorld()->SpawnActor<ATileActor>(ATileActor::StaticClass(), position, rotation, params);
-			//tActor->SetActorLabel(FString::Printf(TEXT("Item_Clue")));
-			return;
+			tActor = GetWorld()->SpawnActor<ATileActor_Clue>(_clueBP->GeneratedClass, position, rotation, params);
+			clueCasted = Cast<ATileActor_Clue>(tActor);
+			gameManager->_clueNumber++;
+			clueCasted->clueNumber = _TileItems[i].clueIndex;
+			break;
 		case ETileActorType::Peruvien:
 			tActor = GetWorld()->SpawnActor<ATileActor_Character_Peruvien>(_peruvienBP->GeneratedClass, position, rotation, params);
 			peruvienCasted = Cast<ATileActor_Character_Peruvien>(tActor);
 			_gridManager->_peruviens.Add(peruvienCasted);
 			peruvienCasted->_startingTile = this;
+			peruvienCasted->SetUpRotation(_TileItems[i].angle);
+			peruvienCasted->_startingAngle = peruvienCasted->angle;
+
 #if WITH_EDITOR
 			tActor->SetActorLabel(FString::Printf(TEXT("Enemy_Peruvien")));
 #endif
@@ -272,8 +314,8 @@ void ATile::AddTileActors()
 			break;
 		}
 
-		
 		_tileActors.Add(tActor);
+		
 		tActor->SetActorLocation(GetTileActorPosition(tActor));
 		tActor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 		tActor->SetCurrentTile(this);

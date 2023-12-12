@@ -12,7 +12,7 @@ void UState_CondorAttack::OnStateEnter()
 {
 	UState::OnStateEnter();
 	
-	if (ATileActor_Character_Condor::GetInstance() != nullptr)
+	/*if (ATileActor_Character_Condor::GetInstance() != nullptr)
 	{
 		_condor = ATileActor_Character_Condor::GetInstance();
 		AGridManager* _gridManager = AGridManager::GetInstance();
@@ -56,14 +56,14 @@ void UState_CondorAttack::OnStateEnter()
 	else
 	{
 		_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
-	}
+	}*/
 }
 
 void UState_CondorAttack::OnStateTick(float DeltaTime)
 {
 	UState::OnStateTick(DeltaTime);
 
-	if (IsValid(ATileActor_Character_Condor::GetInstance()))
+	/*if (IsValid(ATileActor_Character_Condor::GetInstance()))
 	{
 		if(_barrier->_isBarriereCompleted == true)
 		{
@@ -90,10 +90,10 @@ void UState_CondorAttack::OnStateTick(float DeltaTime)
 			default:
 				break;
 			}
-		}
+		}*/
 	
-		_barrier->OnTick(DeltaTime);
-	}
+		//_barrier->OnTick(DeltaTime);
+	//}
 }
 
 void UState_CondorAttack::OnStateExit()

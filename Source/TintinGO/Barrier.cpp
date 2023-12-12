@@ -13,8 +13,7 @@ void UBarrier::OnBarrierIni(TSubclassOf<UState_TActor> newState)
 {
 	for (int i = 0; i < _actors.Num(); i++)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Barrier %s on Tile : %d %d"), *_actors[i]->GetName(), _actors[i]->GetCurrentTile()->_row,_actors[i]->GetCurrentTile()->_column);
-		_actors[i]->ChangeState(NewObject<UState_TA_Move>(newState->StaticClass()));
+		_actors[i]->ChangeState(NewObject<UState_TActor>(this ,newState));
 	}
 }
 
@@ -26,14 +25,14 @@ void UBarrier::OnTick(float DeltaTime)
 		{
 			_actors[i]->ChangeState(NewObject<UState_TA_Neutral>(UState_TA_Neutral::StaticClass()));
 
-			UE_LOG(LogTemp, Warning, TEXT("Barrier num %d %s on Tile : %d %d"), _actors.Num(), *_actors[i]->GetName(), _actors[i]->GetCurrentTile()->_row,_actors[i]->GetCurrentTile()->_column);
+			//UE_LOG(LogTemp, Warning, TEXT("Barrier num %d %s on Tile : %d %d"), _actors.Num(), *_actors[i]->GetName(), _actors[i]->GetCurrentTile()->_row,_actors[i]->GetCurrentTile()->_column);
 			_actors.RemoveAt(i);
 			i--;
 		}
 	}
 	if(_actors.Num() == 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Barrier Complete"));
+		//UE_LOG(LogTemp, Warning, TEXT("Barrier Complete"));
 		_isBarriereCompleted = true;
 	}
 	

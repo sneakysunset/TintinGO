@@ -30,6 +30,25 @@ void ATileActor::ChangeState(UState_TActor* newState)
 	_currentState_TA->OnStateEnter();
 }
 
+ATile* ATileActor::GetCurrentTile() const
+{
+	return _currentTile;
+}
+
+void ATileActor::SetCurrentTile(ATile* tile)
+{
+	if(IsValid(_currentTile) && _currentTile->_tileActors.Contains(this))
+	{
+		_currentTile->_tileActors.Remove(this);
+	}
+	_currentTile = tile;
+		
+	if(IsValid(tile) && !tile->_tileActors.Contains(this))
+	{
+		tile->_tileActors.Add(this);
+	}
+}
+
 void ATileActor::BeginPlay()
 {
 	Super::BeginPlay();

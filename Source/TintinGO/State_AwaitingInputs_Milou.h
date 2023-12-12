@@ -16,4 +16,6 @@ public:
 	virtual void ProcessPlayerInputs() override;
 	virtual void ReceiveLeftMouseClick() override;
 	virtual void ReceiveMiloClickDelegate() override;
+	virtual void OnStateExit() override;
+	virtual void DisableTiles() override;
 };

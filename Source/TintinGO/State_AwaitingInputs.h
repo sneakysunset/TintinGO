@@ -13,22 +13,46 @@ class TINTINGO_API UState_AwaitingInputs : public UState
 GENERATED_BODY()
 	
 public:
+	UFUNCTION()
 	virtual void OnStateEnter() override;
+
+	UFUNCTION()
 	virtual void OnStateTick(float DeltaTime) override;
+
+	UFUNCTION()
 	virtual void OnStateExit() override;
+
+	UFUNCTION()
 	void ProcessMousePositionInput();
-	
+
+	UFUNCTION()
 	virtual void ProcessPlayerInputs();
+	
 	UFUNCTION()
 	virtual void ReceiveLeftMouseClick();
+	
 	UFUNCTION()
 	virtual void ReceiveMiloClickDelegate();
-	virtual void DisableTiles(bool disablePath, bool disablePlayerTarget);
+
+	UFUNCTION()
+	virtual void DisableTiles();
+	
 protected:
+	UPROPERTY()
 	AGridManager* gridManager;
+
+	UPROPERTY()
 	ATile* _hitTile;
+
+	UPROPERTY()
 	ATileActor_Character_Milou* _milou;
+
+	UPROPERTY()
 	ATileActor_Character_Tintin* _tintin;
+
+	UPROPERTY()
 	APlayerController* pc;
+
+	UPROPERTY()
 	bool isTileAccessible;
 };

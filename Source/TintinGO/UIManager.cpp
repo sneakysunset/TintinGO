@@ -5,6 +5,13 @@
 
 #include "GameManager.h"
 
+AUIManager* AUIManager::SingletonInstance = nullptr;
+
+AUIManager* AUIManager::GetInstance()
+{
+	return SingletonInstance;
+}
+
 // Sets default values
 AUIManager::AUIManager()
 {
@@ -25,18 +32,14 @@ AUIManager::AUIManager()
 void AUIManager::BeginPlay()
 {
 	Super::BeginPlay();
+	SingletonInstance = this;
 	//ChangeTextValue(0, FColor::Emerald);
 	if (IsValid(YourWidgetClass))
 	{
 		_coreUI = CreateWidget<UCoreUI>(GetWorld(), YourWidgetClass);
 	}
 	_coreUI->AddToViewport(9999);
-	AGameManager* gameManager = AGameManager::GetInstance();
-	gameManager->OnBoneConsumed.BindDynamic(this, &AUIManager::ChangeTextValue);
-	if(gameManager->OnBoneConsumed.IsBound())
-	{
-		gameManager->OnBoneConsumed.Execute(0, FColor::Emerald);
-	}
+	ChangeTextValue(0, FColor::Emerald);
 }
 
 void AUIManager::ChangeTextValue(int32 newValue, FColor DisabledColor)
@@ -53,6 +56,12 @@ void AUIManager::ChangeTextValue(int32 newValue, FColor DisabledColor)
 		_coreUI->ButtonMilou->SetIsEnabled(true);
 		_coreUI->BoneNumber_Text->SetColorAndOpacity(FColor::Black);
 	}
+}
+
+void AUIManager::CustomInit()
+{
+	AGameManager* gameManager = AGameManager::GetInstance();
+	gameManager->OnBoneConsumed.BindDynamic(this, &AUIManager::ChangeTextValue);
 }
 
 

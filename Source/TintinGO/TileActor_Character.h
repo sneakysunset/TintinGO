@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Barrier.h"
 #include "TileActor.h"
 #include "TileActor_Character.generated.h"
 class ATile;
@@ -11,10 +10,10 @@ class ATile;
 UENUM(BlueprintType)
 enum class EAngle : uint8
 {
-	Right = 0 UMETA(),
-	Left = 1 UMETA(),
-	Up = 2 UMETA(),
-	Down = 4 UMETA()
+	Right = 0 UMETA(DisplayName = "Right"),
+	Left = 1 UMETA(DisplayName = "Left"),
+	Up = 2 UMETA(DisplayName = "Up"),
+	Down = 4 UMETA(DisplayName = "Down")
 };
 
 UCLASS()
@@ -31,9 +30,18 @@ public:
 
 	UPROPERTY()
 	EAngle angle;
+
+	UPROPERTY(EditAnywhere)
+	float _rotationSpeed;
+	
+	UPROPERTY(EditAnywhere)
+	float _baseAngleOffset;
+
+	UFUNCTION()
+	void SetUpRotation(EAngle newAngle);
 	
 protected:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	ATile* _nextTile;
 
 	UFUNCTION()

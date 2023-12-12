@@ -5,6 +5,7 @@
 #include "State_AwaitingInputs_Milou.h"
 #include "State_MilouMove.h"
 #include "State_PlayerMove.h"
+#include "State_PlayerRotate.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/GameFramework/PlayerController.h"
 
@@ -70,18 +71,19 @@ void UState_AwaitingInputs::ProcessMousePositionInput()
 	else
 	{
 		isTileAccessible = false;
-		DisableTiles(false, true);
+		DisableTiles();
 		return;
 	}
 
 	if(!IsValid(hitTile))
 	{
 		isTileAccessible = false;
-		DisableTiles(false, true);
+		DisableTiles();
+		_hitTile = nullptr;
 		return;
 	}
 
-	if(_hitTile == nullptr || _hitTile != hitTile)
+	if(_hitTile != hitTile)
 	{
 		if(IsValid(_hitTile))
 			_hitTile->SetHighlighted(false);
@@ -100,17 +102,18 @@ void UState_AwaitingInputs::ProcessPlayerInputs()
 {
 	_tintin = ATileActor_Character_Tintin::GetInstance();
 	if(!IsValid(_tintin)) return;
+	if(!IsValid(_hitTile)) return;
 	
 	const ATile* tintinTile = _tintin->GetCurrentTile();
 
 	if(!IsValid(tintinTile)) return;
-	
+
 	if (FMath::Abs(_hitTile->_row - tintinTile->_row) + FMath::Abs(_hitTile->_column - tintinTile->_column) == 1 && _hitTile->_walkable)
 	{
-		if((_hitTile->_row - tintinTile->_row == 1 && _hitTile->_leftLink)
-			|| (_hitTile->_row - tintinTile->_row == -1 && _hitTile->_rightLink)
-			|| (_hitTile->_column - tintinTile->_column == 1 && _hitTile->_downLink)
-			|| (_hitTile->_column - tintinTile->_column == -1 && _hitTile->_upLink)
+		if((_hitTile->_row - tintinTile->_row == 1 && _hitTile->_downLink)
+			|| (_hitTile->_row - tintinTile->_row == -1 && _hitTile->_upLink)
+			|| (_hitTile->_column - tintinTile->_column == 1 && _hitTile->_leftLink)
+			|| (_hitTile->_column - tintinTile->_column == -1 && _hitTile->_rightLink)
 			)
 		{
 			_hitTile->SetHighlighted(true);
@@ -120,12 +123,14 @@ void UState_AwaitingInputs::ProcessPlayerInputs()
 		{
 			_hitTile->SetHighlighted(false);
 			isTileAccessible = false;
+			_hitTile = nullptr;
 		}
 	}
 	else
 	{
-		_hitTile->SetHighlighted(false);
 		isTileAccessible = false;
+		_hitTile->SetHighlighted(false);
+		_hitTile = nullptr;
 	}
 }
 
@@ -146,8 +151,7 @@ void UState_AwaitingInputs::ReceiveLeftMouseClick()
 			_milou->SetNextTile(_tintin->GetNextTile());
 		}
 
-		UE_LOG(LogTemp, Warning, TEXT("UState_AwaitingInputs"));
-		_gameManager->StateChange(NewObject<UState_PlayerMove>(UState_PlayerMove::StaticClass()));
+		_gameManager->StateChange(NewObject<UState_PlayerRotate>(UState_PlayerRotate::StaticClass()));
 	}
 }
 
@@ -157,26 +161,9 @@ void UState_AwaitingInputs::ReceiveMiloClickDelegate()
 	_gameManager->StateChange(NewObject<UState_AwaitingInputs_Milou>(UState_AwaitingInputs_Milou::StaticClass()));
 }
 
-void UState_AwaitingInputs::DisableTiles(bool disablePath, bool disablePlayerTarget)
+void UState_AwaitingInputs::DisableTiles()
 {
 	if(!IsValid(_hitTile)) return;
-	if(disablePlayerTarget && _hitTile != nullptr)
-	{
-		_hitTile->SetHighlighted(false);
-		//_hitTile = nullptr;
-	}
-	if(!IsValid(_milou)) return;
-	if(disablePath && IsValid(_milou) && _milou->MilouTilePath.Num() > 1)
-	{
-		for (int i = 0; i < _milou->MilouTilePath.Num(); i++)
-		{
-			if(!IsValid(_milou->MilouTilePath[i]))continue;
-			if(IsValid(_milou->MilouTilePath[i]))
-			{
-				_milou->MilouTilePath[i]->SetHighlightedPath(false);
-			}
-		}
-		_milou->MilouTilePath.Empty();
-	}
+	_hitTile->SetHighlighted(false);
 }
 

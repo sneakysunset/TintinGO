@@ -11,10 +11,23 @@ UCLASS()
 class TINTINGO_API ATileActor_Character_Milou : public ATileActor_Character
 {
 	GENERATED_BODY()
+	
 	ATileActor_Character_Milou();
+	
 public:
 	static ATileActor_Character_Milou* GetInstance();
 	static ATileActor_Character_Milou* SingletonInstance;
+
+	UPROPERTY()
 	bool isBoundToTintin;
+
+	UPROPERTY(EditAnywhere)
 	TArray<ATile*> MilouTilePath;
+
+	UPROPERTY(EditAnywhere)
+	float _boneSpeed;
+
+protected:
+	virtual void BeginPlay() override;
+	
 };

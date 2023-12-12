@@ -17,5 +17,7 @@ class TINTINGO_API UState_PeruviensMove : public UState
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateExit() override;
+
+	UPROPERTY()
 	UBarrier* _barrier;
 };

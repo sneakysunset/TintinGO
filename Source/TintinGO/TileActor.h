@@ -2,10 +2,10 @@
 
 #include "CoreMinimal.h"
 #include "State_TActor.h"
-#include "Tile.h"
 #include "GameFramework/Actor.h"
 #include "TileActor.generated.h"
 
+class ATile;
 
 UCLASS()
 class TINTINGO_API ATileActor : public AActor
@@ -22,20 +22,8 @@ public:
 	UState_TActor* _currentState_TA;
 	void ChangeState(UState_TActor* newState);
 	
-	virtual ATile* GetCurrentTile() const{return _currentTile;}
-	virtual void SetCurrentTile(ATile* tile)
-	{
-		if(IsValid(_currentTile) && _currentTile->_tileActors.Contains(this))
-		{
-			_currentTile->_tileActors.Remove(this);
-		}
-		_currentTile = tile;
-		
-		if(IsValid(tile) && !tile->_tileActors.Contains(this))
-		{
-			tile->_tileActors.Add(this);
-		}
-	}
+	virtual ATile* GetCurrentTile() const;
+	virtual void SetCurrentTile(ATile* tile);
 	bool _isTaskOver;
 
 	UPROPERTY(EditAnywhere)

@@ -3,12 +3,20 @@
 
 #include "TileActor_Character_Tintin.h"
 
+#include "GameManager.h"
+
 
 ATileActor_Character_Tintin* ATileActor_Character_Tintin::SingletonInstance = nullptr;
 
 ATileActor_Character_Tintin* ATileActor_Character_Tintin::GetInstance() 
 {
 	return SingletonInstance;
+}
+
+void ATileActor_Character_Tintin::BeginPlay()
+{
+	Super::BeginPlay();
+	SetUpRotation(AGameManager::GetInstance()->_tintinAngle);
 }
 
 ATileActor_Character_Tintin::ATileActor_Character_Tintin()

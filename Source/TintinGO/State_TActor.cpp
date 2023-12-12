@@ -1,4 +1,6 @@
 #include "State_TActor.h"
+
+#include "GameManager.h"
 #include "TileActor.h"
 
 
@@ -7,7 +9,7 @@ void UState_TActor::OnStateEnter()
 	UState::OnStateEnter();
 	_isStateComplete = false;
 	_interpolateValue = 0;
-	_speed = _tileActor->_speed;
+	_speed = AGameManager::GetInstance()->_inTileMoveSpeed;
 }
 
 void UState_TActor::OnStateTick(float DeltaTime)

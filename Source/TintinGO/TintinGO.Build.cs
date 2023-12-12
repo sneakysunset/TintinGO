@@ -13,9 +13,7 @@ public class TintinGO : ModuleRules
 			"CoreUObject", 
 			"Engine", 
 			"InputCore",
-			"EnhancedInput",
-            "FMODStudio"/*,
-            "FMODStudioNiagara"*/
+			"EnhancedInput"
         });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

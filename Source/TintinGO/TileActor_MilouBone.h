@@ -11,7 +11,7 @@ class TINTINGO_API ATileActor_MilouBone : public ATileActor
 
 public:
 	ATileActor_MilouBone();
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION()
 	virtual void OnEndTask() override;
 };

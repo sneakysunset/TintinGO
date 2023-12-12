@@ -14,4 +14,7 @@ class TINTINGO_API ATileActor_Character_Tintin : public ATileActor_Character
 public:
 	static ATileActor_Character_Tintin* GetInstance();
 	static ATileActor_Character_Tintin* SingletonInstance;
+
+protected:
+virtual void BeginPlay() override;
 };

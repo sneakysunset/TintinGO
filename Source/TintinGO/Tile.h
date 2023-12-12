@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "TileActor_Character.h"
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
@@ -27,6 +28,21 @@ enum class ETileActorType : uint8
 	Condor = 4 UMETA(DisplayName = "Condor [Ennemy]")
 };
 
+USTRUCT(BlueprintType)
+struct FItemToSpawn
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	ETileActorType actorType;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	EAngle angle;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 clueIndex;
+};
+
 UCLASS()
 class TINTINGO_API ATile : public AActor
 {
@@ -36,10 +52,10 @@ public:
 	ATile();
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		ETileType _tileType {ETileType::Neutral};
+	ETileType _tileType {ETileType::Neutral};
 	
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		bool _walkable = true;
+	bool _walkable = true;
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 	bool _rightLink = true;
@@ -54,22 +70,25 @@ public:
 	bool _downLink = true;
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		TArray<ETileActorType> _TileItems;
+	TArray<FItemToSpawn> _TileItems;
 	
 	UPROPERTY()
-		TArray<ATileActor*> _tileActors;
+	TArray<ATileActor*> _tileActors;
 
 	UFUNCTION(CallInEditor , Category = "Spawn TileActors")
-		void AddTileActors();
+	void AddTileActors();
 	
 	UPROPERTY(EditAnywhere, Category = "Spawn TileActors")
-		UBlueprint* _milouBoneBP;
+	UBlueprint* _milouBoneBP;
 	
 	UPROPERTY(EditAnywhere, Category = "Spawn TileActors")
-		UBlueprint* _peruvienBP;
+	UBlueprint* _peruvienBP;
+
+	UPROPERTY(EditAnywhere, Category = "Spawn TileActors")
+	UBlueprint* _clueBP;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
-		bool _useEditorTick = true;
+	bool _useEditorTick = true;
 
 	UPROPERTY()
 	int32 _row;
@@ -98,8 +117,14 @@ public:
 	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _HighlightedPathMat;
 
+	UPROPERTY(EditAnywhere, Category = "TileMaterials")
+	UMaterialInterface* _InBoneRangeMat;
+	
 	UFUNCTION()
 	void SetHighlighted(bool toHightlight);
+
+	UFUNCTION()
+	void SetTilesInBoneRangeMat(bool toBone);
 
 	UFUNCTION()
 	void SetHighlightedPath(bool toHightlight);
@@ -122,7 +147,7 @@ private:
 	UPROPERTY()
 	bool _walkableChecker = true;
 
-	UPROPERTY()
+	UFUNCTION()
 	UMaterialInstanceDynamic* DynamicMat(UMaterialInterface* mat) const;
 
 	UPROPERTY()
@@ -132,7 +157,7 @@ private:
 	virtual bool ShouldTickIfViewportsOnly() const override;
 
 	UFUNCTION(CallInEditor)
-		void BlueprintEditorTick(float DeltaTime);
+	void BlueprintEditorTick(float DeltaTime);
 	
 	UFUNCTION()
 	void AddTintin();

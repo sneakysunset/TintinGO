@@ -20,12 +20,12 @@ public:
 		return _tileActor;
 	}
 	bool _isStateComplete;
+	float _speed;
 
 protected:
 	UPROPERTY()
 	ATileActor* _tileActor;
 	float _interpolateValue;
-	float _speed;
 	virtual void OnStateComplete();
 	
 };

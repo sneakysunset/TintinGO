@@ -25,10 +25,6 @@
 		{
 			"Name": "EnhancedInput",
 			"Enabled": true
-		},
-		{
-			"Name": "FMODStudioNiagara",
-			"Enabled": false
 		}
 	],
 	"TargetPlatforms": [

@@ -11,7 +11,8 @@ class TINTINGO_API AUIManager : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
+	static AUIManager* GetInstance();
 	// Sets default values for this actor's properties
 	AUIManager();
 	UPROPERTY(EditAnywhere, Category = "UI")
@@ -20,8 +21,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	UCoreUI* _coreUI;
+
+	static AUIManager* SingletonInstance;
 public:	
 	// Called every frame
 	UFUNCTION()
 	void ChangeTextValue(int32 newValue, FColor DisabledColor);
+
+	UFUNCTION()
+	void CustomInit();
 };

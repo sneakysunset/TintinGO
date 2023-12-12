@@ -29,4 +29,7 @@ public:
 	ATile* endNest2Tile;
 
 	bool isWaitLastRound;
+
+protected:
+	virtual void BeginPlay() override;
 };
