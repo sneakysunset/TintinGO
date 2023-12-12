@@ -157,8 +157,9 @@ void ATile::AddCondor()
 	FVector position =  GetActorLocation();
 	FRotator rotation = FRotator(0, 0, 0);
 	ATileActor_Character_Condor* condor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP->GeneratedClass, position, rotation, params);
-
+#if WITH_EDITOR
 	condor->SetActorLabel(FString::Printf(TEXT("Condor")));
+#endif
 	condor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 	condor->SetCurrentTile(this);
 	condor->SetActorLocation(condor->GetCurrentTile()->GetTileActorPosition(condor));

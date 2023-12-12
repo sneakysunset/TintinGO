@@ -20,6 +20,8 @@ class TINTINGO_API AGameManager : public AActor
 
 public:	
 	static AGameManager* GetInstance();
+	void GameOver() const;
+	void OnWin() const;
 	FOnClickDelegate OnClickD;
 	FUIMilouClick OnMilouBoneClick;
 	FOnBoneConsumed OnBoneConsumed;

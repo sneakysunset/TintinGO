@@ -62,4 +62,20 @@ AGameManager* AGameManager::GetInstance()
 	return SingletonInstance;
 }
 
+void AGameManager::GameOver() const
+{
+	UGameplayStatics::OpenLevel(GetWorld(), *UGameplayStatics::GetCurrentLevelName(GetWorld()), true);
+}
+
+void AGameManager::OnWin() const
+{
+	if(UGameplayStatics::GetCurrentLevelName(GetWorld()) == FString("Level_1"))
+	{
+		UGameplayStatics::OpenLevel(GetWorld(),  *FString("Level_2"), true);
+	}
+	else if(UGameplayStatics::GetCurrentLevelName(GetWorld()) == FString("Level_2"))
+	{
+		UGameplayStatics::OpenLevel(GetWorld(),  *FString("Level_3"), true);
+	}
+}
 

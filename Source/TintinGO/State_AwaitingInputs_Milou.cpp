@@ -72,7 +72,8 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 			_milou->isBoundToTintin = false;
 		_milou->SetNextTile(_milou->MilouTilePath.Last());
 		_gameManager->_milouBonesNumber--;
-		_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
+		if(_gameManager->OnBoneConsumed.IsBound())
+			_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
 		_gameManager->StateChange(NewObject<UState_MilouRotate>(UState_MilouRotate::StaticClass()));
 	}
 

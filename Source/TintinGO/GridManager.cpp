@@ -42,12 +42,12 @@ void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
-	TArray<AActor*> ActorsToFind;
+	/*TArray<AActor*> ActorsToFind;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATileActor::StaticClass(), ActorsToFind);
 	for(auto actor : ActorsToFind)
 	{
 		Destroy(actor);
-	}
+	}*/
 }
 
 bool AGridManager::ShouldTickIfViewportsOnly() const

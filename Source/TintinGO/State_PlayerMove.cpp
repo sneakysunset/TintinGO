@@ -48,7 +48,7 @@ void UState_PlayerMove::OnStateTick(float DeltaTime)
 	{
 		if(_tintin->GetCurrentTile()->_tileType == ETileType::EndingPosition && _gameManager->_clueNumber == 0)
 		{
-			Cast<UGlobalGameManager>(UGameplayStatics::GetGameInstance(GetWorld()))->OnWin();
+			_gameManager->OnWin();
 		}
 	
 		_gameManager->StateChange(NewObject<UState_TriggerItemsCharacters>(UState_TriggerItemsCharacters::StaticClass()));

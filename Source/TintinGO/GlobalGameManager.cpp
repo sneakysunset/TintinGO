@@ -26,7 +26,7 @@ void UGlobalGameManager::OnWin()
 
 void UGlobalGameManager::OnGameOver() const
 {
-	UGameplayStatics::OpenLevel(GetWorld(), *UGameplayStatics::GetCurrentLevelName(GetWorld()), true);
+	
 }
 
 void UGlobalGameManager::OnLevelLoad()

@@ -65,7 +65,7 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 		{
 			if(peruvien->GetCurrentTile() == tintin->GetCurrentTile())
 			{
-				UGameplayStatics::OpenLevel(GetWorld(), *UGameplayStatics::GetCurrentLevelName(GetWorld()), true);
+				_gameManager->GameOver();
 				//Cast<UGlobalGameManager>(UGameplayStatics::GetGameInstance(GetWorld()))->OnGameOver();
 				return;
 			}
