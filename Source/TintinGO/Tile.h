@@ -11,28 +11,28 @@ class AGridManager;
 UENUM(BlueprintType)
 enum class ETileType : uint8
 {
-	Neutral = 0 UMETA(DisplayName = "Neutral"),
-	StartingPosition = 1 UMETA(DisplayName = "Starting Position"),
-	EndingPosition = 2 UMETA(DisplayName = "Ending Position"),
-	NestPosition = 4 UMETA(DisplayName = "Nest")
+	Neutral UMETA(DisplayName = "Neutral"),
+	StartingPosition UMETA(DisplayName = "Starting Position"),
+	EndingPosition UMETA(DisplayName = "Ending Position"),
+	NestPosition UMETA(DisplayName = "Nest")
 };
 
 UENUM(BlueprintType)
 enum class ENestDirection : uint8
 {
-	Left = 0 UMETA(DisplayName = "Left"),
-	Right = 1 UMETA(DisplayName = "Right"),
-	Top = 2 UMETA(DisplayName = "Top"),
-	Down = 4 UMETA(DisplayName = "Down")
+	Left UMETA(DisplayName = "Left"),
+	Right UMETA(DisplayName = "Right"),
+	Top UMETA(DisplayName = "Top"),
+	Down UMETA(DisplayName = "Down")
 };
 
 UENUM(BlueprintType)
 enum class ETileActorType : uint8
 {
-	Bone = 0 UMETA(DisplayName = "Milou's Bone"),
-	Clue = 1 UMETA(DisplayName = "Clue"),
-	Peruvien = 2 UMETA(DisplayName = "Peruvien [Ennemy]"),
-	Condor = 4 UMETA(DisplayName = "Condor [Ennemy]")
+	Bone UMETA(DisplayName = "Milou's Bone"),
+	Clue UMETA(DisplayName = "Clue"),
+	Peruvien UMETA(DisplayName = "Peruvien [Ennemy]"),
+	Condor UMETA(DisplayName = "Condor [Ennemy]")
 };
 
 USTRUCT(BlueprintType)
@@ -59,9 +59,7 @@ public:
 	ATile();
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-		ETileType _tileType {ETileType::Neutral};
-
-	virtual void BeginPlay() override;
+	ETileType _tileType {ETileType::Neutral};
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 	ENestDirection _nestDirection = ENestDirection::Left;
@@ -125,6 +123,7 @@ public:
 	
 	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _nestMat;
+	
 	UPROPERTY(EditAnywhere, Category = "TileMaterials")
 	UMaterialInterface* _HighlightedMat;
 	

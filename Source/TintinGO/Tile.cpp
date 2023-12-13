@@ -9,6 +9,7 @@
 #include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Peruvien.h"
 #include "TileActor_Character_Tintin.h"
+#include "TileActor_Character.h"
 #include "TileActor_Clue.h"
 #include "TileActor_MilouBone.h"
 
@@ -141,19 +142,7 @@ void ATile::AddTintin()
 
 void ATile::AddCondor()
 {
-	FActorSpawnParameters params;
-	params.bNoFail = true;
-	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-	FVector position =  GetActorLocation();
-	FRotator rotation = FRotator(0, 0, 0);
-	ATileActor_Character_Condor* condor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP->GeneratedClass, position, rotation, params);
-#if WITH_EDITOR
-	condor->SetActorLabel(FString::Printf(TEXT("Condor")));
-#endif
-	condor->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-	condor->SetCurrentTile(this);
-	condor->SetActorLocation(condor->GetCurrentTile()->GetTileActorPosition(condor));
-	_gridManager->_condors.Add(condor);
+
 }
 
 void ATile::SetHighlighted(bool toHightlight)
@@ -274,6 +263,9 @@ void ATile::AddTileActors()
 	for (int i = 0; i < _TileItems.Num(); i++)
 	{
 		FActorSpawnParameters params;
+		params.bNoFail = true;
+		params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
 		FVector position = GetActorLocation();
 		FRotator rotation = FRotator(0, 0, 0);
 		ATileActor* tActor = nullptr;
@@ -304,10 +296,12 @@ void ATile::AddTileActors()
 #endif
 			break;
 		case ETileActorType::Condor:
-			AddCondor();
-			return;
-		default:
-			break;
+			ATileActor_Character_Condor* condor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP->GeneratedClass, position, rotation, params);
+			_gridManager->_condors.Add(condor);
+			tActor = condor;
+#if WITH_EDITOR
+			condor->SetActorLabel(FString::Printf(TEXT("Condor")));
+#endif
 		}
 
 		_tileActors.Add(tActor);

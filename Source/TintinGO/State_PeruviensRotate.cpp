@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+	// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "State_PeruviensRotate.h"
@@ -6,6 +6,7 @@
 #include "GameManager.h"
 #include "GridManager.h"
 #include "State_AwaitingInputs.h"
+#include "State_CondorChoice.h"
 #include "State_TA_Rotate.h"
 #include "TileActor_Character_Peruvien.h"
 
@@ -67,7 +68,7 @@ void UState_PeruviensRotate::OnStateTick(float DeltaTime)
 				peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingTintin;
 			}
 		}
-		_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
+		_gameManager->StateChange(NewObject<UState_CondorChoice>(UState_CondorChoice::StaticClass()));
 	}
 	_barrier->OnTick(DeltaTime);
 }

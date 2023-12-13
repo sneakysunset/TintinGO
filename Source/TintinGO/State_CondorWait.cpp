@@ -32,7 +32,7 @@ void UState_CondorWait::OnStateExit()
 {
 	UState::OnStateExit();
 
-	UE_LOG(LogTemp, Warning, TEXT("Condor Wait State Exit"));
+	//UE_LOG(LogTemp, Warning, TEXT("Condor Wait State Exit"));
 }
 
 

@@ -3,7 +3,6 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "TileActor.h"
-#include "Barrier.h"
 #include "TileActor_Character.generated.h"
 class ATile;
 

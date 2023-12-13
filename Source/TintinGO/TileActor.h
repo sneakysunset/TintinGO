@@ -2,8 +2,6 @@
 
 #include "CoreMinimal.h"
 #include "State_TActor.h"
-#include "Tile.h"
-#include "State_TActor.h"
 #include "GameFramework/Actor.h"
 #include "TileActor.generated.h"
 

@@ -21,7 +21,7 @@ void UState_CheckWinConditions::OnStateEnter()
 		//_gameManager->StateChange(NewObject<UState_AwaitingInputs_Milou>(UState_AwaitingInputs_Milou::StaticClass()));
 	}
 	else
-	{
+	{	
 		//_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 		/*
 		if (ATileActor_Character_Condor::GetInstance() != nullptr)

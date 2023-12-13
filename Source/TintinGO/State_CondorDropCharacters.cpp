@@ -7,20 +7,20 @@
 #include "GameManager.h"
 #include "State_CondorGoToNextNest.h"
 #include "State_TA_Move.h"
+#include "TileActor_Character_Peruvien.h"
 
 void UState_CondorDropCharacters::OnStateEnter()
 {
 	UState::OnStateEnter();
 	UE_LOG(LogTemp, Warning, TEXT("Condor Wait State Enter"));
 
-	ATile* nextNestTile = nullptr;
-	ATile* targetTile = nullptr;
-	ATile* previousTile = nullptr;
+	ATile* targetTile;
+	ATile* previousTile;
 	_gridManager = AGridManager::GetInstance();
 	
 	for (auto condor : _gridManager->_condors)
 	{
-		nextNestTile = _gridManager->_nests[(condor->currentNestNb + 1) %_gridManager->_nests.Num()];
+		const ATile* nextNestTile = _gridManager->_nests[(condor->currentNestNb + 1) % _gridManager->_nests.Num()];
 
 		if (condor->_characters.Num() > 0)
 		{
@@ -113,8 +113,24 @@ void UState_CondorDropCharacters::OnStateTick(float DeltaTime)
 {
 	if(IsValid(_barrier))
 	{
-		if (_barrier->_isBarriereCompleted) 
+		if (_barrier->_isBarriereCompleted)
+		{
+			for (auto condor : _gridManager->_condors)
+			{
+				for (auto character : condor->_characters)
+				{
+					if(character->IsA<ATileActor_Character_Peruvien>())
+					{
+						ATileActor_Character_Peruvien* peruvien = Cast<ATileActor_Character_Peruvien>(character);
+						_gridManager->MarkStepsOnGrid(character->GetCurrentTile());
+						peruvien->PeruvienTilePath = _gridManager->GetPath(peruvien->_startingTile, false);
+						peruvien->_currentPBehaviour = EPeruvienBehaviour::Returning;
+						peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
+					}
+				}
+			}
 			_gameManager->StateChange(NewObject<UState_CondorGoToNextNest>(UState_CondorGoToNextNest::StaticClass()));
+		}
 
 		_barrier->OnTick(DeltaTime);
 	}

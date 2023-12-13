@@ -14,15 +14,15 @@ void UState_CondorAttack::OnStateEnter()
 {
 	UState::OnStateEnter();
 
-	ATile* currentTile = nullptr;
 	_gridManager = AGridManager::GetInstance();
 	
 	for (auto condor : _gridManager->_condors)
 	{
 		condor->isWaitLastRound = false;
-		currentTile = condor->GetCurrentTile();
+		ATile* currentTile = condor->GetCurrentTile();
 		ATile* previousCondorTile = nullptr;
-		
+		_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
+
 		switch (currentTile->_nestDirection)
 		{
 			case ENestDirection::Left :
@@ -57,7 +57,6 @@ void UState_CondorAttack::OnStateEnter()
 							}
 						}
 						
-						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						previousCondorTile = currentTile;
 						condor->SetNextTile(_gridManager->_gridTiles[currentTile->_row].Tiles[i]);
 						condor->SetCurrentTile(condor->GetNextTile());
@@ -198,7 +197,7 @@ void UState_CondorAttack::OnStateTick(float DeltaTime)
 {
 	UState::OnStateTick(DeltaTime);
 
-	if(_barrier->_isBarriereCompleted == true)
+	if(_barrier->_isBarriereCompleted)
 	{
 		_gameManager->StateChange(NewObject<UState_CondorDropCharacters>(UState_CondorDropCharacters::StaticClass()));
 	}

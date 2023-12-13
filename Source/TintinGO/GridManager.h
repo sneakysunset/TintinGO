@@ -41,7 +41,7 @@ public:
     UBlueprint* _tileBP;
 
     UFUNCTION()
-    void ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile);
+    static void ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile);
 
     UFUNCTION()
     void MarkStepsOnGrid(ATile* CenterTile);
@@ -81,6 +81,9 @@ public:
     UPROPERTY()
     TArray<ATileActor_Character_Condor*> _condors;
     
+    UPROPERTY()
+    TArray<ATile*> _nests;
+    
 protected:
     virtual void BeginPlay() override;
 
@@ -88,8 +91,6 @@ protected:
 
     virtual bool ShouldTickIfViewportsOnly() const override;
 
-    UPROPERTY()
-    TArray<ATile*> _nests;
 
     
 private:

@@ -64,26 +64,32 @@ bool AGridManager::ShouldTickIfViewportsOnly() const
 
 void AGridManager::ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile)
 {
-	for(auto body : previousTile->_tileActors)
+	if(IsValid(previousTile))
 	{
-		if(body == nullptr) continue;
-		UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
-		
-		if(!barrier->_actors.Contains(body))
+		for(auto body : previousTile->_tileActors)
 		{
-			body->ChangeState(state);
-			barrier->_actors.Add(body);
+			if(body == nullptr) continue;
+			UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
+			
+			if(!barrier->_actors.Contains(body))
+			{
+				body->ChangeState(state);
+				barrier->_actors.Add(body);
+			}
 		}
 	}
 
-	for(auto body : currentTile->_tileActors)
+	if(IsValid(currentTile))
 	{
-		if(body == nullptr) continue;
-		UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
-		if(!barrier->_actors.Contains(body))
+		for(auto body : currentTile->_tileActors)
 		{
-			body->ChangeState(state);
-			barrier->_actors.Add(body);
+			if(body == nullptr) continue;
+			UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
+			if(!barrier->_actors.Contains(body))
+			{
+				body->ChangeState(state);
+				barrier->_actors.Add(body);
+			}
 		}
 	}
 }
