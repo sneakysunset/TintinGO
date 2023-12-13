@@ -3,6 +3,7 @@
 #include "State_CondorGoToNextNest.h"
 #include "GameManager.h"
 #include "State_AwaitingInputs.h"
+#include "State_MilouRotate.h"
 #include "State_TA_Move.h"
 
 void UState_CondorGoToNextNest::OnStateEnter()
@@ -28,7 +29,7 @@ void UState_CondorGoToNextNest::OnStateTick(float DeltaTime)
 {
 	if(_barrier->_isBarriereCompleted)
 	{
-		_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
+		_gameManager->StateChange(NewObject<UState_MilouRotate>(UState_MilouRotate::StaticClass()));
 	}
 
 	_barrier->OnTick(DeltaTime);

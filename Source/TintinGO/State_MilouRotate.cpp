@@ -4,6 +4,7 @@
 #include "State_MilouRotate.h"
 
 #include "GameManager.h"
+#include "State_AwaitingInputs.h"
 #include "State_MilouMove.h"
 #include "Tile.h"
 #include "TileActor_Character_Milou.h"
@@ -14,6 +15,11 @@ void UState_MilouRotate::OnStateEnter()
 
 	UE_LOG(LogTemp, Warning, TEXT("State Enter Milou Rotate"));
 	_milou = ATileActor_Character_Milou::GetInstance();
+	if(_milou->isBoundToTintin || _milou->MilouTilePath.Num() == 0)
+	{
+		_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
+		return;
+	}
 	const ATile* tile = _milou->GetCurrentTile();
 	const ATile* nextTile = _milou->GetNextTile();
 	_startRotation = _milou->GetActorRotation();

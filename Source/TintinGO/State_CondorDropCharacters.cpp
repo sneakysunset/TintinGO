@@ -7,7 +7,9 @@
 #include "GameManager.h"
 #include "State_CondorGoToNextNest.h"
 #include "State_TA_Move.h"
+#include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Peruvien.h"
+
 
 void UState_CondorDropCharacters::OnStateEnter()
 {
@@ -36,6 +38,12 @@ void UState_CondorDropCharacters::OnStateEnter()
 					
 					for (auto Character : condor->_characters)
 					{
+						if(Character->IsA<ATileActor_Character_Milou>())
+						{
+							ATileActor_Character_Milou* milou = Cast<ATileActor_Character_Milou>(Character);
+							if(!milou->isBoundToTintin)
+								milou->_previousCondorTile = milou->GetCurrentTile();
+						}
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
@@ -55,6 +63,12 @@ void UState_CondorDropCharacters::OnStateEnter()
 						
 					for (auto Character : condor->_characters)
 					{
+						if(Character->IsA<ATileActor_Character_Milou>())
+						{
+							ATileActor_Character_Milou* milou = Cast<ATileActor_Character_Milou>(Character);
+							if(!milou->isBoundToTintin)
+								milou->_previousCondorTile = milou->GetCurrentTile();
+						}
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
@@ -74,6 +88,12 @@ void UState_CondorDropCharacters::OnStateEnter()
 							
 					for (auto Character : condor->_characters)
 					{
+						if(Character->IsA<ATileActor_Character_Milou>())
+						{
+							ATileActor_Character_Milou* milou = Cast<ATileActor_Character_Milou>(Character);
+							if(!milou->isBoundToTintin)
+								milou->_previousCondorTile = milou->GetCurrentTile();
+						}
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
@@ -93,6 +113,12 @@ void UState_CondorDropCharacters::OnStateEnter()
 								
 					for (auto Character : condor->_characters)
 					{
+						if(Character->IsA<ATileActor_Character_Milou>())
+						{
+							ATileActor_Character_Milou* milou = Cast<ATileActor_Character_Milou>(Character);
+							if(!milou->isBoundToTintin)
+								milou->_previousCondorTile = milou->GetCurrentTile();
+						}
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
@@ -126,6 +152,15 @@ void UState_CondorDropCharacters::OnStateTick(float DeltaTime)
 						peruvien->PeruvienTilePath = _gridManager->GetPath(peruvien->_startingTile, false);
 						peruvien->_currentPBehaviour = EPeruvienBehaviour::Returning;
 						peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
+					}
+					else if(character->IsA<ATileActor_Character_Milou>())
+					{
+						ATileActor_Character_Milou* milou = Cast<ATileActor_Character_Milou>(character);
+						if(!milou->isBoundToTintin)
+						{
+							_gridManager->MarkStepsOnGrid(character->GetCurrentTile());
+							milou->MilouTilePath = _gridManager->GetPath(milou->_previousCondorTile, true);
+						}
 					}
 				}
 			}

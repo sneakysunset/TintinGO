@@ -24,6 +24,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	TArray<ATile*> MilouTilePath;
 
+	UPROPERTY()
+	ATile* _previousCondorTile;
+	
 	UPROPERTY(EditAnywhere)
 	float _boneSpeed;
 
