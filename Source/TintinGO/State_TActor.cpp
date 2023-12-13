@@ -3,7 +3,6 @@
 #include "GameManager.h"
 #include "TileActor.h"
 
-
 void UState_TActor::OnStateEnter()
 {
 	UState::OnStateEnter();

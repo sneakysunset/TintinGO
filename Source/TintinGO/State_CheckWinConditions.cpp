@@ -2,8 +2,7 @@
 #include "GameManager.h"
 #include "GridManager.h"
 #include "State_AwaitingInputs.h"
-#include "State_CondorAttack.h"
-#include "State_CondorWait.h"
+#include "State_CondorChoice.h"
 #include "TileActor_Character_Condor.h"
 
 void UState_CheckWinConditions::OnStateEnter()

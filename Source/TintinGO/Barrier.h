@@ -1,12 +1,11 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "State_TActor.h"
 #include "UObject/Object.h"
-#include "Barrier.generated.h"
 class ATileActor;
+#include "State_TActor.h"
+#include "Barrier.generated.h"
+
 
 UCLASS()
 class TINTINGO_API UBarrier : public UObject

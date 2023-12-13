@@ -11,58 +11,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18a00cf5-8619-465a-9e48-0ecda5c9207c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Content/Models/Corps.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/Museau.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/cactus.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/condor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/condor_vol.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/herbe_1_Plane_016.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/herbe_2_Plane_018.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/herbe_3_Plane_019.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/herbe_4_Plane_020.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/milou_Retopo_Sphere.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/milou_Sphere_008.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/milou_Sphere_009.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/nid_condor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/os.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/peruvien.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/plante.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/plateau.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_1.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_2.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_3.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_4.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_5.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/rocher_6.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/Condor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/CondorVol.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/NidCondor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/Peruvien.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/Plateau.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/Tintin.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/Tour.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/condor_DefaultMaterial_BaseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/condor_vol_DefaultMaterial_BaseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/nid_condor_DefaultMaterial_BaseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/peruvien_yeux_BaseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/plateau_DefaultMaterial_BaseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/tintin_DefaultMaterial_BaseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/textures/tour_DefaultMaterial_BaseColor.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/tintin.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/tour.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/yeux.uasset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Content/Models/yeux_001.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Content/Materials/NestTileWithLinks.uasset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorChoice.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorChoice.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorDropCharacters.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorDropCharacters.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorGoToNextNest.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorGoToNextNest.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEditor.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEditor.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Condor_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Condor_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Peruvien_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Peruvien_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Milou_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Milou_BP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Tintin_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Tintin_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/FirstMap.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/FirstMap.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/Tile_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/Tile_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/TestFlo1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestFlo1.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Barrier.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Barrier.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Barrier.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Barrier.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/GridManager.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CheckWinConditions.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CondorAttack.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorAttack.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CondorAttack.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorAttack.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CondorWait.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorWait.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_CondorWait.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_CondorWait.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TActor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TActor.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_TActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_TActor.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Condor.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Condor.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Condor.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Condor.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Tintin.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/TileActor_Character_Tintin.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +50,10 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Dummy.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
@@ -90,11 +73,12 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;nouveauMerge&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;condor&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;UnrealLogSettings&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -107,6 +91,67 @@
   }
 }</component>
   <component name="RunManager" selected="C++ Project.TintinGO">
+    <configuration name="TintinGO" type="CppProject" factoryName="C++ Project">
+      <configuration_1>
+        <option name="CONFIGURATION" value="DebugGame Editor" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Intermediate/ProjectFiles/TintinGO.vcxproj" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXE_PATH" value="$(LocalDebuggerCommand)" />
+        <option name="PROGRAM_PARAMETERS" value="$(LocalDebuggerCommandArguments)" />
+        <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      </configuration_1>
+      <configuration_2>
+        <option name="CONFIGURATION" value="Shipping" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Intermediate/ProjectFiles/TintinGO.vcxproj" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXE_PATH" value="$(LocalDebuggerCommand)" />
+        <option name="PROGRAM_PARAMETERS" value="$(LocalDebuggerCommandArguments)" />
+        <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      </configuration_2>
+      <configuration_3>
+        <option name="CONFIGURATION" value="DebugGame" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Intermediate/ProjectFiles/TintinGO.vcxproj" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXE_PATH" value="$(LocalDebuggerCommand)" />
+        <option name="PROGRAM_PARAMETERS" value="$(LocalDebuggerCommandArguments)" />
+        <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      </configuration_3>
+      <configuration_4>
+        <option name="CONFIGURATION" value="Development Editor" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Intermediate/ProjectFiles/TintinGO.vcxproj" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXE_PATH" value="$(LocalDebuggerCommand)" />
+        <option name="PROGRAM_PARAMETERS" value="$(LocalDebuggerCommandArguments)" />
+        <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      </configuration_4>
+      <configuration_5>
+        <option name="CONFIGURATION" value="Development" />
+        <option name="PLATFORM" value="Win64" />
+        <option name="PROJECT_FILE_PATH" value="$PROJECT_DIR$/Intermediate/ProjectFiles/TintinGO.vcxproj" />
+        <option name="CURRENT_LAUNCH_PROFILE" value="Local" />
+        <option name="EXE_PATH" value="$(LocalDebuggerCommand)" />
+        <option name="PROGRAM_PARAMETERS" value="$(LocalDebuggerCommandArguments)" />
+        <option name="WORKING_DIRECTORY" value="$(LocalDebuggerWorkingDirectory)" />
+        <option name="PASS_PARENT_ENVS" value="1" />
+        <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      </configuration_5>
+      <option name="DEFAULT_PROJECT_PATH" value="$PROJECT_DIR$/Intermediate/ProjectFiles/TintinGO.vcxproj" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <configuration name="TintinGO" type="CppProject" factoryName="C++ Project">
       <configuration_1>
         <option name="CONFIGURATION" value="DebugGame Editor" />
@@ -186,6 +231,24 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="AutomationTool" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.3/Engine/Source/Programs/AutomationTool/AutomationTool.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <configuration name="UnrealBuildTool" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="" />
       <option name="PROGRAM_PARAMETERS" value="" />
@@ -200,6 +263,39 @@
       <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
       <option name="PROJECT_KIND" value="DotNetCore" />
       <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration name="UnrealBuildTool" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.3/Engine/Source/Programs/UnrealBuildTool/UnrealBuildTool.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
+    <configuration name="EpicGames.AspNet" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.3/Engine/Source/Programs/Shared/EpicGames.AspNet/EpicGames.AspNet.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
+      <option name="LAUNCH_PROFILE_NAME" value="EpicGames.AspNet" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
       <method v="2">
         <option name="Build" />
       </method>
@@ -256,6 +352,10 @@
       <workItem from="1702027680352" duration="767000" />
       <workItem from="1702028648911" duration="8174000" />
       <workItem from="1702056240931" duration="1323000" />
+      <workItem from="1702207316258" duration="2173000" />
+      <workItem from="1702312676295" duration="12373000" />
+      <workItem from="1702329905177" duration="2224000" />
+      <workItem from="1702332169008" duration="3125000" />
     </task>
     <servers />
   </component>

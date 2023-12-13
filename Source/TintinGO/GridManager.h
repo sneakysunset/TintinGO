@@ -1,9 +1,8 @@
 #pragma once
 
-
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Tile.h"
+#include "TileActor_Character_Condor.h"
 #include "Barrier.h"
 #include "GridManager.generated.h"
 
@@ -69,18 +68,6 @@ public:
     UPROPERTY()
     ATile* _endTile;
     
-    UPROPERTY()
-    ATile* _nest1Tile;
-    
-    UPROPERTY()
-    ATile* _endNest1Tile;
-    
-    UPROPERTY()
-    ATile* _nest2Tile;
-    
-    UPROPERTY()
-    ATile* _endNest2Tile;
-    
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
     bool _useEditorTick;
 
@@ -100,6 +87,10 @@ protected:
     virtual void Tick(float DeltaTime) override;
 
     virtual bool ShouldTickIfViewportsOnly() const override;
+
+    UPROPERTY()
+    TArray<ATile*> _nests;
+
     
 private:
     static AGridManager* SingletonInstance;

@@ -3,16 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Barrier.h"
+#include "GridManager.h"
 #include "State.h"
-#include "TileActor_Character_Condor.h"
-#include "State_CondorAttack.generated.h"
+#include "State_CondorChoice.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TINTINGO_API UState_CondorAttack : public UState
+class TINTINGO_API UState_CondorChoice : public UState
 {
 	GENERATED_BODY()
 
@@ -20,9 +19,8 @@ public:
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateExit() override;
+
 private:
-	UPROPERTY()
-	UBarrier* _barrier;
 	UPROPERTY()
 	AGridManager* _gridManager;
 };

@@ -3,8 +3,8 @@
 #include "CoreMinimal.h"
 #include "State.h"
 #include "State_TActor.generated.h"
+
 class ATileActor;
-class ATile;
 
 UCLASS()
 class TINTINGO_API UState_TActor : public UState

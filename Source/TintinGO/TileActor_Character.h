@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
-
 #include "CoreMinimal.h"
 #include "TileActor.h"
+#include "Barrier.h"
 #include "TileActor_Character.generated.h"
 class ATile;
 

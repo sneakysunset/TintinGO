@@ -17,19 +17,11 @@ class TINTINGO_API ATileActor_Character_Condor : public ATileActor_Character
 	ATileActor_Character_Condor();
 public:
 	UPROPERTY(EditAnywhere)
-	ATile* nest1Tile;
-	
-	UPROPERTY(EditAnywhere)
-	ATile* endNest1Tile;
-	
-	UPROPERTY(EditAnywhere)
-	ATile* nest2Tile;
-	
-	UPROPERTY(EditAnywhere)
-	ATile* endNest2Tile;
+	int32 currentNestNb;
 
+	UPROPERTY(EditAnywhere)
 	bool isWaitLastRound;
 
-protected:
-	virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere)
+	TArray<ATileActor_Character*> _characters;
 };

@@ -12,13 +12,15 @@ void UState_CondorWait::OnStateEnter()
 	UState::OnStateEnter();
 	UE_LOG(LogTemp, Warning, TEXT("Condor Wait State Enter"));
 
-	/*if (ATileActor_Character_Condor::GetInstance() != nullptr)
+	_gridManager = AGridManager::GetInstance();
+	
+	for (auto condor : _gridManager->_condors)
 	{
-		_condor = ATileActor_Character_Condor::GetInstance();
-		_condor->isWaitLastRound = true;
+		condor->_characters.Empty();
+		condor->isWaitLastRound = true;
 	}
-
-	_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));*/
+	
+	_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 }
 
 void UState_CondorWait::OnStateTick(float DeltaTime)
@@ -29,4 +31,8 @@ void UState_CondorWait::OnStateTick(float DeltaTime)
 void UState_CondorWait::OnStateExit()
 {
 	UState::OnStateExit();
+
+	UE_LOG(LogTemp, Warning, TEXT("Condor Wait State Exit"));
 }
+
+
