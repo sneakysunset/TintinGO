@@ -22,6 +22,8 @@ void UState_CondorGoToNextNest::OnStateEnter()
 		condor->SetCurrentTile(condor->GetNextTile());
 		_gridManager->ChangeTile(_barrier, previousCondorTile, condor->GetCurrentTile());
 		_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
+		Cast<UState_TA_Move>(condor->_currentState_TA)->_actorSpeed = condor->_speed;
+		Cast<UState_TA_Move>(condor->_currentState_TA)->_speed = condor->_speed;
 	}
 }
 

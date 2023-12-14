@@ -25,6 +25,44 @@ void UState_AwaitingInputs::OnStateEnter()
 
 	pc = UGameplayStatics::GetPlayerController(_gameManager->GetWorld(), 0);
 
+	for(auto condor : gridManager->_condors)
+	{
+		if(condor->isWaitLastRound)
+		{
+			ATile* currentTile = condor->GetCurrentTile();
+
+			switch (currentTile->_nestDirection)
+			{
+				case ENestDirection::Left :
+					for (int i = currentTile->_column - 1; i >= 0; --i)
+					{
+						gridManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(1);
+					}
+					break;
+				case ENestDirection::Right :
+					for (int i = currentTile->_column + 1; i < gridManager->_gridTiles[0].Tiles.Num(); ++i)
+					{
+						gridManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(1);
+					}
+					break;
+				case ENestDirection::Top :
+					for (int i = currentTile->_row + 1; i > gridManager->_gridTiles.Num(); ++i)
+					{
+						gridManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(1);
+					}
+					break;
+				case ENestDirection::Down :
+					for (int i = currentTile->_row - 1; i >= 0; --i)
+					{
+						gridManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(1);
+					}
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
 	UE_LOG(LogTemp, Warning, TEXT("Awaiting Inputs State Enter"));
 }
 

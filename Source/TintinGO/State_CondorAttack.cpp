@@ -5,7 +5,6 @@
 
 #include "GameManager.h"
 #include "GridManager.h"
-#include "State_AwaitingInputs.h"
 #include "State_CondorDropCharacters.h"
 #include "State_TA_Move.h"
 #include "Tile.h"
@@ -15,6 +14,44 @@ void UState_CondorAttack::OnStateEnter()
 	UState::OnStateEnter();
 
 	_gridManager = AGridManager::GetInstance();
+
+	for(auto condor : _gridManager->_condors)
+	{
+		if(condor->isWaitLastRound)
+		{
+			ATile* currentTile = condor->GetCurrentTile();
+
+			switch (currentTile->_nestDirection)
+			{
+			case ENestDirection::Left :
+				for (int i = currentTile->_column - 1; i >= 0; --i)
+				{
+					_gridManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(0);
+				}
+				break;
+			case ENestDirection::Right :
+				for (int i = currentTile->_column + 1; i < _gridManager->_gridTiles[0].Tiles.Num(); ++i)
+				{
+					_gridManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(0);
+				}
+				break;
+			case ENestDirection::Top :
+				for (int i = currentTile->_row + 1; i > _gridManager->_gridTiles.Num(); ++i)
+				{
+					_gridManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(0);
+				}
+				break;
+			case ENestDirection::Down :
+				for (int i = currentTile->_row - 1; i >= 0; --i)
+				{
+					_gridManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(0);
+				}
+				break;
+			default:
+				break;
+			}
+		}
+	}
 	
 	for (auto condor : _gridManager->_condors)
 	{
@@ -189,6 +226,8 @@ void UState_CondorAttack::OnStateEnter()
 
 		_gridManager->ChangeTile(_barrier, previousCondorTile, condor->GetCurrentTile());
 		_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
+		Cast<UState_TA_Move>(condor->_currentState_TA)->_actorSpeed = condor->_speed;
+		Cast<UState_TA_Move>(condor->_currentState_TA)->_speed = condor->_speed;
 	}
 }
 

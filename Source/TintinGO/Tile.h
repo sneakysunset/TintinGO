@@ -144,6 +144,9 @@ public:
 	
 	UFUNCTION()
 	FVector GetTileActorPosition(ATileActor* tileActor);
+	
+	UFUNCTION()
+	void RefreshTileBackgroundRenderer(int alpha);
 
 	UPROPERTY()
 	float _positionCircleRadius = 1;
@@ -161,7 +164,10 @@ private:
 	bool _walkableChecker = true;
 
 	UFUNCTION()
-	UMaterialInstanceDynamic* DynamicMat(UMaterialInterface* mat) const;
+	UMaterialInstanceDynamic* DynamicMat(UMaterialInterface* mat, int backgroundAlpha) const;
+	
+	UPROPERTY()
+	int _currentBackgroundAlpha;
 
 	UPROPERTY()
 	ETileType _tileTypeChecker {ETileType::Neutral};

@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Barrier.h"
 #include "State.h"
-#include "TileActor_Character_Condor.h"
+#include "GridManager.h"
 #include "State_CondorAttack.generated.h"
 
 /**
