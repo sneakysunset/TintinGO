@@ -20,7 +20,7 @@ void UState_TA_Rotate::OnStateEnter()
 	const ATile* nextTile = character->GetNextTile();
 	if(tile == nullptr)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Not Valid tile for rotate"));
+		//UE_LOG(LogTemp, Error, TEXT("Not Valid tile for rotate"));
 		return;
 	}
 	EAngle angle = EAngle::Up;

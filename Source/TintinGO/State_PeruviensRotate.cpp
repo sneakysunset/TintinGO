@@ -25,6 +25,7 @@ void UState_PeruviensRotate::OnStateEnter()
 			peruvien->PeruvienTilePath = gridManager->GetPath(tintinTile, false);
 			peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 			peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingTintin;
+			peruvien->SetWidgetVisible(true);
 		}
 		else if(peruvien->_currentPBehaviour == EPeruvienBehaviour::FollowingTintin)
 		{
@@ -66,6 +67,7 @@ void UState_PeruviensRotate::OnStateTick(float DeltaTime)
 				peruvien->PeruvienTilePath = gridManager->GetPath(tintinTile, false);
 				peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 				peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingTintin;
+				peruvien->SetWidgetVisible(true);
 			}
 		}
 		_gameManager->StateChange(NewObject<UState_CondorChoice>(UState_CondorChoice::StaticClass()));

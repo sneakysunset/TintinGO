@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "TileActor_Character.h"
+#include "Components/SplineComponent.h"
+#include "Engine/SplineMeshActor.h"
 #include "TileActor_Character_Peruvien.generated.h"
 
 class AGridManager;
@@ -28,12 +30,18 @@ public:
 	UPROPERTY(EditAnywhere)
 	TArray<ATile*> PeruvienTilePath;
 
+	virtual void SetUpRotation(EAngle newAngle) override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
+	UUserWidget* WidgetInstance;
+	
 	UPROPERTY()
 	ATile* _startingTile;
 
 	UPROPERTY()
 	EAngle _startingAngle;
 
+	UPROPERTY()
 	EAngle _tintinAngle;
 	
 	UFUNCTION()
@@ -42,7 +50,29 @@ public:
 	UPROPERTY(EditAnywhere)
 	EPeruvienBehaviour _currentPBehaviour;
 	
+	UPROPERTY()
+	APlayerController* PlayerController;
+
+	UPROPERTY()
+	TArray<ASplineMeshActor*> splineMeshs;
+
+	UPROPERTY(EditAnywhere)
+	UBlueprint* splineBP;
+	
+	UPROPERTY()
+	USplineComponent* splineComponent;
+
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* widgetParent;
+	
+	UFUNCTION()
+	void SetWidgetVisible(bool isVisible) const;
+
+	UFUNCTION()
+	void SetSplinePoints();
+
 protected:
 	virtual void BeginPlay() override;
 
+	virtual void Tick(float DeltaSeconds) override;
 };

@@ -40,7 +40,6 @@ void UState_CondorAttack::OnStateEnter()
 
 						if (condor->_characters.Num() > 0)
 						{
-							_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 							previousCondorTile = currentTile;
 							condor->SetNextTile(_gridManager->_gridTiles[currentTile->_row].Tiles[i]);
 							condor->SetCurrentTile(condor->GetNextTile());

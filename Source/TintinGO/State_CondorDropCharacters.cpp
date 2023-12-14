@@ -19,7 +19,7 @@ void UState_CondorDropCharacters::OnStateEnter()
 	ATile* targetTile;
 	ATile* previousTile;
 	_gridManager = AGridManager::GetInstance();
-	
+	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 	for (auto condor : _gridManager->_condors)
 	{
 		const ATile* nextNestTile = _gridManager->_nests[(condor->currentNestNb + 1) % _gridManager->_nests.Num()];
@@ -29,7 +29,6 @@ void UState_CondorDropCharacters::OnStateEnter()
 			switch (nextNestTile->_nestDirection)
 			{
 				case ENestDirection::Left :
-					_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 					targetTile = _gridManager->GetTile(nextNestTile->_row, nextNestTile->_column - 1);
 					previousTile = condor->GetCurrentTile();
 					condor->SetNextTile(targetTile );
@@ -132,6 +131,10 @@ void UState_CondorDropCharacters::OnStateEnter()
 					break;
 			}
 		}
+	}
+	if(_barrier->_actors.Num() == 0)
+	{
+		_gameManager->StateChange(NewObject<UState_CondorGoToNextNest>(UState_CondorGoToNextNest::StaticClass()));
 	}
 }
 

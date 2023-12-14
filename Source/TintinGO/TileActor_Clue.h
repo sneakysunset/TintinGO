@@ -12,11 +12,23 @@ class TINTINGO_API ATileActor_Clue : public ATileActor
 	GENERATED_BODY()
 
 public:
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	int32 clueNumber;
 
 	ATileActor_Clue();
 	
 	UFUNCTION()
 	virtual void OnEndTask() override;
+
+
+	virtual void Tick(float DeltaSeconds) override;
+	
+	UFUNCTION()
+	void Init();
+
+	UPROPERTY()
+	float initTimer;
+
+	UPROPERTY()
+	bool hasInit;
 };

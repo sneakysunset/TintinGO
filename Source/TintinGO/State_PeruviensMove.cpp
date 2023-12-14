@@ -80,6 +80,7 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 				else if(peruvien->_currentPBehaviour == EPeruvienBehaviour::FollowingTintin || peruvien->_currentPBehaviour == EPeruvienBehaviour::SearchingTintin)
 				{
 					peruvien->SetNextTile(nullptr);
+					peruvien->SetWidgetVisible(false);
 				}
 				else if(peruvien->GetCurrentTile() != peruvien->_startingTile)
 				{
@@ -87,11 +88,13 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 					peruvien->PeruvienTilePath = gridManager->GetPath(peruvien->_startingTile, false);
 					peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 					peruvien->_currentPBehaviour = EPeruvienBehaviour::Returning;
+					peruvien->SetWidgetVisible(false);
 				}
 				else
 				{
 					peruvien->SetNextTile(nullptr);
 					peruvien->_currentPBehaviour = EPeruvienBehaviour::Static;
+					peruvien->SetWidgetVisible(false);
 				}
 			}
 			else
@@ -104,6 +107,7 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 					peruvien->_currentPBehaviour = EPeruvienBehaviour::Returning;
 				}
 				else peruvien->_currentPBehaviour = EPeruvienBehaviour::Static;
+				peruvien->SetWidgetVisible(false);
 			}
 			
 		}

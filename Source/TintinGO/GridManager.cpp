@@ -1,9 +1,11 @@
 #include "GridManager.h"
 
 #include "Barrier.h"
+#include "GameManager.h"
 #include "State_TA_Move.h"
 #include "Tile.h"
 #include "TileActor_Character_Milou.h"
+#include "TileActor_Clue.h"
 #include "Math/UnrealMathUtility.h"
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
@@ -42,6 +44,7 @@ void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
 	SingletonInstance = this;
+	
 	/*TArray<AActor*> ActorsToFind;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATileActor::StaticClass(), ActorsToFind);
 	for(auto actor : ActorsToFind)
@@ -170,14 +173,14 @@ TArray<ATile*> AGridManager::GetPath(ATile* endTile, bool getCurrentTile)
 
 ATile* AGridManager::GetNextTileInPath(ATile* tile)
 {
-	if(tile->_row + 1 >= 0 && tile->_row + 1 < _gridTiles.Num() && _gridTiles[tile->_row + 1].Tiles[tile->_column]->_step == tile->_step - 1)
-		return _gridTiles[tile->_row + 1].Tiles[tile->_column];
-	if(tile->_row - 1 >= 0 && tile->_row - 1 < _gridTiles.Num() && _gridTiles[tile->_row - 1].Tiles[tile->_column]->_step == tile->_step - 1)
-    	return _gridTiles[tile->_row - 1].Tiles[tile->_column];
-	if(tile->_column + 1 >= 0 && tile->_column + 1 < _gridTiles[0].Tiles.Num() && _gridTiles[tile->_row].Tiles[tile->_column + 1]->_step == tile->_step - 1)
+	if(tile->_column + 1 >= 0 && tile->_column + 1 < _gridTiles[0].Tiles.Num() && _gridTiles[tile->_row].Tiles[tile->_column + 1]->_step == tile->_step - 1 && tile->_rightLink)
 		return _gridTiles[tile->_row].Tiles[tile->_column + 1];
-	if(tile->_column - 1 >= 0 && tile->_column- 1 < _gridTiles[0].Tiles.Num() && _gridTiles[tile->_row].Tiles[tile->_column - 1]->_step == tile->_step - 1)
+	else if(tile->_column - 1 >= 0 && tile->_column- 1 < _gridTiles[0].Tiles.Num() && _gridTiles[tile->_row].Tiles[tile->_column - 1]->_step == tile->_step - 1&& tile->_leftLink)
 		return _gridTiles[tile->_row].Tiles[tile->_column - 1];
+	else if(tile->_row + 1 >= 0 && tile->_row + 1 < _gridTiles.Num() && _gridTiles[tile->_row + 1].Tiles[tile->_column]->_step == tile->_step - 1 && tile->_upLink)
+		return _gridTiles[tile->_row + 1].Tiles[tile->_column];
+	else if(tile->_row - 1 >= 0 && tile->_row - 1 < _gridTiles.Num() && _gridTiles[tile->_row - 1].Tiles[tile->_column]->_step == tile->_step - 1 && tile->_downLink)
+    	return _gridTiles[tile->_row - 1].Tiles[tile->_column];
 	else return nullptr;
 }
 

@@ -45,7 +45,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ReceiveMilouUIClick();
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	int32 _clueNumber;
 
 	UPROPERTY(EditAnywhere)

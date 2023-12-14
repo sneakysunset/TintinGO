@@ -37,7 +37,7 @@ public:
 	float _baseAngleOffset;
 
 	UFUNCTION()
-	void SetUpRotation(EAngle newAngle);
+	virtual void SetUpRotation(EAngle newAngle);
 	
 protected:
 	UPROPERTY(EditAnywhere)

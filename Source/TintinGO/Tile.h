@@ -183,7 +183,6 @@ private:
 	UPROPERTY(EditAnywhere)
 	UBlueprint* _milouBP;
 
-	
 protected:
 	virtual void BeginPlay() override;
 	

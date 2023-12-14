@@ -91,8 +91,6 @@ protected:
 
     virtual bool ShouldTickIfViewportsOnly() const override;
 
-
-    
 private:
     static AGridManager* SingletonInstance;
     

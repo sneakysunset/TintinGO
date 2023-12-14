@@ -54,6 +54,11 @@ void ATile::BeginPlay()
 		
 	if (_tileType == ETileType::NestPosition)
 		AGridManager::GetInstance()->_nests.Add(this);
+
+	for (auto actor : _tileActors)
+	{
+		actor->SetActorLocation(GetTileActorPosition(actor));
+	}
 }
 
 void ATile::Tick(float DeltaTime)
@@ -67,8 +72,6 @@ void ATile::Tick(float DeltaTime)
 
 #endif
 }
-
-
 
 bool ATile::ShouldTickIfViewportsOnly() const
 {
@@ -235,8 +238,8 @@ FVector ATile::GetTileActorPosition(ATileActor* tileActor)
 			float Angle = FMath::DegreesToRadians(static_cast<float>(i) / static_cast<float>(_tileActors.Num()) * 360);
 			// Calculate the position of the element around the circle
 			destination = FVector(
-				destination.X + 20 * FMath::Cos(Angle),
-				destination.Y + 20 * FMath::Sin(Angle),
+				destination.X + 35 * FMath::Cos(Angle),
+				destination.Y + 35 * FMath::Sin(Angle),
 				destination.Z
 			);
 			break;
@@ -282,6 +285,8 @@ void ATile::AddTileActors()
 			clueCasted = Cast<ATileActor_Clue>(tActor);
 			gameManager->_clueNumber++;
 			clueCasted->clueNumber = _TileItems[i].clueIndex;
+			clueCasted->SetActorHiddenInGame(true);
+			UE_LOG(LogTemp, Error, TEXT("Clue Init"));
 			break;
 		case ETileActorType::Peruvien:
 			tActor = GetWorld()->SpawnActor<ATileActor_Character_Peruvien>(_peruvienBP->GeneratedClass, position, rotation, params);
@@ -342,10 +347,10 @@ UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat) const
 
 void ATile::RefreshLinks()
 {
-	ATile* leftTile = _gridManager->GetTile(_row, _column - 1);
-	ATile* rightTile = _gridManager->GetTile(_row, _column + 1);
-	ATile* upTile = _gridManager->GetTile(_row + 1, _column);
-	ATile* downTile = _gridManager->GetTile(_row - 1, _column);
+	const ATile* leftTile = _gridManager->GetTile(_row, _column - 1);
+	const ATile* rightTile = _gridManager->GetTile(_row, _column + 1);
+	const ATile* upTile = _gridManager->GetTile(_row + 1, _column);
+	const ATile* downTile = _gridManager->GetTile(_row - 1, _column);
 
 	if(leftTile == nullptr || !leftTile->_walkable || !leftTile->_rightLink)
 	{
