@@ -55,12 +55,14 @@ void UState_PlayerRotate::OnStateTick(float DeltaTime)
 	_interpolateValue += DeltaTime * _gameManager->_rotateSpeed;
 
 	_tintin->SetActorRotation(FQuat::Slerp(_startRotation.Quaternion(), _endRotation.Quaternion(), _interpolateValue));
-	_milou->SetActorRotation(FQuat::Slerp(_milouStartRotation.Quaternion(), _milouEndRotation.Quaternion(), _interpolateValue));
+	if(_milou->isBoundToTintin)
+		_milou->SetActorRotation(FQuat::Slerp(_milouStartRotation.Quaternion(), _milouEndRotation.Quaternion(), _interpolateValue));
 	Super::OnStateTick(DeltaTime);
 	if(_interpolateValue >= 1)
 	{
 		_tintin->SetActorRotation(_endRotation);
-		_milou->SetActorRotation(_milouEndRotation);
+		if(_milou->isBoundToTintin)
+			_milou->SetActorRotation(_milouEndRotation);
 		_gameManager->StateChange(NewObject<UState_PlayerMove>(UState_PlayerMove::StaticClass()));
 	}
 }

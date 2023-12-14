@@ -44,17 +44,18 @@ void AUIManager::BeginPlay()
 
 void AUIManager::ChangeTextValue(int32 newValue, FColor DisabledColor)
 {
-	_coreUI->BoneNumber_Text->SetText(FText(FText::FromString("X  " + newValue)));
+	FText MyText = FText::Format(FText::FromString(TEXT("X {0}")), FText::AsNumber(newValue));
+	_coreUI->BoneNumber_Text->SetText(MyText);
 	UE_LOG(LogTemp, Warning, TEXT("boneNumber %d"), newValue);
 	if(newValue == 0)
 	{
 		_coreUI->ButtonMilou->SetIsEnabled(false);
-		_coreUI->BoneNumber_Text->SetColorAndOpacity(DisabledColor);
+		_coreUI->BoneNumber_Text->SetColorAndOpacity(FLinearColor(0,0,0, .6));
 	}
 	else
 	{
 		_coreUI->ButtonMilou->SetIsEnabled(true);
-		_coreUI->BoneNumber_Text->SetColorAndOpacity(FColor::Black);
+		_coreUI->BoneNumber_Text->SetColorAndOpacity(FLinearColor(0,0,0, 1));
 	}
 }
 

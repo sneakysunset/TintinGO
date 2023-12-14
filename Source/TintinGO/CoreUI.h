@@ -23,6 +23,4 @@ public:
 	TObjectPtr<UCanvasPanel> Canvas;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UTextBlock> BoneNumber_Text;
-	void ChangeTextValue(int32 newValue, FColor DisabledColor);
-
 };

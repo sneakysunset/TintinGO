@@ -23,13 +23,12 @@ void UState_MilouRotate::OnStateEnter()
 	const ATile* tile = _milou->GetCurrentTile();
 	const ATile* nextTile = _milou->GetNextTile();
 	_startRotation = _milou->GetActorRotation();
-
 	EAngle angle = EAngle::Up;
-	if(nextTile->_row - tile->_row == -1)
+	if(_milou->MilouTilePath.Last()->_row - tile->_row == -1)
 		angle = EAngle::Down;
-	else if(nextTile->_column - tile->_column == 1)
+	else if(_milou->MilouTilePath.Last()->_column - tile->_column == 1)
 		angle = EAngle::Right;
-	else if(nextTile->_column - tile->_column == -1)
+	else if(_milou->MilouTilePath.Last()->_column - tile->_column == -1)
 		angle = EAngle::Left;
 	
 	if(angle != _milou->angle)
@@ -37,12 +36,12 @@ void UState_MilouRotate::OnStateEnter()
 		float angleValue = 0;
 		switch(angle)
 		{
-		case EAngle::Right: angleValue = 0; break;
-		case EAngle::Up: angleValue = 270; break;
-		case EAngle::Left : angleValue = 180; break;
-		case EAngle::Down : angleValue = 90; break;
+		case EAngle::Right: angleValue = 180; break;
+		case EAngle::Up: angleValue = 90; break;
+		case EAngle::Left : angleValue = 0; break;
+		case EAngle::Down : angleValue = 270; break;
 		}
-		
+
 		_milou->angle = angle;
 		_endRotation = FQuat::MakeFromEuler(FVector::UpVector * (angleValue + _milou->_baseAngleOffset)).Rotator();
 	}

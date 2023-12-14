@@ -247,8 +247,8 @@ void AGridManager::UpdateLinks()
 
 ATile* AGridManager::WorldCoordinatesToTilePosition(const FVector& worldCoordinates)
 {
-	const int32 x = FMath::RoundToInt32( static_cast<float>(FMath::CeilToInt32(worldCoordinates.X)) / _tileWidth / 100.0f) ;
-	const int32 y = FMath::RoundToInt32( static_cast<float>(FMath::CeilToInt32(worldCoordinates.Y)) / _tileWidth / 100.0f) ;
+	const int32 x = FMath::RoundToInt32( static_cast<float>(FMath::CeilToInt32(worldCoordinates.X)) / (_tileWidth * 100.0f)) ;
+	const int32 y = FMath::RoundToInt32( static_cast<float>(FMath::CeilToInt32(worldCoordinates.Y)) / (_tileWidth * 100.0f)) ;
 
 	if (x >= 0 && x < _rows && y >= 0 && y < _columns && _gridTiles[x].Tiles[y]->_walkable)
 		return _gridTiles[x].Tiles[y];
