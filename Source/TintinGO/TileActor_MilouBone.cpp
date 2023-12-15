@@ -19,3 +19,9 @@ void ATileActor_MilouBone::OnEndTask()
 		gameManager->OnBoneConsumed.Execute(gameManager->_milouBonesNumber, FColor::Emerald);
 	Super::OnEndTask();
 }
+
+void ATileActor_MilouBone::OnDestroyBone()
+{
+	Super::OnEndTask();
+}
+

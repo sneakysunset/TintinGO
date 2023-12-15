@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "TileActor_Character.h"
+#include "TileActor_MilouBone.h"
 #include "GameFramework/Actor.h"
 class AGridManager;
 #include "Tile.generated.h"
@@ -96,6 +97,12 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Spawn TileActors")
 	UBlueprint* _clueBP;
+
+	UFUNCTION()
+	void SpawnMilouBone();
+
+	UPROPERTY()
+	ATileActor_MilouBone* milouBoneToDrop;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 	bool _useEditorTick = true;

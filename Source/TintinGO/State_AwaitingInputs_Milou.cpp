@@ -4,11 +4,13 @@
 #include "State_AwaitingInputs_Milou.h"
 
 #include "GameManager.h"
+#include "State_DropMilouBoneAnimation.h"
 #include "State_MilouRotate.h"
 
 void UState_AwaitingInputs_Milou::OnStateEnter()
 {
 	Super::OnStateEnter();
+	_milou->GetCurrentTile()->SpawnMilouBone();
 	gridManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
 	_tintin = ATileActor_Character_Tintin::GetInstance();
 	
@@ -74,7 +76,7 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 		_gameManager->_milouBonesNumber--;
 		if(_gameManager->OnBoneConsumed.IsBound())
 			_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
-		_gameManager->StateChange(NewObject<UState_MilouRotate>(UState_MilouRotate::StaticClass()));
+		_gameManager->StateChange(NewObject<UState_DropMilouBoneAnimation>(UState_DropMilouBoneAnimation::StaticClass()));
 	}
 
 }

@@ -14,4 +14,7 @@ public:
 
 	UFUNCTION()
 	virtual void OnEndTask() override;
+	
+	UFUNCTION()
+	void OnDestroyBone();
 };

@@ -25,14 +25,16 @@ void UState_AwaitingInputs::OnStateEnter()
 
 	pc = UGameplayStatics::GetPlayerController(_gameManager->GetWorld(), 0);
 
-	for(auto condor : gridManager->_condors)
+	if (IsValid(gridManager))
 	{
-		if(condor->isWaitLastRound)
+		for(auto condor : gridManager->_condors)
 		{
-			ATile* currentTile = condor->GetCurrentTile();
-
-			switch (currentTile->_nestDirection)
+			if(condor->isWaitLastRound)
 			{
+				ATile* currentTile = condor->GetCurrentTile();
+
+				switch (currentTile->_nestDirection)
+				{
 				case ENestDirection::Left :
 					for (int i = currentTile->_column - 1; i >= 0; --i)
 					{
@@ -59,6 +61,7 @@ void UState_AwaitingInputs::OnStateEnter()
 					break;
 				default:
 					break;
+				}
 			}
 		}
 	}

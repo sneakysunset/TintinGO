@@ -28,6 +28,7 @@ void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 
+	milouBoneToDrop = nullptr;
 	_currentBackgroundAlpha = 0;
 	TArray<UStaticMeshComponent*> Components;
 	GetComponents<UStaticMeshComponent>(Components);
@@ -318,6 +319,20 @@ void ATile::AddTileActors()
 		//_tileActors.Add(tActor);
 	}
 }
+
+void ATile::SpawnMilouBone()
+{
+	FActorSpawnParameters params;
+	params.bNoFail = true;
+	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	FVector position = GetActorLocation() + FVector(0, 2, 0);
+	FRotator rotation = FRotator(0, 0, 0);
+	ATileActor_MilouBone* milouBone = nullptr;
+	milouBone = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP->GeneratedClass, position, rotation, params);
+	milouBoneToDrop = milouBone; 
+}
+
 
 UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat, int backgroundAlpha) const
 {

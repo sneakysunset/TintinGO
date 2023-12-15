@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "State.h"
 #include "TileActor_Character_Milou.h"
+#include "Barrier.h"
 #include "State_MilouMove.generated.h"
 
 class ATileCharacter_Tintin;

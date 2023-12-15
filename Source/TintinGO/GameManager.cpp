@@ -29,7 +29,7 @@ void AGameManager::BeginPlay()
 	SingletonInstance = this;
 	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 	_currentStateType->OnStateEnter();
-	Cast<UGlobalGameManager>(UGameplayStatics::GetGameInstance(GetWorld()))->OnLevelLoad();
+	//Cast<UGlobalGameManager>(UGameplayStatics::GetGameInstance(GetWorld()))->OnLevelLoad();
 	AUIManager::GetInstance()->CustomInit();
 }
 
