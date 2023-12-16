@@ -8,8 +8,6 @@
 #include "Engine/SplineMeshActor.h"
 #include "TileActor_Character_Peruvien.generated.h"
 
-class AGridManager;
-
 UENUM(BlueprintType)
 enum class EPeruvienBehaviour : uint8
 {

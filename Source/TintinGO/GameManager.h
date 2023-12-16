@@ -5,9 +5,9 @@
 #include "GameFramework/Actor.h"
 #include "GameManager.generated.h"
 
-DECLARE_DYNAMIC_DELEGATE(FOnClickDelegate);
+/*DECLARE_DYNAMIC_DELEGATE(FOnClickDelegate);
 DECLARE_DYNAMIC_DELEGATE(FUIMilouClick);
-DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnBoneConsumed, int32, NewBoneNumber, FColor, DisabledColor);
+DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnBoneConsumed, int32, NewBoneNumber, FColor, DisabledColor);*/
 //DECLARE_DELEGATE(FOnClickDelegate)
 //DECLARE_DELEGATE(FUIMilouClick)
 
@@ -19,12 +19,12 @@ class TINTINGO_API AGameManager : public AActor
 	GENERATED_BODY()
 
 public:	
-	static AGameManager* GetInstance();
+	/*static AGameManager* GetInstance();
 	void GameOver() const;
 	void OnWin() const;
-	FOnClickDelegate OnClickD;
-	FUIMilouClick OnMilouBoneClick;
-	FOnBoneConsumed OnBoneConsumed;
+	//FOnClickDelegate OnClickD;
+	//FUIMilouClick OnMilouBoneClick;
+	//FOnBoneConsumed OnBoneConsumed;
 
 	AGameManager();
 	
@@ -67,5 +67,5 @@ protected:
 	
 private:
 	// Called when the game starts or when spawned
-	static AGameManager* SingletonInstance;
+	static AGameManager* SingletonInstance;*/
 };

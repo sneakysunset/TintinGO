@@ -2,6 +2,7 @@
 
 #include "GameManager.h"
 #include "GridManager.h"
+#include "MainGameMode.h"
 #include "TileActor_Character.h"
 #include "TileActor_Character_Peruvien.h"
 
@@ -9,7 +10,7 @@ void UState_TA_Rotate::OnStateEnter()
 {
 	Super::OnStateEnter();
 	_startRotation = _tileActor->GetActorRotation();
-	_speed = AGameManager::GetInstance()->_rotateSpeed;
+	_speed = _gameManager->_rotateSpeed;
 	if(!IsValid(_tileActor))
 	{
 		UE_LOG(LogTemp, Error, TEXT("Not Valid Actor for rotate"));

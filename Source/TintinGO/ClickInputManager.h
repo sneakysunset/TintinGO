@@ -1,10 +1,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameManager.h"
 #include "GameFramework/Pawn.h"
 #include "ClickInputManager.generated.h"
 
+
+class AMainGameMode;
 
 UCLASS()
 class TINTINGO_API AClickInputManager : public APawn
@@ -24,5 +25,6 @@ public:
 	void OnMouseClick();
 		
 private :
-	AGameManager* _gameManager;
+	UPROPERTY()
+	AMainGameMode* _gameManager;
 };

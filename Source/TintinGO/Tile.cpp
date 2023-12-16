@@ -5,6 +5,7 @@
 
 #include "GameManager.h"
 #include "GridManager.h"
+#include "MainGameMode.h"
 #include "TileActor_Character_Condor.h"
 #include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Peruvien.h"
@@ -22,12 +23,18 @@ ATile::ATile()
 	_upLink = false;
 	_downLink = false;
 	_step = -1;
+	/*static ConstructorHelpers::FObjectFinder<ATileActor_Character_Tintin> meshFinder(TEXT("/Script/Engine.Blueprint'/Game/BluePrints/TileActor_Character_Tintin_BP.TileActor_Character_Tintin_BP'"));
+	_tintinBP =  meshFinder.Object;
+	static ConstructorHelpers::FObjectFinder<ATileActor_Character_Milou> meshFinder2(TEXT("/Script/Engine.Blueprint'/Game/BluePrints/TileActor_Character_Milou_BP.TileActor_Character_Milou_BP'"));
+	_milouBP =  meshFinder2.Object;*/
 }
 
 void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 
+	_gameManager = Cast<AMainGameMode>(GetWorld()->GetAuthGameMode());
+	
 	TArray<UStaticMeshComponent*> Components;
 	GetComponents<UStaticMeshComponent>(Components);
 	if(Components.Num() > 0)
@@ -50,10 +57,10 @@ void ATile::BeginPlay()
 		AddTintin();
 
 	if (_tileType == ETileType::EndingPosition)
-		AGridManager::GetInstance()->_endTile = this;
+		_gameManager->_endTile = this;
 		
 	if (_tileType == ETileType::NestPosition)
-		AGridManager::GetInstance()->_nests.Add(this);
+		_gameManager->_nests.Add(this);
 
 	for (auto actor : _tileActors)
 	{
@@ -122,13 +129,16 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 
 void ATile::AddTintin()
 {
+
 	FActorSpawnParameters params;
+	params.ObjectFlags |= RF_Transient;
 	params.bNoFail = true;
 	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FVector position = GetActorLocation();
 	const FRotator rotation = FRotator(0, 0, 0);
-	ATileActor_Character_Tintin* character = GetWorld()->SpawnActor<ATileActor_Character_Tintin>(_tintinBP->GeneratedClass, position, rotation, params);
-	ATileActor_Character_Milou* milou = GetWorld()->SpawnActor<ATileActor_Character_Milou>(_milouBP->GeneratedClass, position, rotation, params);
+	//if(!IsValid(_tintinBP) || !IsValid(_milouBP)) return;
+	ATileActor_Character_Tintin* character = GetWorld()->SpawnActor<ATileActor_Character_Tintin>(_tintinBP, position, rotation, params);
+	ATileActor_Character_Milou* milou = GetWorld()->SpawnActor<ATileActor_Character_Milou>(_milouBP, position, rotation, params);
 
 #if WITH_EDITOR
 	character->SetActorLabel(FString::Printf(TEXT("Tintin")));
@@ -252,7 +262,6 @@ FVector ATile::GetTileActorPosition(ATileActor* tileActor)
 void ATile::AddTileActors()
 {
 	TArray<AActor*> AttachedActors;
-	_gridManager = AGridManager::GetInstance();
 	GetAttachedActors(AttachedActors);
 	for (auto* Attached : AttachedActors)
 	{
@@ -262,36 +271,36 @@ void ATile::AddTileActors()
 	_tileActors.Empty();
 	ATileActor_Clue* clueCasted = nullptr;
 	ATileActor_Character_Peruvien* peruvienCasted = nullptr;
-	AGameManager* gameManager = AGameManager::GetInstance();
+	FActorSpawnParameters params;
+	params.bNoFail = true;
+	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	params.ObjectFlags |= RF_Transient;
+	FVector position = GetActorLocation();
+	FRotator rotation = FRotator(0, 0, 0);
+	
 	for (int i = 0; i < _TileItems.Num(); i++)
 	{
-		FActorSpawnParameters params;
-		params.bNoFail = true;
-		params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-		FVector position = GetActorLocation();
-		FRotator rotation = FRotator(0, 0, 0);
 		ATileActor* tActor = nullptr;
 		switch (_TileItems[i].actorType)
 		{
 		case ETileActorType::Bone:
-			tActor = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP->GeneratedClass, position, rotation, params);
+			tActor = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP, position, rotation, params);
 #if WITH_EDITOR
 			tActor->SetActorLabel(FString::Printf(TEXT("Item_Bone")));
 #endif
 			break;
 		case ETileActorType::Clue:
-			tActor = GetWorld()->SpawnActor<ATileActor_Clue>(_clueBP->GeneratedClass, position, rotation, params);
+			tActor = GetWorld()->SpawnActor<ATileActor_Clue>(_clueBP, position, rotation, params);
 			clueCasted = Cast<ATileActor_Clue>(tActor);
-			gameManager->_clueNumber++;
+			_gameManager->_clueNumber++;
 			clueCasted->clueNumber = _TileItems[i].clueIndex;
 			clueCasted->SetActorHiddenInGame(true);
 			UE_LOG(LogTemp, Error, TEXT("Clue Init"));
 			break;
 		case ETileActorType::Peruvien:
-			tActor = GetWorld()->SpawnActor<ATileActor_Character_Peruvien>(_peruvienBP->GeneratedClass, position, rotation, params);
+			tActor = GetWorld()->SpawnActor<ATileActor_Character_Peruvien>(_peruvienBP, position, rotation, params);
 			peruvienCasted = Cast<ATileActor_Character_Peruvien>(tActor);
-			_gridManager->_peruviens.Add(peruvienCasted);
+			_gameManager->_peruviens.Add(peruvienCasted);
 			peruvienCasted->_startingTile = this;
 			peruvienCasted->SetUpRotation(_TileItems[i].angle);
 			peruvienCasted->_startingAngle = peruvienCasted->angle;
@@ -301,8 +310,8 @@ void ATile::AddTileActors()
 #endif
 			break;
 		case ETileActorType::Condor:
-			ATileActor_Character_Condor* condor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP->GeneratedClass, position, rotation, params);
-			_gridManager->_condors.Add(condor);
+			ATileActor_Character_Condor* condor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP, position, rotation, params);
+			_gameManager->_condors.Add(condor);
 			tActor = condor;
 #if WITH_EDITOR
 			condor->SetActorLabel(FString::Printf(TEXT("Condor")));
@@ -347,10 +356,10 @@ UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat) const
 
 void ATile::RefreshLinks()
 {
-	const ATile* leftTile = _gridManager->GetTile(_row, _column - 1);
-	const ATile* rightTile = _gridManager->GetTile(_row, _column + 1);
-	const ATile* upTile = _gridManager->GetTile(_row + 1, _column);
-	const ATile* downTile = _gridManager->GetTile(_row - 1, _column);
+	const ATile* leftTile = _gameManager->GetTile(_row, _column - 1);
+	const ATile* rightTile = _gameManager->GetTile(_row, _column + 1);
+	const ATile* upTile = _gameManager->GetTile(_row + 1, _column);
+	const ATile* downTile = _gameManager->GetTile(_row - 1, _column);
 
 	if(leftTile == nullptr || !leftTile->_walkable || !leftTile->_rightLink)
 	{

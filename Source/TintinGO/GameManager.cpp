@@ -6,7 +6,7 @@
 #include "UIManager.h"
 #include "Kismet/GameplayStatics.h"
 
-AGameManager* AGameManager::SingletonInstance = nullptr;
+/*AGameManager* AGameManager::SingletonInstance = nullptr;
 
 AGameManager::AGameManager()
 {
@@ -14,6 +14,7 @@ AGameManager::AGameManager()
 	_milouBoneThrowRange = 2;
 	_milouBonesNumber = 0;
 	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
+	SingletonInstance = this;
 }
 
 AGameManager::~AGameManager()
@@ -26,11 +27,11 @@ AGameManager::~AGameManager()
 void AGameManager::BeginPlay()
 {
 	Super::BeginPlay();
-	SingletonInstance = this;
+	
 	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 	_currentStateType->OnStateEnter();
 	Cast<UGlobalGameManager>(UGameplayStatics::GetGameInstance(GetWorld()))->OnLevelLoad();
-	AUIManager::GetInstance()->CustomInit();
+	//AUIManager::GetInstance()->CustomInit();
 }
 
 void AGameManager::ReceiveMilouUIClick()
@@ -77,5 +78,5 @@ void AGameManager::OnWin() const
 	{
 		UGameplayStatics::OpenLevel(GetWorld(),  *FString("Level_3"), true);
 	}
-}
+}*/
 

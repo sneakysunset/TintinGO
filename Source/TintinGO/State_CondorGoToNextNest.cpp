@@ -10,17 +10,14 @@ void UState_CondorGoToNextNest::OnStateEnter()
 {
 	UState::OnStateEnter();
 	UE_LOG(LogTemp, Warning, TEXT("Condor Wait State Enter"));
-
-	_gridManager = AGridManager::GetInstance();
-
-	for (auto condor : _gridManager->_condors)
+	for (auto condor : _gameManager->_condors)
 	{
 		condor->_characters.Empty();
 		_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 		ATile* previousCondorTile = condor->GetCurrentTile();
-		condor->SetNextTile(_gridManager->_nests[(condor->currentNestNb + 1) %_gridManager->_nests.Num()]);
+		condor->SetNextTile(_gameManager->_nests[(condor->currentNestNb + 1) %_gameManager->_nests.Num()]);
 		condor->SetCurrentTile(condor->GetNextTile());
-		_gridManager->ChangeTile(_barrier, previousCondorTile, condor->GetCurrentTile());
+		_gameManager->ChangeTile(_barrier, previousCondorTile, condor->GetCurrentTile());
 		_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 	}
 }

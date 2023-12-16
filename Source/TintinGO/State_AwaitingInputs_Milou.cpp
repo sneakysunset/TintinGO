@@ -4,23 +4,24 @@
 #include "State_AwaitingInputs_Milou.h"
 
 #include "GameManager.h"
+#include "MainGameMode.h"
 #include "State_MilouRotate.h"
 
 void UState_AwaitingInputs_Milou::OnStateEnter()
 {
 	Super::OnStateEnter();
-	gridManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
+	_gameManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
 	_tintin = ATileActor_Character_Tintin::GetInstance();
 	
-	for (int i = 0; i < gridManager->_gridTiles.Num(); i++)
+	for (int i = 0; i < _gameManager->_gridTiles.Num(); i++)
 	{
-		for (int j = 0; j < gridManager->_gridTiles[0].Tiles.Num(); j++)
+		for (int j = 0; j < _gameManager->_gridTiles[0].Tiles.Num(); j++)
 		{
-			const bool condition1 = FMathf::Abs(gridManager->_gridTiles[i].Tiles[j]->_row  - _tintin->GetCurrentTile()->_row) <= 2;
-			const bool condition2 = FMathf::Abs(gridManager->_gridTiles[i].Tiles[j]->_column -_tintin->GetCurrentTile()->_column) <= 2;
+			const bool condition1 = FMathf::Abs(_gameManager->_gridTiles[i].Tiles[j]->_row  - _tintin->GetCurrentTile()->_row) <= 2;
+			const bool condition2 = FMathf::Abs(_gameManager->_gridTiles[i].Tiles[j]->_column -_tintin->GetCurrentTile()->_column) <= 2;
 			if(condition1 && condition2)
 			{
-				gridManager->_gridTiles[i].Tiles[j]->SetTilesInBoneRangeMat(true);
+				_gameManager->_gridTiles[i].Tiles[j]->SetTilesInBoneRangeMat(true);
 			}
 		}
 	}
@@ -46,7 +47,7 @@ void UState_AwaitingInputs_Milou::ProcessPlayerInputs()
 		_hitTile->SetHighlighted(true);
 		isTileAccessible = true;
 
-		_milou->MilouTilePath = gridManager->GetPath(_hitTile, true);
+		_milou->MilouTilePath = _gameManager->GetPath(_hitTile, true);
 		if(_milou->MilouTilePath.Num() > 1)
 		{
 			for (int i = 1; i < _milou->MilouTilePath.Num(); i++)
@@ -87,15 +88,15 @@ void UState_AwaitingInputs_Milou::ReceiveMiloClickDelegate()
 void UState_AwaitingInputs_Milou::OnStateExit()
 {
 	Super::OnStateExit();
-	for (int i = 0; i < gridManager->_gridTiles.Num(); i++)
+	for (int i = 0; i < _gameManager->_gridTiles.Num(); i++)
 	{
-		for (int j = 0; j < gridManager->_gridTiles[0].Tiles.Num(); j++)
+		for (int j = 0; j < _gameManager->_gridTiles[0].Tiles.Num(); j++)
 		{
-			const bool condition1 = FMathf::Abs(gridManager->_gridTiles[i].Tiles[j]->_row  - _tintin->GetCurrentTile()->_row) <= 2;
-			const bool condition2 = FMathf::Abs(gridManager->_gridTiles[i].Tiles[j]->_column -_tintin->GetCurrentTile()->_column) <= 2;
+			const bool condition1 = FMathf::Abs(_gameManager->_gridTiles[i].Tiles[j]->_row  - _tintin->GetCurrentTile()->_row) <= 2;
+			const bool condition2 = FMathf::Abs(_gameManager->_gridTiles[i].Tiles[j]->_column -_tintin->GetCurrentTile()->_column) <= 2;
 			if(condition1 && condition2)
 			{
-				gridManager->_gridTiles[i].Tiles[j]->SetTilesInBoneRangeMat(false);
+				_gameManager->_gridTiles[i].Tiles[j]->SetTilesInBoneRangeMat(false);
 			}
 		}
 	}

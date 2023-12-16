@@ -15,10 +15,12 @@ void ATileActor_Character::SetUpRotation(EAngle newAngle)
 	SetActorRotation(FQuat::MakeFromEuler(FVector::UpVector * (angleV + _baseAngleOffset)).Rotator());
 }
 
+void ATileActor_Character::OnEndTask()
+{
+	Super::OnEndTask();
+}
+
 void ATileActor_Character::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *UEnum::GetValueAsString(angle));
-
-
 }

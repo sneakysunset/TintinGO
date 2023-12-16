@@ -3,9 +3,16 @@
 #include "CoreMinimal.h"
 #include "TileActor_Character.h"
 #include "GameFramework/Actor.h"
-class AGridManager;
 #include "Tile.generated.h"
 
+class ATileActor_MilouBone;
+class AGridManager;
+class ATileActor_Character_Milou;
+class ATileActor_Character_Tintin;
+class ATileActor_Character_Peruvien;
+class ATileActor_Character_Condor;
+class ATileActor_Clue;
+class ATileActor_MilouBone;
 
 
 UENUM(BlueprintType)
@@ -41,13 +48,13 @@ struct FItemToSpawn
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ETileActorType actorType;
+	ETileActorType actorType = ETileActorType::Bone;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EAngle angle;
+	EAngle angle = EAngle::Up;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 clueIndex;
+	int32 clueIndex = 0;
 };
 
 UCLASS()
@@ -88,14 +95,6 @@ public:
 	UFUNCTION(CallInEditor , Category = "Spawn TileActors")
 	void AddTileActors();
 	
-	UPROPERTY(EditAnywhere, Category = "Spawn TileActors")
-	UBlueprint* _milouBoneBP;
-	
-	UPROPERTY(EditAnywhere, Category = "Spawn TileActors")
-	UBlueprint* _peruvienBP;
-
-	UPROPERTY(EditAnywhere, Category = "Spawn TileActors")
-	UBlueprint* _clueBP;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 	bool _useEditorTick = true;
@@ -149,7 +148,7 @@ public:
 	float _positionCircleRadius = 1;
 
 	UPROPERTY()
-	AGridManager* _gridManager;
+	AMainGameMode* _gameManager;
 	
 	UFUNCTION(BlueprintCallable, CallInEditor)
 	void RefreshLinks();
@@ -177,17 +176,27 @@ private:
 
 	void AddCondor();
 
-	UPROPERTY(EditAnywhere)
-	UBlueprint* _tintinBP;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATileActor_Character_Tintin> _tintinBP;
 	
-	UPROPERTY(EditAnywhere)
-	UBlueprint* _milouBP;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATileActor_Character_Milou> _milouBP;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATileActor_Character_Condor> _condorBP;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATileActor_MilouBone> _milouBoneBP;
+	
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATileActor_Character_Peruvien> _peruvienBP;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATileActor_Clue> _clueBP;
+	
 protected:
 	virtual void BeginPlay() override;
 	
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere)
-	UBlueprint* _condorBP;
 };

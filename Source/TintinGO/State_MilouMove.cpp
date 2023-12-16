@@ -2,6 +2,7 @@
 
 #include "Barrier.h"
 #include "GameManager.h"
+#include "MainGameMode.h"
 #include "State_AwaitingInputs.h"
 #include "State_MilouRotate.h"
 #include "State_TA_Move.h"
@@ -23,7 +24,7 @@ void UState_MilouMove::OnStateEnter()
 	_milou->MilouTilePath.Pop(true);
 	previousMilouTile->SetHighlightedPath(false);
 	
-	AGridManager::GetInstance()->ChangeTile(_barrier, previousMilouTile, _milou->GetCurrentTile());
+	_gameManager->ChangeTile(_barrier, previousMilouTile, _milou->GetCurrentTile());
 	_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 	Cast<UState_TA_Move>(_milou->_currentState_TA)->_actorSpeed = _milou->_boneSpeed;
 	Cast<UState_TA_Move>(_milou->_currentState_TA)->_speed = _milou->_boneSpeed;
@@ -34,17 +35,15 @@ void UState_MilouMove::OnStateTick(float DeltaTime)
 	UState::OnStateTick(DeltaTime);
 	if(_barrier->_isBarriereCompleted)
 	{
-		AGridManager* gridManager = AGridManager::GetInstance();
-
 		if(_milou->MilouTilePath.Num() > 0)
 		{
 			//PeruvienDetectionAllDirection();
-			for (const auto peruvien : gridManager->_peruviens)
+			for (const auto peruvien : _gameManager->_peruviens)
 			{
 				if(peruvien->Detection(_milou->GetCurrentTile()))
 				{
-					gridManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
-					TArray<ATile*> tempList = gridManager->GetPath(_milou->GetCurrentTile(), false);
+					_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
+					TArray<ATile*> tempList = _gameManager->GetPath(_milou->GetCurrentTile(), false);
 					peruvien->PeruvienTilePath = _milou->MilouTilePath;
 					for (int32 i = 0; i < tempList.Num(); i++)
 					{
@@ -61,12 +60,12 @@ void UState_MilouMove::OnStateTick(float DeltaTime)
 		else
 		{
 			//PeruvienDetectionAllDirection();
-			for (const auto peruvien : gridManager->_peruviens)
+			for (const auto peruvien : _gameManager->_peruviens)
 			{
 				if(peruvien->Detection(_milou->GetCurrentTile()))
 				{
-					gridManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
-					TArray<ATile*> tempList = gridManager->GetPath(_milou->GetCurrentTile(), false);
+					_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
+					TArray<ATile*> tempList = _gameManager->GetPath(_milou->GetCurrentTile(), false);
 					peruvien->PeruvienTilePath = _milou->MilouTilePath;
 
 					for (int32 i = 0; i < tempList.Num(); i++)

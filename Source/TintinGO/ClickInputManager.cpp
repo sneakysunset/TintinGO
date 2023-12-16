@@ -5,6 +5,7 @@
 #include "State_AwaitingInputs.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "MainGameMode.h"
 
 AClickInputManager::AClickInputManager()
 {
@@ -16,7 +17,7 @@ AClickInputManager::AClickInputManager()
 void AClickInputManager::BeginPlay()
 {
 	Super::BeginPlay();
-    _gameManager = AGameManager::GetInstance();
+    _gameManager = Cast<AMainGameMode>(GetWorld()->GetAuthGameMode());
 }
 
 void AClickInputManager::Tick(float DeltaTime)

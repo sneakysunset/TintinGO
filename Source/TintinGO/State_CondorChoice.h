@@ -19,8 +19,4 @@ public:
 	virtual void OnStateEnter() override;
 	virtual void OnStateTick(float DeltaTime) override;
 	virtual void OnStateExit() override;
-
-private:
-	UPROPERTY()
-	AGridManager* _gridManager;
 };

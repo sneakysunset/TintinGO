@@ -1,10 +1,8 @@
 #include "State.h"
 #include "GameManager.h"
+#include "MainGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
-UState::UState()
-{
-	_gameManager = AGameManager::GetInstance();
-}
 
 void UState::OnStateEnter()
 {

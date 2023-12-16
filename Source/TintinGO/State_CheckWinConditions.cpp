@@ -8,14 +8,9 @@
 void UState_CheckWinConditions::OnStateEnter()
 {
 	UState::OnStateEnter();
+	//_tintin = ATileActor_Character_Tintin::GetInstance();
 	
-	gridManager = AGridManager::GetInstance();
-	_tintin = ATileActor_Character_Tintin::GetInstance();
-
-
-	
-	
-	if (_tintin->GetCurrentTile() == gridManager->GetEndTile())
+	/*if (_tintin->GetCurrentTile() == _gameManager->GetEndTile())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Win"));
 		//_gameManager->StateChange(NewObject<UState_AwaitingInputs_Milou>(UState_AwaitingInputs_Milou::StaticClass()));
@@ -43,7 +38,7 @@ void UState_CheckWinConditions::OnStateEnter()
 		{
 			_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 		}
-		*/
+		#1#
 		
-	}
+	}*/
 }

@@ -6,12 +6,12 @@
 #include "State_TA_Move.h"
 #include "State_TriggerItemsCharacters.h"
 #include "GlobalGameManager.h"
+#include "MainGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
 void UState_PlayerMove::OnStateEnter()
 {
 	UState::OnStateEnter();
-	AGridManager* gridManager = AGridManager::GetInstance();
 	UE_LOG(LogTemp, Warning, TEXT("Player Move State Enter"));
 	
 	_tintin = ATileActor_Character_Tintin::GetInstance();
@@ -28,9 +28,9 @@ void UState_PlayerMove::OnStateEnter()
 	if(_milou->isBoundToTintin)
 	{
 		_milou->SetCurrentTile(_milou->GetNextTile());
-		gridManager->ChangeTile(_barrier, previousMilouTile, _milou->GetCurrentTile());
+		_gameManager->ChangeTile(_barrier, previousMilouTile, _milou->GetCurrentTile());
 	}
-	gridManager->ChangeTile(_barrier, previousTintinTile, _tintin->GetCurrentTile());
+	_gameManager->ChangeTile(_barrier, previousTintinTile, _tintin->GetCurrentTile());
 	_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 	if(_milou->isBoundToTintin)
 	{
@@ -50,7 +50,13 @@ void UState_PlayerMove::OnStateTick(float DeltaTime)
 		{
 			_gameManager->OnWin();
 		}
-	
+
+		if(_tintin->GetCurrentTile() == _milou->GetCurrentTile())
+		{
+			_milou->isBoundToTintin;
+			
+		}
+		
 		_gameManager->StateChange(NewObject<UState_TriggerItemsCharacters>(UState_TriggerItemsCharacters::StaticClass()));
 	}
 	_barrier->OnTick(DeltaTime);

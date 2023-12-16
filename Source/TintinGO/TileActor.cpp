@@ -1,5 +1,6 @@
 #include "TileActor.h"
 
+#include "MainGameMode.h"
 #include "State_TA_Neutral.h"
 #include "State_TActor.h"
 #include "Tile.h"
@@ -8,12 +9,10 @@
 
 void ATileActor::OnEndTask()
 {
-	UE_LOG(LogTemp, Warning, TEXT("DESTROY"));
-
 	if(_currentTile->_tileActors.Contains(this))
 		_currentTile->_tileActors.Remove(this);
 	
-	Destroy();
+	//Destroy();
 }
 
 void ATileActor::TriggerBody()
@@ -25,7 +24,7 @@ void ATileActor::ChangeState(UState_TActor* newState)
 {
 	_currentState_TA->OnStateExit();
 	_currentState_TA = newState;
-
+	_currentState_TA->_gameManager = _gameManager;
 	newState->SetTileActor(this);
 	_currentState_TA->OnStateEnter();
 }
@@ -52,6 +51,7 @@ void ATileActor::SetCurrentTile(ATile* tile)
 void ATileActor::BeginPlay()
 {
 	Super::BeginPlay();
+	_gameManager = Cast<AMainGameMode>(GetWorld()->GetAuthGameMode());
 	_currentState_TA = NewObject<UState_TA_Neutral>(UState_TA_Neutral::StaticClass());
 }
 

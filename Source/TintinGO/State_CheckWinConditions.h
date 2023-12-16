@@ -18,7 +18,7 @@ public:
 	virtual void OnStateEnter() override;
 	
 protected:
-	AGridManager* gridManager;
+	AGridManager* _gameManager;
 	ATile* _hitTile;
 	ATileActor_Character_Tintin* _tintin;
 };

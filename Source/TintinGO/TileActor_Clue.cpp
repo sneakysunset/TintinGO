@@ -5,6 +5,7 @@
 
 #include "GameManager.h"
 #include "GridManager.h"
+#include "MainGameMode.h"
 
 ATileActor_Clue::ATileActor_Clue()
 {
@@ -13,13 +14,10 @@ ATileActor_Clue::ATileActor_Clue()
 
 void ATileActor_Clue::OnEndTask()
 {
-	AGameManager* gameManager = AGameManager::GetInstance();
-	UE_LOG(LogTemp, Warning, TEXT("clue %d %d"), clueNumber, gameManager->_clueNumber);
-	if(clueNumber == gameManager->_clueNumber)
+	if(clueNumber == _gameManager->_clueNumber)
 	{
-		gameManager->_clueNumber--;
-		AGridManager* gridManager = AGridManager::GetInstance();
-		for(auto tileRow : gridManager->_gridTiles)
+		_gameManager->_clueNumber--;
+		for(auto tileRow : _gameManager->_gridTiles)
 		{
 			for (auto tile : tileRow.Tiles)
 			{
@@ -37,6 +35,7 @@ void ATileActor_Clue::OnEndTask()
 			}
 		}
 		Super::OnEndTask();
+		Destroy();
 	}
 }
 
@@ -56,8 +55,7 @@ void ATileActor_Clue::Tick(float DeltaSeconds)
 
 void ATileActor_Clue::Init()
 {
-		UE_LOG(LogTemp, Error, TEXT("ClueNUmer = %d, %d"), clueNumber, AGameManager::GetInstance()->_clueNumber);
-	if(clueNumber == AGameManager::GetInstance()->_clueNumber)
+	if(clueNumber == _gameManager->_clueNumber)
 	{
 		SetActorHiddenInGame(false);
 	}

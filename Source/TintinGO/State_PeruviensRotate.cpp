@@ -5,6 +5,7 @@
 
 #include "GameManager.h"
 #include "GridManager.h"
+#include "MainGameMode.h"
 #include "State_AwaitingInputs.h"
 #include "State_CondorChoice.h"
 #include "State_TA_Rotate.h"
@@ -14,15 +15,14 @@ void UState_PeruviensRotate::OnStateEnter()
 {
 	Super::OnStateEnter();
 	UE_LOG(LogTemp, Warning, TEXT("State Enter Peruvien Rotate"));
-	AGridManager* gridManager = AGridManager::GetInstance();
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 	ATile* tintinTile = ATileActor_Character_Tintin::GetInstance()->GetCurrentTile();
-	for (auto peruvien : gridManager->_peruviens)
+	for (auto peruvien : _gameManager->_peruviens)
 	{
 		if(peruvien->Detection(tintinTile))
 		{
-			gridManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
-			peruvien->PeruvienTilePath = gridManager->GetPath(tintinTile, false);
+			_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
+			peruvien->PeruvienTilePath = _gameManager->GetPath(tintinTile, false);
 			peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 			peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingTintin;
 			peruvien->SetWidgetVisible(true);
@@ -58,13 +58,12 @@ void UState_PeruviensRotate::OnStateTick(float DeltaTime)
 	if(_barrier->_isBarriereCompleted)
 	{
 		ATile* tintinTile = ATileActor_Character_Tintin::GetInstance()->GetCurrentTile();
-		AGridManager* gridManager = AGridManager::GetInstance();
-		for(auto peruvien : gridManager->_peruviens)
+		for(auto peruvien : _gameManager->_peruviens)
 		{
 			if(peruvien->Detection(tintinTile))
 			{
-				gridManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
-				peruvien->PeruvienTilePath = gridManager->GetPath(tintinTile, false);
+				_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
+				peruvien->PeruvienTilePath = _gameManager->GetPath(tintinTile, false);
 				peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 				peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingTintin;
 				peruvien->SetWidgetVisible(true);

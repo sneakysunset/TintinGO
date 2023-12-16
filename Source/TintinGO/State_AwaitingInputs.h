@@ -39,9 +39,6 @@ public:
 	
 protected:
 	UPROPERTY()
-	AGridManager* gridManager;
-
-	UPROPERTY()
 	ATile* _hitTile;
 
 	UPROPERTY()

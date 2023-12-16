@@ -44,7 +44,7 @@ protected:
 	ATile* _nextTile;
 
 	UFUNCTION()
-	virtual void OnEndTask() override{}
+	virtual void OnEndTask() override;
 
 	virtual void BeginPlay() override;
 };

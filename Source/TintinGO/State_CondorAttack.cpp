@@ -5,18 +5,18 @@
 
 #include "GameManager.h"
 #include "GridManager.h"
+#include "MainGameMode.h"
 #include "State_AwaitingInputs.h"
 #include "State_CondorDropCharacters.h"
 #include "State_TA_Move.h"
 #include "Tile.h"
+#include "GameFramework/GameModeBase.h"
 
 void UState_CondorAttack::OnStateEnter()
 {
 	UState::OnStateEnter();
 
-	_gridManager = AGridManager::GetInstance();
-	
-	for (auto condor : _gridManager->_condors)
+	for (auto condor : _gameManager->_condors)
 	{
 		condor->isWaitLastRound = false;
 		ATile* currentTile = condor->GetCurrentTile();
@@ -28,9 +28,9 @@ void UState_CondorAttack::OnStateEnter()
 			case ENestDirection::Left :
 				for (int i = currentTile->_column - 1; i >= 0; --i)
 				{
-					if(_gridManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors.Num() > 0)
+					if(_gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors.Num() > 0)
 					{
-						for (auto actor : _gridManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors)
+						for (auto actor : _gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors)
 						{
 							if(IsValid(Cast<ATileActor_Character>(actor)))
 							{
@@ -41,14 +41,14 @@ void UState_CondorAttack::OnStateEnter()
 						if (condor->_characters.Num() > 0)
 						{
 							previousCondorTile = currentTile;
-							condor->SetNextTile(_gridManager->_gridTiles[currentTile->_row].Tiles[i]);
+							condor->SetNextTile(_gameManager->_gridTiles[currentTile->_row].Tiles[i]);
 							condor->SetCurrentTile(condor->GetNextTile());
 							break;
 						}
 					}
 					else if (i == 0)
 					{
-						for (auto actor : _gridManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors)
+						for (auto actor : _gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors)
 						{
 							if(IsValid(Cast<ATileActor_Character>(actor)))
 							{
@@ -57,18 +57,18 @@ void UState_CondorAttack::OnStateEnter()
 						}
 						
 						previousCondorTile = currentTile;
-						condor->SetNextTile(_gridManager->_gridTiles[currentTile->_row].Tiles[i]);
+						condor->SetNextTile(_gameManager->_gridTiles[currentTile->_row].Tiles[i]);
 						condor->SetCurrentTile(condor->GetNextTile());
 						break;
 					}
 				}
 			break;
 			case ENestDirection::Right :
-				for (int i = currentTile->_column + 1; i < _gridManager->_gridTiles[0].Tiles.Num(); ++i)
+				for (int i = currentTile->_column + 1; i < _gameManager->_gridTiles[0].Tiles.Num(); ++i)
 				{
-					if(_gridManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors.Num() > 0)
+					if(_gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors.Num() > 0)
 					{
-						for (ATileActor* actor : _gridManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors)
+						for (ATileActor* actor : _gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors)
 						{
 							if(IsValid(Cast<ATileActor_Character>(actor)))
 							{
@@ -80,14 +80,14 @@ void UState_CondorAttack::OnStateEnter()
 						{
 							_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 							previousCondorTile = currentTile;
-							condor->SetNextTile(_gridManager->_gridTiles[currentTile->_row].Tiles[i]);
+							condor->SetNextTile(_gameManager->_gridTiles[currentTile->_row].Tiles[i]);
 							condor->SetCurrentTile(condor->GetNextTile());
 							break;
 						}
 					}
-					else if (i == _gridManager->_gridTiles[0].Tiles.Num() - 1)
+					else if (i == _gameManager->_gridTiles[0].Tiles.Num() - 1)
 					{
-						for (ATileActor* actor : _gridManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors)
+						for (ATileActor* actor : _gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors)
 						{
 							if(IsValid(Cast<ATileActor_Character>(actor)))
 							{
@@ -97,18 +97,18 @@ void UState_CondorAttack::OnStateEnter()
 
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						previousCondorTile = currentTile;
-						condor->SetNextTile(_gridManager->_gridTiles[currentTile->_row].Tiles[i]);
+						condor->SetNextTile(_gameManager->_gridTiles[currentTile->_row].Tiles[i]);
 						condor->SetCurrentTile(condor->GetNextTile());
 						break;
 					}
 				}
 				break;
 			case ENestDirection::Top :
-				for (int i = currentTile->_row + 1; i > _gridManager->_gridTiles.Num(); ++i)
+				for (int i = currentTile->_row + 1; i > _gameManager->_gridTiles.Num(); ++i)
 				{
-					if(_gridManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors.Num() > 0)
+					if(_gameManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors.Num() > 0)
 					{
-						for (ATileActor* actor : _gridManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors)
+						for (ATileActor* actor : _gameManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors)
 						{
 							if(IsValid(Cast<ATileActor_Character>(actor)))
 							{
@@ -120,14 +120,14 @@ void UState_CondorAttack::OnStateEnter()
 						{
 							_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 							previousCondorTile = currentTile;
-							condor->SetNextTile(_gridManager->_gridTiles[i].Tiles[currentTile->_column]);
+							condor->SetNextTile(_gameManager->_gridTiles[i].Tiles[currentTile->_column]);
 							condor->SetCurrentTile(condor->GetNextTile());
 							break;
 						}
 					}
-					else if (i == _gridManager->_gridTiles.Num() - 1)
+					else if (i == _gameManager->_gridTiles.Num() - 1)
 					{
-						for (ATileActor* actor : _gridManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors)
+						for (ATileActor* actor : _gameManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors)
 						{
 							if(IsValid(Cast<ATileActor_Character>(actor)))
 							{
@@ -137,7 +137,7 @@ void UState_CondorAttack::OnStateEnter()
 						
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						previousCondorTile = currentTile;
-						condor->SetNextTile(_gridManager->_gridTiles[i].Tiles[currentTile->_column]);
+						condor->SetNextTile(_gameManager->_gridTiles[i].Tiles[currentTile->_column]);
 						condor->SetCurrentTile(condor->GetNextTile());
 						break;
 					}
@@ -146,9 +146,9 @@ void UState_CondorAttack::OnStateEnter()
 			case ENestDirection::Down :
 				for (int i = currentTile->_row - 1; i >= 0; --i)
 				{
-					if(_gridManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors.Num() > 0)
+					if(_gameManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors.Num() > 0)
 					{
-						for (ATileActor* actor : _gridManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors)
+						for (ATileActor* actor : _gameManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors)
 						{
 							if(IsValid(Cast<ATileActor_Character>(actor)))
 							{
@@ -160,14 +160,14 @@ void UState_CondorAttack::OnStateEnter()
 						{
 							_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 							previousCondorTile = currentTile;
-							condor->SetNextTile(_gridManager->_gridTiles[i].Tiles[currentTile->_column]);
+							condor->SetNextTile(_gameManager->_gridTiles[i].Tiles[currentTile->_column]);
 							condor->SetCurrentTile(condor->GetNextTile());
 							break;
 						}
 					}
 					else if (i == 0)
 					{
-						for (ATileActor* actor : _gridManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors)
+						for (ATileActor* actor : _gameManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors)
 						{
 							if(IsValid(Cast<ATileActor_Character>(actor)))
 							{
@@ -177,7 +177,7 @@ void UState_CondorAttack::OnStateEnter()
 						
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						previousCondorTile = currentTile;
-						condor->SetNextTile(_gridManager->_gridTiles[i].Tiles[currentTile->_column]);
+						condor->SetNextTile(_gameManager->_gridTiles[i].Tiles[currentTile->_column]);
 						condor->SetCurrentTile(condor->GetNextTile());
 						break;
 					}
@@ -187,7 +187,7 @@ void UState_CondorAttack::OnStateEnter()
 				break;
 		}
 
-		_gridManager->ChangeTile(_barrier, previousCondorTile, condor->GetCurrentTile());
+		_gameManager->ChangeTile(_barrier, previousCondorTile, condor->GetCurrentTile());
 		_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 	}
 }

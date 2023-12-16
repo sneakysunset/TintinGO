@@ -4,8 +4,9 @@
 #include "UIManager.h"
 
 #include "GameManager.h"
+#include "MainGameMode.h"
 
-AUIManager* AUIManager::SingletonInstance = nullptr;
+/*AUIManager* AUIManager::SingletonInstance = nullptr;
 
 AUIManager* AUIManager::GetInstance()
 {
@@ -61,9 +62,9 @@ void AUIManager::ChangeTextValue(int32 newValue, FColor DisabledColor)
 
 void AUIManager::CustomInit()
 {
-	AGameManager* gameManager = AGameManager::GetInstance();
+	AMainGameMode* gameManager = Cast<AMainGameMode>(GetWorld()->GetAuthGameMode());
 	gameManager->OnBoneConsumed.BindDynamic(this, &AUIManager::ChangeTextValue);
-}
+}*/
 
 
 

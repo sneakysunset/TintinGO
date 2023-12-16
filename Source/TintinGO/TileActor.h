@@ -5,6 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "TileActor.generated.h"
 
+class AMainGameMode;
 class ATile;
 
 UCLASS()
@@ -35,6 +36,7 @@ protected:
 	ATile* _currentTile;
 	virtual void BeginPlay() override;
 
-public:	
+	UPROPERTY()
+	AMainGameMode* _gameManager;
 	
 };

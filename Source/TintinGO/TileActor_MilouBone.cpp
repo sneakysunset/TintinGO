@@ -4,6 +4,7 @@
 #include "TileActor_MilouBone.h"
 
 #include "GameManager.h"
+#include "MainGameMode.h"
 
 
 ATileActor_MilouBone::ATileActor_MilouBone()
@@ -13,9 +14,8 @@ ATileActor_MilouBone::ATileActor_MilouBone()
 
 void ATileActor_MilouBone::OnEndTask()
 {
-	AGameManager* gameManager = AGameManager::GetInstance();
-	gameManager->_milouBonesNumber++;
-	if(gameManager->OnBoneConsumed.IsBound())
-		gameManager->OnBoneConsumed.Execute(gameManager->_milouBonesNumber, FColor::Emerald);
+	_gameManager->_milouBonesNumber++;
+	if(_gameManager->OnBoneConsumed.IsBound())
+		_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
 	Super::OnEndTask();
 }

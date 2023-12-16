@@ -22,8 +22,5 @@ public:
 
 private:
 	UPROPERTY()
-	AGridManager* _gridManager;
-
-	UPROPERTY()
 	UBarrier* _barrier;
 };

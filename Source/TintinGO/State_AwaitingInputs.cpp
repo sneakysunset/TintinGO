@@ -2,11 +2,12 @@
 
 #include "Math/UnrealMathUtility.h"
 #include "GameManager.h"
+#include "MainGameMode.h"
 #include "State_AwaitingInputs_Milou.h"
 #include "State_MilouMove.h"
 #include "State_PlayerMove.h"
 #include "State_PlayerRotate.h"
-#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/GameFramework/PlayerController.h"
 
 
@@ -16,14 +17,16 @@ void UState_AwaitingInputs::OnStateEnter()
 	UState::OnStateEnter();
 	
 	isTileAccessible = false;
-	gridManager = AGridManager::GetInstance();
 	_milou = ATileActor_Character_Milou::GetInstance();
 	_tintin = ATileActor_Character_Tintin::GetInstance();
 
 	_gameManager->OnClickD.BindDynamic(this,&UState_AwaitingInputs::ReceiveLeftMouseClick);
 	_gameManager->OnMilouBoneClick.BindDynamic(this, &UState_AwaitingInputs::ReceiveMiloClickDelegate);
 
-	pc = UGameplayStatics::GetPlayerController(_gameManager->GetWorld(), 0);
+	if(_gameManager != nullptr)
+	{
+		pc = _gameManager->pc;
+	}
 
 	UE_LOG(LogTemp, Warning, TEXT("Awaiting Inputs State Enter"));
 }
@@ -50,9 +53,8 @@ void UState_AwaitingInputs::ProcessMousePositionInput()
 {
 	float mouseX;
 	float mouseY;
-	
-	pc->GetMousePosition(mouseX, mouseY);
 	if(!IsValid(pc)) return;
+	pc->GetMousePosition(mouseX, mouseY);
 	
 	FVector MouseWorldPosition;
 	FVector MouseWorldDirection;
@@ -66,7 +68,7 @@ void UState_AwaitingInputs::ProcessMousePositionInput()
 	ATile* hitTile = nullptr;
 	if (_gameManager->GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, CollisionParams))
 	{
-		hitTile = AGridManager::GetInstance()->WorldCoordinatesToTilePosition(HitResult.Location);
+		hitTile = _gameManager->WorldCoordinatesToTilePosition(HitResult.Location);
 	}
 	else
 	{

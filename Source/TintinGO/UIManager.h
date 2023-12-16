@@ -11,6 +11,7 @@ class TINTINGO_API AUIManager : public AActor
 {
 	GENERATED_BODY()
 	
+/*
 public:
 	static AUIManager* GetInstance();
 	// Sets default values for this actor's properties
@@ -29,5 +30,5 @@ public:
 	void ChangeTextValue(int32 newValue, FColor DisabledColor);
 
 	UFUNCTION()
-	void CustomInit();
+	void CustomInit();*/
 };

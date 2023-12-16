@@ -18,22 +18,21 @@ void UState_CondorDropCharacters::OnStateEnter()
 
 	ATile* targetTile;
 	ATile* previousTile;
-	_gridManager = AGridManager::GetInstance();
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
-	for (auto condor : _gridManager->_condors)
+	for (auto condor : _gameManager->_condors)
 	{
-		const ATile* nextNestTile = _gridManager->_nests[(condor->currentNestNb + 1) % _gridManager->_nests.Num()];
+		const ATile* nextNestTile = _gameManager->_nests[(condor->currentNestNb + 1) % _gameManager->_nests.Num()];
 
 		if (condor->_characters.Num() > 0)
 		{
 			switch (nextNestTile->_nestDirection)
 			{
 				case ENestDirection::Left :
-					targetTile = _gridManager->GetTile(nextNestTile->_row, nextNestTile->_column - 1);
+					targetTile = _gameManager->GetTile(nextNestTile->_row, nextNestTile->_column - 1);
 					previousTile = condor->GetCurrentTile();
 					condor->SetNextTile(targetTile );
 					condor->SetCurrentTile(condor->GetNextTile());
-					_gridManager->ChangeTile(_barrier, previousTile, condor->GetCurrentTile());
+					_gameManager->ChangeTile(_barrier, previousTile, condor->GetCurrentTile());
 					
 					for (auto Character : condor->_characters)
 					{
@@ -46,19 +45,19 @@ void UState_CondorDropCharacters::OnStateEnter()
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
-						_gridManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
+						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
 
 					_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 					break;
 				
 				case ENestDirection::Right :
-					targetTile = _gridManager->GetTile(nextNestTile->_row, nextNestTile->_column + 1);
+					targetTile = _gameManager->GetTile(nextNestTile->_row, nextNestTile->_column + 1);
 					_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 					previousTile = condor->GetCurrentTile();
 					condor->SetNextTile(targetTile );
 					condor->SetCurrentTile(condor->GetNextTile());
-					_gridManager->ChangeTile(_barrier, previousTile, condor->GetCurrentTile());
+					_gameManager->ChangeTile(_barrier, previousTile, condor->GetCurrentTile());
 						
 					for (auto Character : condor->_characters)
 					{
@@ -71,19 +70,19 @@ void UState_CondorDropCharacters::OnStateEnter()
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
-						_gridManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
+						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
 
 					_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 					break;
 				
 				case ENestDirection::Top :
-					targetTile = _gridManager->GetTile(nextNestTile->_row + 1, nextNestTile->_column);
+					targetTile = _gameManager->GetTile(nextNestTile->_row + 1, nextNestTile->_column);
 					_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 					previousTile = condor->GetCurrentTile();
 					condor->SetNextTile(targetTile);
 					condor->SetCurrentTile(condor->GetNextTile());
-					_gridManager->ChangeTile(_barrier, previousTile, condor->GetCurrentTile());
+					_gameManager->ChangeTile(_barrier, previousTile, condor->GetCurrentTile());
 							
 					for (auto Character : condor->_characters)
 					{
@@ -96,19 +95,19 @@ void UState_CondorDropCharacters::OnStateEnter()
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
-						_gridManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
+						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
 
 					_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 					break;
 				
 				case ENestDirection::Down :
-					targetTile = _gridManager->GetTile(nextNestTile->_row - 1, nextNestTile->_column);
+					targetTile = _gameManager->GetTile(nextNestTile->_row - 1, nextNestTile->_column);
 					_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 					previousTile = condor->GetCurrentTile();
 					condor->SetNextTile(targetTile);
 					condor->SetCurrentTile(condor->GetNextTile());
-					_gridManager->ChangeTile(_barrier, previousTile, condor->GetCurrentTile());
+					_gameManager->ChangeTile(_barrier, previousTile, condor->GetCurrentTile());
 								
 					for (auto Character : condor->_characters)
 					{
@@ -121,7 +120,7 @@ void UState_CondorDropCharacters::OnStateEnter()
 						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
-						_gridManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
+						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
 
 					_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
@@ -144,15 +143,15 @@ void UState_CondorDropCharacters::OnStateTick(float DeltaTime)
 	{
 		if (_barrier->_isBarriereCompleted)
 		{
-			for (auto condor : _gridManager->_condors)
+			for (auto condor : _gameManager->_condors)
 			{
 				for (auto character : condor->_characters)
 				{
 					if(character->IsA<ATileActor_Character_Peruvien>())
 					{
 						ATileActor_Character_Peruvien* peruvien = Cast<ATileActor_Character_Peruvien>(character);
-						_gridManager->MarkStepsOnGrid(character->GetCurrentTile());
-						peruvien->PeruvienTilePath = _gridManager->GetPath(peruvien->_startingTile, false);
+						_gameManager->MarkStepsOnGrid(character->GetCurrentTile());
+						peruvien->PeruvienTilePath = _gameManager->GetPath(peruvien->_startingTile, false);
 						peruvien->_currentPBehaviour = EPeruvienBehaviour::Returning;
 						peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 					}
@@ -161,8 +160,8 @@ void UState_CondorDropCharacters::OnStateTick(float DeltaTime)
 						ATileActor_Character_Milou* milou = Cast<ATileActor_Character_Milou>(character);
 						if(!milou->isBoundToTintin)
 						{
-							_gridManager->MarkStepsOnGrid(character->GetCurrentTile());
-							milou->MilouTilePath = _gridManager->GetPath(milou->_previousCondorTile, true);
+							_gameManager->MarkStepsOnGrid(character->GetCurrentTile());
+							milou->MilouTilePath = _gameManager->GetPath(milou->_previousCondorTile, true);
 						}
 					}
 				}
