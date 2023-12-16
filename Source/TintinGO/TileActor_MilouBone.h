@@ -14,4 +14,7 @@ public:
 
 	UFUNCTION()
 	virtual void OnEndTask() override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AudioFile")
+	USoundBase* S_BoneTrigger;
 };

@@ -5,6 +5,7 @@
 
 #include "GameManager.h"
 #include "MainGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 ATileActor_Character_Milou* ATileActor_Character_Milou::SingletonInstance = nullptr;
 
@@ -16,7 +17,6 @@ ATileActor_Character_Milou* ATileActor_Character_Milou::GetInstance()
 void ATileActor_Character_Milou::BeginPlay()
 {
 	Super::BeginPlay();
-	SetUpRotation(_gameManager->_tintinAngle);
 }
 
 ATileActor_Character_Milou::ATileActor_Character_Milou()

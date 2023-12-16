@@ -59,7 +59,6 @@ void AMainGameMode::Tick(float DeltaTime)
 	{
 		_currentStateType->OnStateTick(DeltaTime);
 	}
-	
 }
 
 
@@ -128,6 +127,7 @@ bool AMainGameMode::ShouldTickIfViewportsOnly() const
 
 void AMainGameMode::ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile)
 {
+
 	if(IsValid(previousTile))
 	{
 		for(auto body : previousTile->_tileActors)

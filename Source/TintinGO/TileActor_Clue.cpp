@@ -6,6 +6,7 @@
 #include "GameManager.h"
 #include "GridManager.h"
 #include "MainGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 ATileActor_Clue::ATileActor_Clue()
 {
@@ -35,6 +36,14 @@ void ATileActor_Clue::OnEndTask()
 			}
 		}
 		Super::OnEndTask();
+		if(clueNumber == 1)
+		{
+			UGameplayStatics::SpawnSoundAtLocation(this, S_EndTileActivated, GetActorLocation());	
+		}
+		else
+		{
+			UGameplayStatics::SpawnSoundAtLocation(this, S_CluePickUp, GetActorLocation());
+		}
 		Destroy();
 	}
 }

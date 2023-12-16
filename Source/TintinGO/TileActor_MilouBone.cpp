@@ -5,6 +5,7 @@
 
 #include "GameManager.h"
 #include "MainGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ATileActor_MilouBone::ATileActor_MilouBone()
@@ -18,4 +19,6 @@ void ATileActor_MilouBone::OnEndTask()
 	if(_gameManager->OnBoneConsumed.IsBound())
 		_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
 	Super::OnEndTask();
+	UGameplayStatics::SpawnSoundAtLocation(this, S_BoneTrigger, GetActorLocation());
+	Destroy();
 }

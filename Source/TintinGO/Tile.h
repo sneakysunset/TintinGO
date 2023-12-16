@@ -88,6 +88,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 	TArray<FItemToSpawn> _TileItems;
+
+	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
+	EAngle _tintinAngle;
 	
 	UPROPERTY()
 	TArray<ATileActor*> _tileActors;
@@ -131,6 +134,14 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
 	UMaterialInterface* _InBoneRangeMat;
+
+	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
+	USoundBase* _Sound_OnTileHover;
+
+	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
+	USoundBase* _Sound_OnTileClick;
+
+
 	
 	UFUNCTION()
 	void SetHighlighted(bool toHightlight);

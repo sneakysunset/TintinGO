@@ -5,6 +5,7 @@
 
 #include "GameManager.h"
 #include "MainGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ATileActor_Character_Tintin* ATileActor_Character_Tintin::SingletonInstance = nullptr;
@@ -17,7 +18,7 @@ ATileActor_Character_Tintin* ATileActor_Character_Tintin::GetInstance()
 void ATileActor_Character_Tintin::BeginPlay()
 {
 	Super::BeginPlay();
-	SetUpRotation(_gameManager->_tintinAngle);
+	UGameplayStatics::SpawnSoundAtLocation(this, S_LevelStart, GetActorLocation());
 }
 
 ATileActor_Character_Tintin::ATileActor_Character_Tintin()

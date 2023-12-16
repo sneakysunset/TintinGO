@@ -20,7 +20,6 @@ public:
 	UFUNCTION()
 	virtual void OnEndTask() override;
 
-
 	virtual void Tick(float DeltaSeconds) override;
 	
 	UFUNCTION()
@@ -31,4 +30,10 @@ public:
 
 	UPROPERTY()
 	bool hasInit;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_CluePickUp;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_EndTileActivated;
 };

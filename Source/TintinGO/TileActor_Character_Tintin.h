@@ -15,6 +15,15 @@ public:
 	static ATileActor_Character_Tintin* GetInstance();
 	static ATileActor_Character_Tintin* SingletonInstance;
 
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	TArray<USoundBase*> S_throwBoneArray;
+	
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	TArray<USoundBase*> S_pickUpMilou;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_LevelStart;
+	
 protected:
 virtual void BeginPlay() override;
 };

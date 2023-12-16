@@ -6,13 +6,14 @@
 #include "GameManager.h"
 #include "MainGameMode.h"
 #include "State_MilouRotate.h"
+#include "Kismet/GameplayStatics.h"
 
 void UState_AwaitingInputs_Milou::OnStateEnter()
 {
 	Super::OnStateEnter();
 	_gameManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
 	_tintin = ATileActor_Character_Tintin::GetInstance();
-	
+	UGameplayStatics::SpawnSoundAtLocation(pc, _gameManager->S_buttonClick, pc->PlayerCameraManager->GetCameraLocation());
 	for (int i = 0; i < _gameManager->_gridTiles.Num(); i++)
 	{
 		for (int j = 0; j < _gameManager->_gridTiles[0].Tiles.Num(); j++)
@@ -47,7 +48,7 @@ void UState_AwaitingInputs_Milou::ProcessPlayerInputs()
 		_hitTile->SetHighlighted(true);
 		isTileAccessible = true;
 
-		_milou->MilouTilePath = _gameManager->GetPath(_hitTile, true);
+		_milou->MilouTilePath = _gameManager->GetPath(_hitTile, false);
 		if(_milou->MilouTilePath.Num() > 1)
 		{
 			for (int i = 1; i < _milou->MilouTilePath.Num(); i++)
@@ -75,6 +76,11 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 		_gameManager->_milouBonesNumber--;
 		if(_gameManager->OnBoneConsumed.IsBound())
 			_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
+
+		int32 randomAudioFileIndex = FMath::RandRange(0, _tintin->S_throwBoneArray.Num() - 1);
+		
+		UGameplayStatics::SpawnSoundAtLocation(_tintin, _tintin->S_throwBoneArray[randomAudioFileIndex], _tintin->GetActorLocation());
+		UGameplayStatics::SpawnSoundAtLocation(_milou, _milou->S_milouStartMoving, _milou->GetActorLocation());
 		_gameManager->StateChange(NewObject<UState_MilouRotate>(UState_MilouRotate::StaticClass()));
 	}
 
@@ -82,6 +88,7 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 
 void UState_AwaitingInputs_Milou::ReceiveMiloClickDelegate()
 {
+	UGameplayStatics::SpawnSoundAtLocation(pc, _gameManager->S_buttonClick, pc->PlayerCameraManager->GetCameraLocation());
 	_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 }
 

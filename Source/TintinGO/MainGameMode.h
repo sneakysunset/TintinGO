@@ -155,8 +155,7 @@ public:
     UPROPERTY(EditAnywhere)
     float _rotateSpeed;
 
-    UPROPERTY(EditAnywhere)
-    EAngle _tintinAngle;
+
 
 	UPROPERTY(EditAnywhere, Category = "UI")
 	TSubclassOf<UCoreUI> YourWidgetClass;
@@ -164,6 +163,12 @@ public:
 	UPROPERTY()
 	UCoreUI* _coreUI;
 
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_buttonClick;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	TArray<USoundBase*> S_MoveSoundsArray;
+	
 	UFUNCTION()
 	void ChangeTextValue(int32 newValue, FColor DisabledColor);
 };

@@ -36,7 +36,14 @@ void UState_PlayerMove::OnStateEnter()
 	{
 		Cast<UState_TA_Move>(_milou->_currentState_TA)->_actorSpeed = _milou->_speed;
 		Cast<UState_TA_Move>(_milou->_currentState_TA)->_speed = _milou->_speed;
+
+		const int32 milourandomAudioFileIndex = FMath::RandRange(0, _gameManager->S_MoveSoundsArray.Num() - 1);
+		
+		UGameplayStatics::SpawnSoundAtLocation(_milou, _gameManager->S_MoveSoundsArray[milourandomAudioFileIndex], _milou->GetActorLocation());
 	}
+	const int32 randomAudioFileIndex = FMath::RandRange(0, _gameManager->S_MoveSoundsArray.Num() - 1);
+		
+	UGameplayStatics::SpawnSoundAtLocation(_tintin, _gameManager->S_MoveSoundsArray[randomAudioFileIndex], _tintin->GetActorLocation());
 	Cast<UState_TA_Move>(_tintin->_currentState_TA)->_actorSpeed = _tintin->_speed;
 	Cast<UState_TA_Move>(_tintin->_currentState_TA)->_speed = _tintin->_speed;
 }
@@ -51,10 +58,12 @@ void UState_PlayerMove::OnStateTick(float DeltaTime)
 			_gameManager->OnWin();
 		}
 
-		if(_tintin->GetCurrentTile() == _milou->GetCurrentTile())
+		if(!_milou->isBoundToTintin && _tintin->GetCurrentTile() == _milou->GetCurrentTile())
 		{
-			_milou->isBoundToTintin;
-			
+			_milou->isBoundToTintin = true;
+			const int32 randomAudioFileIndex = FMath::RandRange(0, _tintin->S_pickUpMilou.Num() - 1);
+		
+			UGameplayStatics::SpawnSoundAtLocation(_tintin, _tintin->S_pickUpMilou[randomAudioFileIndex], _tintin->GetActorLocation());
 		}
 		
 		_gameManager->StateChange(NewObject<UState_TriggerItemsCharacters>(UState_TriggerItemsCharacters::StaticClass()));

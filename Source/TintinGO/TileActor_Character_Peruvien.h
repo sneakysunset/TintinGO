@@ -69,6 +69,14 @@ public:
 	UFUNCTION()
 	void SetSplinePoints();
 
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_detect;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_lostDetect;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_ReachMilou;
 protected:
 	virtual void BeginPlay() override;
 

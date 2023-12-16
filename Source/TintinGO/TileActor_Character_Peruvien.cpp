@@ -3,6 +3,7 @@
 #include "Tile.h"
 #include "Components/SplineMeshComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 ATileActor_Character_Peruvien::ATileActor_Character_Peruvien(): _startingTile(nullptr), _startingAngle(),
@@ -29,6 +30,7 @@ void ATileActor_Character_Peruvien::SetUpRotation(EAngle newAngle)
 
 bool ATileActor_Character_Peruvien::Detection(ATile* detectTile) const
 {
+	if(detectTile == GetCurrentTile()) return true;
 	int32 distance;
 	switch(angle)
 	{
@@ -152,7 +154,14 @@ void ATileActor_Character_Peruvien::Tick(float DeltaSeconds)
 
 void ATileActor_Character_Peruvien::SetWidgetVisible(bool isVisible) const
 {
-	if(isVisible)
+	if(isVisible && WidgetInstance->GetVisibility() == ESlateVisibility::Hidden)
+	{
+		UGameplayStatics::SpawnSoundAtLocation(this, S_detect, GetActorLocation());
 		WidgetInstance->SetVisibility(ESlateVisibility::Visible);
-	else WidgetInstance->SetVisibility(ESlateVisibility::Hidden);
+	}
+	else if(!isVisible && WidgetInstance->GetVisibility() != ESlateVisibility::Hidden)
+	{
+		UGameplayStatics::SpawnSoundAtLocation(this, S_lostDetect, GetActorLocation());
+		WidgetInstance->SetVisibility(ESlateVisibility::Hidden);
+	}
 }

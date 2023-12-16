@@ -54,9 +54,11 @@ void UState_PeruviensMove::OnStateEnter()
 	{
 		Cast<UState_TA_Move>(peruvien->_currentState_TA)->_speed = peruvien->_speed;
 		Cast<UState_TA_Move>(peruvien->_currentState_TA)->_speed = peruvien->_speed;
+		const int32 randomAudioFileIndex = FMath::RandRange(0, _gameManager->S_MoveSoundsArray.Num() - 1);
+		
+		UGameplayStatics::SpawnSoundAtLocation(peruvien, _gameManager->S_MoveSoundsArray[randomAudioFileIndex], peruvien->GetActorLocation());
 		
 	}
-
 }
 
 void UState_PeruviensMove::OnStateTick(float DeltaTime)
@@ -89,6 +91,10 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 				}
 				else if(peruvien->GetCurrentTile() != peruvien->_startingTile)
 				{
+					if(peruvien->_currentPBehaviour == EPeruvienBehaviour::FollowingMilou)
+					{
+						UGameplayStatics::SpawnSoundAtLocation(peruvien, peruvien->S_ReachMilou, peruvien->GetActorLocation());
+					}
 					_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
 					peruvien->PeruvienTilePath = _gameManager->GetPath(peruvien->_startingTile, false);
 					peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());

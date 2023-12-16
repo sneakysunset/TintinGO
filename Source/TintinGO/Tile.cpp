@@ -3,7 +3,6 @@
 
 #include "Tile.h"
 
-#include "GameManager.h"
 #include "GridManager.h"
 #include "MainGameMode.h"
 #include "TileActor_Character_Condor.h"
@@ -135,17 +134,20 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 
 void ATile::AddTintin()
 {
-
+	
+	
 	FActorSpawnParameters params;
 	params.ObjectFlags |= RF_Transient;
 	params.bNoFail = true;
 	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	const FVector position = GetActorLocation();
+	
 	const FRotator rotation = FRotator(0, 0, 0);
 	//if(!IsValid(_tintinBP) || !IsValid(_milouBP)) return;
 	ATileActor_Character_Tintin* character = GetWorld()->SpawnActor<ATileActor_Character_Tintin>(_tintinBP, position, rotation, params);
 	ATileActor_Character_Milou* milou = GetWorld()->SpawnActor<ATileActor_Character_Milou>(_milouBP, position, rotation, params);
-
+	character->SetUpRotation(_tintinAngle);
+	milou->SetUpRotation(_tintinAngle);
 #if WITH_EDITOR
 	character->SetActorLabel(FString::Printf(TEXT("Tintin")));
 	milou->SetActorLabel(FString::Printf(TEXT("Milou")));

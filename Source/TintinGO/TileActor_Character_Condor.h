@@ -24,4 +24,8 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	TArray<ATileActor_Character*> _characters;
+
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* _sound_CondorOnAttack;
 };

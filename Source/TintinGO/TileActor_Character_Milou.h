@@ -30,6 +30,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	float _boneSpeed;
 
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_milouStartMoving;
+	
 protected:
 	virtual void BeginPlay() override;
 	
