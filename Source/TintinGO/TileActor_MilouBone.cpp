@@ -22,3 +22,9 @@ void ATileActor_MilouBone::OnEndTask()
 	UGameplayStatics::SpawnSoundAtLocation(this, S_BoneTrigger, GetActorLocation());
 	Destroy();
 }
+
+void ATileActor_MilouBone::OnDestroyBone()
+{
+	Super::OnEndTask();
+}
+

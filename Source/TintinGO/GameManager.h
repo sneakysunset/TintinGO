@@ -56,8 +56,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	EAngle _tintinAngle;
-
-
 	
 	
 protected:

@@ -16,6 +16,46 @@ void UState_CondorAttack::OnStateEnter()
 {
 	UState::OnStateEnter();
 
+
+
+	for(auto condor : _gameManager->_condors)
+	{
+		if(condor->isWaitLastRound)
+		{
+			ATile* currentTile = condor->GetCurrentTile();
+
+			switch (currentTile->_nestDirection)
+			{
+				case ENestDirection::Left :
+					for (int i = currentTile->_column - 1; i >= 0; --i)
+					{
+						_gameManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(0);
+					}
+					break;
+				case ENestDirection::Right :
+					for (int i = currentTile->_column + 1; i < _gridManager->_gridTiles[0].Tiles.Num(); ++i)
+					{
+						_gameManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(0);
+					}
+					break;
+				case ENestDirection::Top :
+					for (int i = currentTile->_row + 1; i > _gridManager->_gridTiles.Num(); ++i)
+					{
+						_gameManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(0);
+					}
+					break;
+				case ENestDirection::Down :
+					for (int i = currentTile->_row - 1; i >= 0; --i)
+					{
+						_gameManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(0);
+					}
+					break;
+				default:
+				break;
+			}
+		}
+	}
+	
 	for (auto condor : _gameManager->_condors)
 	{
 		condor->isWaitLastRound = false;
@@ -189,6 +229,8 @@ void UState_CondorAttack::OnStateEnter()
 
 		_gameManager->ChangeTile(_barrier, previousCondorTile, condor->GetCurrentTile());
 		_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
+		Cast<UState_TA_Move>(condor->_currentState_TA)->_actorSpeed = condor->_speed;
+		Cast<UState_TA_Move>(condor->_currentState_TA)->_speed = condor->_speed;
 	}
 }
 

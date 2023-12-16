@@ -2,16 +2,16 @@
 
 
 #include "State_AwaitingInputs_Milou.h"
-
-#include "GameManager.h"
 #include "MainGameMode.h"
+#include "State_DropMilouBoneAnimation.h"
 #include "State_MilouRotate.h"
 #include "Kismet/GameplayStatics.h"
 
 void UState_AwaitingInputs_Milou::OnStateEnter()
 {
 	Super::OnStateEnter();
-	_gameManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
+	_milou->GetCurrentTile()->SpawnMilouBone();
+	gridManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
 	_tintin = ATileActor_Character_Tintin::GetInstance();
 	UGameplayStatics::SpawnSoundAtLocation(pc, _gameManager->S_buttonClick, pc->PlayerCameraManager->GetCameraLocation());
 	for (int i = 0; i < _gameManager->_gridTiles.Num(); i++)
@@ -76,12 +76,12 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 		_gameManager->_milouBonesNumber--;
 		if(_gameManager->OnBoneConsumed.IsBound())
 			_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
-
 		int32 randomAudioFileIndex = FMath::RandRange(0, _tintin->S_throwBoneArray.Num() - 1);
 		
 		UGameplayStatics::SpawnSoundAtLocation(_tintin, _tintin->S_throwBoneArray[randomAudioFileIndex], _tintin->GetActorLocation());
 		UGameplayStatics::SpawnSoundAtLocation(_milou, _milou->S_milouStartMoving, _milou->GetActorLocation());
-		_gameManager->StateChange(NewObject<UState_MilouRotate>(UState_MilouRotate::StaticClass()));
+
+		_gameManager->StateChange(NewObject<UState_DropMilouBoneAnimation>(UState_DropMilouBoneAnimation::StaticClass()));
 	}
 
 }

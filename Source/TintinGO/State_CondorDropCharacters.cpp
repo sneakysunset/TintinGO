@@ -42,13 +42,23 @@ void UState_CondorDropCharacters::OnStateEnter()
 							if(!milou->isBoundToTintin)
 								milou->_previousCondorTile = milou->GetCurrentTile();
 						}
-						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
 						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
 
+				
 					_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
+
+					for (auto Character : condor->_characters)
+					{
+						Cast<UState_TA_Move>(Character->_currentState_TA)->_actorSpeed = condor->_speed;
+						Cast<UState_TA_Move>(Character->_currentState_TA)->_speed = condor->_speed;
+					}
+					
+					Cast<UState_TA_Move>(condor->_currentState_TA)->_actorSpeed = condor->_speed;
+					Cast<UState_TA_Move>(condor->_currentState_TA)->_speed = condor->_speed;
+
 					break;
 				
 				case ENestDirection::Right :
@@ -67,13 +77,21 @@ void UState_CondorDropCharacters::OnStateEnter()
 							if(!milou->isBoundToTintin)
 								milou->_previousCondorTile = milou->GetCurrentTile();
 						}
-						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
 						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
-
+				
 					_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
+
+					for (auto Character : condor->_characters)
+					{
+						Cast<UState_TA_Move>(Character->_currentState_TA)->_actorSpeed = condor->_speed;
+						Cast<UState_TA_Move>(Character->_currentState_TA)->_speed = condor->_speed;
+					}
+				
+					Cast<UState_TA_Move>(condor->_currentState_TA)->_actorSpeed = condor->_speed;
+					Cast<UState_TA_Move>(condor->_currentState_TA)->_speed = condor->_speed;
 					break;
 				
 				case ENestDirection::Top :
@@ -92,13 +110,21 @@ void UState_CondorDropCharacters::OnStateEnter()
 							if(!milou->isBoundToTintin)
 								milou->_previousCondorTile = milou->GetCurrentTile();
 						}
-						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
 						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
-
+				
 					_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
+
+					for (auto Character : condor->_characters)
+					{
+						Cast<UState_TA_Move>(Character->_currentState_TA)->_actorSpeed = condor->_speed;
+						Cast<UState_TA_Move>(Character->_currentState_TA)->_speed = condor->_speed;
+					}
+						
+					Cast<UState_TA_Move>(condor->_currentState_TA)->_actorSpeed = condor->_speed;
+					Cast<UState_TA_Move>(condor->_currentState_TA)->_speed = condor->_speed;
 					break;
 				
 				case ENestDirection::Down :
@@ -117,13 +143,22 @@ void UState_CondorDropCharacters::OnStateEnter()
 							if(!milou->isBoundToTintin)
 								milou->_previousCondorTile = milou->GetCurrentTile();
 						}
-						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
+						
 						Character->SetNextTile(targetTile);
 						Character->SetCurrentTile(Character->GetNextTile());
 						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
-
+				
 					_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
+
+					for (auto Character : condor->_characters)
+					{
+						Cast<UState_TA_Move>(Character->_currentState_TA)->_actorSpeed = condor->_speed;
+						Cast<UState_TA_Move>(Character->_currentState_TA)->_speed = condor->_speed;
+					}
+						
+					Cast<UState_TA_Move>(condor->_currentState_TA)->_actorSpeed = condor->_speed;
+					Cast<UState_TA_Move>(condor->_currentState_TA)->_speed = condor->_speed;
 					break;
 				
 				default:

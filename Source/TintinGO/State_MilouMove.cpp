@@ -103,5 +103,10 @@ void UState_MilouMove::OnStateTick(float DeltaTime)
 
 void UState_MilouMove::OnStateExit()
 {
+	if (_milou->GetCurrentTile()->milouBoneToDrop)
+	{
+		_milou->GetCurrentTile()->milouBoneToDrop->OnDestroyBone();
+	}
+	
 	UState::OnStateExit();
 }

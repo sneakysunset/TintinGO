@@ -35,9 +35,8 @@ void ATile::BeginPlay()
 	Super::BeginPlay();
 
 	_gameManager = Cast<AMainGameMode>(GetWorld()->GetAuthGameMode());
-
-
-	
+	milouBoneToDrop = nullptr;
+	_currentBackgroundAlpha = 0;
 	TArray<UStaticMeshComponent*> Components;
 	GetComponents<UStaticMeshComponent>(Components);
 	if(Components.Num() > 0)
@@ -114,16 +113,16 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 			
 		switch (_tileType) {
 		case ETileType::Neutral:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat, _currentBackgroundAlpha));
 			break;
 		case ETileType::StartingPosition:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat, _currentBackgroundAlpha));
 			break;
 		case ETileType::EndingPosition:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat, _currentBackgroundAlpha));
 			break;
 		case ETileType::NestPosition:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_nestMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_nestMat, _currentBackgroundAlpha));
 			break;
 		}
 	}
@@ -171,23 +170,23 @@ void ATile::SetHighlighted(bool toHightlight)
 	if(!_walkable) return;
 	if(toHightlight)
 	{
-		_staticMeshComponent->SetMaterial(0, DynamicMat(_HighlightedMat));
+		_staticMeshComponent->SetMaterial(0, DynamicMat(_HighlightedMat, _currentBackgroundAlpha));
 	}
 	else
 	{
 		switch (_tileType)
 		{
 		case ETileType::Neutral:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat, _currentBackgroundAlpha));
 			break;
 		case ETileType::StartingPosition:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat, _currentBackgroundAlpha));
 			break;
 		case ETileType::EndingPosition:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat, _currentBackgroundAlpha));
 			break;
 		case ETileType::NestPosition:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_nestMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_nestMat, _currentBackgroundAlpha));
 			break;
 		default:
 			break;
@@ -199,26 +198,26 @@ void ATile::SetTilesInBoneRangeMat(bool toBone)
 {
 	if(toBone)
 	{
-		_staticMeshComponent->SetMaterial(0, DynamicMat(_InBoneRangeMat));
+		_staticMeshComponent->SetMaterial(0, DynamicMat(_InBoneRangeMat, _currentBackgroundAlpha));
 	}
 	else
 	{
 		switch (_tileType)
 		{
 		case ETileType::Neutral:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat, _currentBackgroundAlpha));
 			break;
 		case ETileType::StartingPosition:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat, _currentBackgroundAlpha));
 			break;
 		case ETileType::EndingPosition:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat, _currentBackgroundAlpha));
 			break;
 		case ETileType::NestPosition:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_nestMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_nestMat, _currentBackgroundAlpha));
 			break;
 		default:
-			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat));
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat, _currentBackgroundAlpha));
 			break;
 		}
 	}
@@ -228,11 +227,11 @@ void ATile::SetHighlightedPath(bool toHightlight)
 {
 	if(toHightlight)
 	{
-		_staticMeshComponent->SetMaterial(0, DynamicMat(_HighlightedPathMat));
+		_staticMeshComponent->SetMaterial(0, DynamicMat(_HighlightedPathMat, _currentBackgroundAlpha));
 	}
 	else
 	{
-		_staticMeshComponent->SetMaterial(0, DynamicMat(_InBoneRangeMat));
+		_staticMeshComponent->SetMaterial(0, DynamicMat(_InBoneRangeMat, _currentBackgroundAlpha));
 	}
 }
 
@@ -335,10 +334,25 @@ void ATile::AddTileActors()
 	}
 }
 
-UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat) const
+void ATile::SpawnMilouBone()
+{
+	FActorSpawnParameters params;
+	params.bNoFail = true;
+	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	FVector position = GetActorLocation() + FVector(0, 2, 0);
+	FRotator rotation = FRotator(0, 0, 0);
+	ATileActor_MilouBone* milouBone = nullptr;
+	milouBone = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP->GeneratedClass, position, rotation, params);
+	milouBoneToDrop = milouBone; 
+}
+
+
+UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat, int backgroundAlpha) const
 {
 	UMaterialInstanceDynamic* dynamicMaterial = UMaterialInstanceDynamic::Create(mat , nullptr);
-
+	dynamicMaterial->SetScalarParameterValue(FName("BackgroundAlpha"), backgroundAlpha);
+	
 	if(_leftLink == true)
 		dynamicMaterial->SetScalarParameterValue(FName("Left"), 1);
 	else
@@ -387,6 +401,29 @@ void ATile::RefreshLinks()
 	if(downTile == nullptr || !downTile->_walkable || !downTile->_upLink)
 	{
 		_downLink = false;
+	}
+}
+
+void ATile::RefreshTileBackgroundRenderer(int alpha)
+{
+	_currentBackgroundAlpha = _currentBackgroundAlpha = alpha;
+	
+	switch (_tileType)
+	{
+		case ETileType::Neutral:
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_walkableMat, alpha));
+			break;
+		case ETileType::StartingPosition:
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_startPosMat, alpha));
+			break;
+		case ETileType::EndingPosition:
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_endPosMat, alpha));
+			break;
+		case ETileType::NestPosition:
+			_staticMeshComponent->SetMaterial(0, DynamicMat(_nestMat, alpha));
+			break;
+		default:
+			break;
 	}
 }
 
