@@ -108,28 +108,28 @@ public:
 	UPROPERTY(EditAnywhere)
 	int32 _step;
 	
-	UPROPERTY(EditAnywhere, Category = "TileMaterials")
+	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
 	UMaterialInterface* _walkableMat;
 	
-	UPROPERTY(EditAnywhere, Category = "TileMaterials")
+	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
 	UMaterialInterface* _unwalkableMat;
 	
-	UPROPERTY(EditAnywhere, Category = "TileMaterials")
+	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
 	UMaterialInterface* _startPosMat;
 	
-	UPROPERTY(EditAnywhere, Category = "TileMaterials")
+	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
 	UMaterialInterface* _endPosMat;
 	
-	UPROPERTY(EditAnywhere, Category = "TileMaterials")
+	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
 	UMaterialInterface* _nestMat;
 	
-	UPROPERTY(EditAnywhere, Category = "TileMaterials")
+	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
 	UMaterialInterface* _HighlightedMat;
 	
-	UPROPERTY(EditAnywhere, Category = "TileMaterials")
+	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
 	UMaterialInterface* _HighlightedPathMat;
 
-	UPROPERTY(EditAnywhere, Category = "TileMaterials")
+	UPROPERTY(EditDefaultsOnly, Category = "TileMaterials")
 	UMaterialInterface* _InBoneRangeMat;
 	
 	UFUNCTION()

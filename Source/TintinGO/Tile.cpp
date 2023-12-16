@@ -27,6 +27,8 @@ ATile::ATile()
 	_tintinBP =  meshFinder.Object;
 	static ConstructorHelpers::FObjectFinder<ATileActor_Character_Milou> meshFinder2(TEXT("/Script/Engine.Blueprint'/Game/BluePrints/TileActor_Character_Milou_BP.TileActor_Character_Milou_BP'"));
 	_milouBP =  meshFinder2.Object;*/
+
+
 }
 
 void ATile::BeginPlay()
@@ -34,6 +36,8 @@ void ATile::BeginPlay()
 	Super::BeginPlay();
 
 	_gameManager = Cast<AMainGameMode>(GetWorld()->GetAuthGameMode());
+
+
 	
 	TArray<UStaticMeshComponent*> Components;
 	GetComponents<UStaticMeshComponent>(Components);
@@ -66,6 +70,8 @@ void ATile::BeginPlay()
 	{
 		actor->SetActorLocation(GetTileActorPosition(actor));
 	}
+
+	SetHighlighted(false);
 }
 
 void ATile::Tick(float DeltaTime)

@@ -91,7 +91,6 @@ void AMainGameMode::BeginPlay()
 	for(auto tile : tiles)
 	{
 		_gridTiles[tile->_row].Tiles[tile->_column] = tile;
-		tile->SetHighlighted(false);
 	}
 
 	if (IsValid(YourWidgetClass))
@@ -113,7 +112,6 @@ void AMainGameMode::LateInit()
 	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 	_currentStateType->_gameManager = this;
 	_currentStateType->OnStateEnter();
-	
 }
 
 bool AMainGameMode::ShouldTickIfViewportsOnly() const
