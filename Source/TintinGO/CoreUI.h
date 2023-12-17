@@ -26,4 +26,10 @@ public:
 	TObjectPtr<UTextBlock> BoneNumber_Text;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UImage> FadeScreen;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	TObjectPtr<UButton> ButtonLevel1;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	TObjectPtr<UButton> ButtonLevel2;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	TObjectPtr<UButton> ButtonLevel3;
 };

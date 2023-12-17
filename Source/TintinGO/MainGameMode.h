@@ -130,6 +130,15 @@ public:
     UFUNCTION(BlueprintCallable)
     void ReceiveMilouUIClick();
 
+	UFUNCTION(BlueprintCallable)
+	void ReceiveNextLevelClick1();
+
+	UFUNCTION(BlueprintCallable)
+	void ReceiveNextLevelClick2();
+	
+	UFUNCTION(BlueprintCallable)
+	void ReceiveNextLevelClick3();
+	
     UPROPERTY(EditAnywhere)
     int32 _clueNumber;
 

@@ -246,6 +246,20 @@ void AMainGameMode::ReceiveMilouUIClick()
 	}
 }
 
+void AMainGameMode::ReceiveNextLevelClick1()
+{
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("Level_1"), true);
+}
+
+void AMainGameMode::ReceiveNextLevelClick2()
+{
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("Level_2"), true);
+}
+
+void AMainGameMode::ReceiveNextLevelClick3()
+{
+	UGameplayStatics::OpenLevel(GetWorld(), TEXT("Level_3"), true);
+}
 
 
 void AMainGameMode::ChangeTextValue(int32 newValue, FColor DisabledColor)
