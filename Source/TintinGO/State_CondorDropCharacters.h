@@ -23,4 +23,8 @@ public:
 private:
 	UPROPERTY()
 	UBarrier* _barrier;
+
+	UPROPERTY()
+	float rotateInterpolationValue;
+
 };

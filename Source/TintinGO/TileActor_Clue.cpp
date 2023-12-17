@@ -44,6 +44,8 @@ void ATileActor_Clue::OnEndTask()
 		{
 			UGameplayStatics::SpawnSoundAtLocation(this, S_CluePickUp, GetActorLocation());
 		}
+		if(_currentTile->_tileActors.Contains(this))
+			_currentTile->_tileActors.Remove(this);
 		Destroy();
 	}
 }

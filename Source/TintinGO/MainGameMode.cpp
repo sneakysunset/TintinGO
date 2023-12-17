@@ -21,9 +21,6 @@ AMainGameMode::AMainGameMode()
 	_rows = 10;
 	_columns = 10;
 	_tileWidth = 1;
-	_useEditorTick = true;
-
-
 }
 
 AMainGameMode::~AMainGameMode()
@@ -46,15 +43,6 @@ void AMainGameMode::Tick(float DeltaTime)
 		}
 	}
 	
-#if WITH_EDITOR
-	//UE_LOG(LogTemp, Warning, TEXT("Test"));
-	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor)
-	{
-		BlueprintEditorTick(DeltaTime);
-	}
-
-#endif
-
 	if(IsValid(this) && IsValid(_currentStateType) && _currentStateType != nullptr)
 	{
 		_currentStateType->OnStateTick(DeltaTime);
@@ -111,18 +99,6 @@ void AMainGameMode::LateInit()
 	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 	_currentStateType->_gameManager = this;
 	_currentStateType->OnStateEnter();
-}
-
-bool AMainGameMode::ShouldTickIfViewportsOnly() const
-{
-	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor && _useEditorTick)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
 }
 
 void AMainGameMode::ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile)
@@ -245,67 +221,6 @@ ATile* AMainGameMode::GetNextTileInPath(ATile* tile)
 	else return nullptr;
 }
 
-void AMainGameMode::BlueprintEditorTick(float DeltaTime)
-{
-}
-
-void AMainGameMode::InitializeGrid()	
-{
-	for (auto& row : _gridTiles)
-	{
-		for (ATile* tile : row.Tiles)
-		{
-			if (tile)
-			{
-				tile->Destroy();
-			}
-		}
-	}
-
-	// Clear the grid array
-	_gridTiles.Empty();
-
-	UE_LOG(LogTemp, Warning, TEXT("Initialization"));
-	for (size_t i = 0; i < _rows; i++)
-	{
-		_gridTiles.Add(FTileArray());
-		for (size_t j = 0; j < _columns; j++)
-		{
-			FActorSpawnParameters SpawnParams;
-			FVector SpawnLocation = FVector(i * 100 * _tileWidth, j * 100 * _tileWidth , 0);
-			FRotator SpawnRotation = FRotator(0, 0, 0);
-			ATile* SpawnedTile = GetWorld()->SpawnActor<ATile>(_tileBP->GeneratedClass, SpawnLocation, SpawnRotation, SpawnParams);
-#if WITH_EDITOR
-			SpawnedTile->SetActorLabel(FString::Printf(TEXT("Tile_%d_%d"), static_cast<int>(i), static_cast<int>(j)));
-#endif
-			SpawnedTile->AttachToActor(this, FAttachmentTransformRules::SnapToTargetIncludingScale);
-			SpawnedTile->SetActorLocation(SpawnLocation);
-			SpawnedTile->_row = i;
-			SpawnedTile->_column = j;
-			SpawnedTile->_gameManager = this;
-			SpawnedTile->SetActorScale3D(FVector(_tileWidth, _tileWidth, 1));
-			_gridTiles[i].Tiles.Add(SpawnedTile);
-			//SpawnedTile->SetHighlighted(false);
-		}
-	}
-
-	_rows = _gridTiles.Num();
-	_columns = _gridTiles[0].Tiles.Num();
-}
-
-void AMainGameMode::UpdateLinks()
-{
-	//UE_LOG(LogTemp, Warning, TEXT("grid tiles size %d"), tile.Tiles.Num());
-	for(int32 i = 0; i < _gridTiles.Num(); i++)
-	{
-		for (int32 j = 0; j < _gridTiles[i].Tiles.Num(); j++)
-		{
-			_gridTiles[i].Tiles[j]->_gameManager = this;
-			_gridTiles[i].Tiles[j]->RefreshLinks();
-		}
-	}
-}
-
 ATile* AMainGameMode::WorldCoordinatesToTilePosition(const FVector& worldCoordinates)
 {
 	const int32 x = FMath::RoundToInt32( static_cast<float>(FMath::CeilToInt32(worldCoordinates.X)) / (_tileWidth * 100.0f)) ;
@@ -315,19 +230,6 @@ ATile* AMainGameMode::WorldCoordinatesToTilePosition(const FVector& worldCoordin
 	else
 		return nullptr;
 }
-
-
-
-ATile* AMainGameMode::GetTile(int32 i, int32 j)
-{
-	if (i >= 0 && i < _gridTiles.Num() && j >= 0 && j < _gridTiles[i].Tiles.Num())
-	{
-		return _gridTiles[i].Tiles[j];
-	}
-
-	return nullptr;
-}
-
 
 void AMainGameMode::ReceiveMilouUIClick()
 {
@@ -377,4 +279,14 @@ void AMainGameMode::OnWin() const
 	{
 		UGameplayStatics::OpenLevel(GetWorld(),  *FString("Level_3"), true);
 	}
+}
+
+ATile* AMainGameMode::GetTile(int32 i, int32 j)
+{
+	if (i >= 0 && i < _gridTiles.Num() && j >= 0 && j < _gridTiles[i].Tiles.Num())
+	{
+		return _gridTiles[i].Tiles[j];
+	}
+
+	return nullptr;
 }

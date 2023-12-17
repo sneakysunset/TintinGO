@@ -10,7 +10,9 @@
 #include "State_CondorDropCharacters.h"
 #include "State_TA_Move.h"
 #include "Tile.h"
+#include "TileActor_Character_Condor.h"
 #include "GameFramework/GameModeBase.h"
+#include "Kismet/GameplayStatics.h"
 
 void UState_CondorAttack::OnStateEnter()
 {
@@ -18,7 +20,7 @@ void UState_CondorAttack::OnStateEnter()
 
 
 
-	for(auto condor : _gameManager->_condors)
+	for(const auto condor : _gameManager->_condors)
 	{
 		if(condor->isWaitLastRound)
 		{
@@ -26,25 +28,25 @@ void UState_CondorAttack::OnStateEnter()
 
 			switch (currentTile->_nestDirection)
 			{
-				case ENestDirection::Left :
+				case EAngle::Left :
 					for (int i = currentTile->_column - 1; i >= 0; --i)
 					{
 						_gameManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(0);
 					}
 					break;
-				case ENestDirection::Right :
-					for (int i = currentTile->_column + 1; i < _gridManager->_gridTiles[0].Tiles.Num(); ++i)
+				case EAngle::Right :
+					for (int i = currentTile->_column + 1; i < _gameManager->_gridTiles[0].Tiles.Num(); ++i)
 					{
 						_gameManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(0);
 					}
 					break;
-				case ENestDirection::Top :
-					for (int i = currentTile->_row + 1; i > _gridManager->_gridTiles.Num(); ++i)
+				case EAngle::Up :
+					for (int i = currentTile->_row + 1; i > _gameManager->_gridTiles.Num(); ++i)
 					{
 						_gameManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(0);
 					}
 					break;
-				case ENestDirection::Down :
+				case EAngle::Down :
 					for (int i = currentTile->_row - 1; i >= 0; --i)
 					{
 						_gameManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(0);
@@ -55,17 +57,17 @@ void UState_CondorAttack::OnStateEnter()
 			}
 		}
 	}
-	
-	for (auto condor : _gameManager->_condors)
+	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
+	for (const auto condor : _gameManager->_condors)
 	{
 		condor->isWaitLastRound = false;
 		ATile* currentTile = condor->GetCurrentTile();
 		ATile* previousCondorTile = nullptr;
-		_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
+
 
 		switch (currentTile->_nestDirection)
 		{
-			case ENestDirection::Left :
+			case EAngle::Left :
 				for (int i = currentTile->_column - 1; i >= 0; --i)
 				{
 					if(_gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors.Num() > 0)
@@ -103,47 +105,38 @@ void UState_CondorAttack::OnStateEnter()
 					}
 				}
 			break;
-			case ENestDirection::Right :
-				for (int i = currentTile->_column + 1; i < _gameManager->_gridTiles[0].Tiles.Num(); ++i)
+			case EAngle::Right :
+				for (int i = currentTile->_column; i < _gameManager->_gridTiles[currentTile->_row].Tiles.Num(); i++)
 				{
 					if(_gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors.Num() > 0)
 					{
-						for (ATileActor* actor : _gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors)
+						for (int j = 0; j < _gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors.Num(); j ++)
 						{
-							if(IsValid(Cast<ATileActor_Character>(actor)))
+							if(_gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors[j]->IsA<ATileActor_Character>() && !_gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors[j]->IsA<ATileActor_Character_Condor>())
 							{
-								condor->_characters.Add(Cast<ATileActor_Character>(actor));
+								condor->_characters.Add(Cast<ATileActor_Character>(_gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors[j]));
 							}
 						}
 
 						if (condor->_characters.Num() > 0)
 						{
-							_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 							previousCondorTile = currentTile;
 							condor->SetNextTile(_gameManager->_gridTiles[currentTile->_row].Tiles[i]);
 							condor->SetCurrentTile(condor->GetNextTile());
 							break;
 						}
 					}
-					else if (i == _gameManager->_gridTiles[0].Tiles.Num() - 1)
-					{
-						for (ATileActor* actor : _gameManager->_gridTiles[currentTile->_row].Tiles[i]->_tileActors)
-						{
-							if(IsValid(Cast<ATileActor_Character>(actor)))
-							{
-								condor->_characters.Add(Cast<ATileActor_Character>(actor));
-							}
-						}
 
-						_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
+					if(i == _gameManager->_gridTiles[currentTile->_row].Tiles.Num() - 1)
+					{
 						previousCondorTile = currentTile;
 						condor->SetNextTile(_gameManager->_gridTiles[currentTile->_row].Tiles[i]);
 						condor->SetCurrentTile(condor->GetNextTile());
-						break;
 					}
 				}
+
 				break;
-			case ENestDirection::Top :
+			case EAngle::Up :
 				for (int i = currentTile->_row + 1; i > _gameManager->_gridTiles.Num(); ++i)
 				{
 					if(_gameManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors.Num() > 0)
@@ -183,7 +176,7 @@ void UState_CondorAttack::OnStateEnter()
 					}
 				}
 				break;
-			case ENestDirection::Down :
+			case EAngle::Down :
 				for (int i = currentTile->_row - 1; i >= 0; --i)
 				{
 					if(_gameManager->_gridTiles[i].Tiles[currentTile->_column]->_tileActors.Num() > 0)
@@ -227,10 +220,17 @@ void UState_CondorAttack::OnStateEnter()
 				break;
 		}
 
+		FVector TargetDirection = condor->GetNextTile()->GetActorLocation() - condor->GetActorLocation();
+		const FRotator TargetRotation = TargetDirection.Rotation();
+		condor->_startRotation = condor->GetActorRotation().Quaternion();
+		condor->_endRotation = TargetRotation.Quaternion();
 		_gameManager->ChangeTile(_barrier, previousCondorTile, condor->GetCurrentTile());
 		_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
-		Cast<UState_TA_Move>(condor->_currentState_TA)->_actorSpeed = condor->_speed;
-		Cast<UState_TA_Move>(condor->_currentState_TA)->_speed = condor->_speed;
+		const float distance =  FMath::Abs(previousCondorTile->_row - condor->GetNextTile()->_row) + FMath::Abs(previousCondorTile->_column - condor->GetNextTile()->_column);
+		Cast<UState_TA_Move>(condor->_currentState_TA)->_actorSpeed = condor->_speed / distance;
+		Cast<UState_TA_Move>(condor->_currentState_TA)->_speed = condor->_speed / distance;
+		rotateInterpolationValue = 0;
+		UGameplayStatics::SpawnSoundAtLocation(condor, condor->S_CondorAttack, condor->GetActorLocation());
 	}
 }
 
@@ -238,6 +238,14 @@ void UState_CondorAttack::OnStateTick(float DeltaTime)
 {
 	UState::OnStateTick(DeltaTime);
 
+	for(auto condor : _gameManager->_condors)
+	{
+		FQuat rot =  FQuat::Slerp(condor->_startRotation, condor->_endRotation, rotateInterpolationValue);
+		condor->SetActorRotation(rot);
+		rotateInterpolationValue +=DeltaTime * condor->_rotateSpeed;
+		rotateInterpolationValue =  FMath::Clamp(rotateInterpolationValue, 0, 1);
+	}
+	
 	if(_barrier->_isBarriereCompleted)
 	{
 		_gameManager->StateChange(NewObject<UState_CondorDropCharacters>(UState_CondorDropCharacters::StaticClass()));

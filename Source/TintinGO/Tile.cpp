@@ -35,7 +35,6 @@ void ATile::BeginPlay()
 	Super::BeginPlay();
 
 	_gameManager = Cast<AMainGameMode>(GetWorld()->GetAuthGameMode());
-	milouBoneToDrop = nullptr;
 	_currentBackgroundAlpha = 0;
 	TArray<UStaticMeshComponent*> Components;
 	GetComponents<UStaticMeshComponent>(Components);
@@ -108,7 +107,6 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 	{
 		return;
 	}
-	
 	if (_walkable) {
 			
 		switch (_tileType) {
@@ -237,7 +235,6 @@ void ATile::SetHighlightedPath(bool toHightlight)
 
 FVector ATile::GetTileActorPosition(ATileActor* tileActor)
 {
-
 	if(IsValid(tileActor) && !_tileActors.Contains(tileActor))
 	{
 		_tileActors.Add(tileActor);
@@ -320,6 +317,7 @@ void ATile::AddTileActors()
 			ATileActor_Character_Condor* condor = GetWorld()->SpawnActor<ATileActor_Character_Condor>(_condorBP, position, rotation, params);
 			_gameManager->_condors.Add(condor);
 			tActor = condor;
+			condor->SetUpRotation(_nestDirection);
 #if WITH_EDITOR
 			condor->SetActorLabel(FString::Printf(TEXT("Condor")));
 #endif
@@ -340,13 +338,10 @@ void ATile::SpawnMilouBone()
 	params.bNoFail = true;
 	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-	FVector position = GetActorLocation() + FVector(0, 2, 0);
-	FRotator rotation = FRotator(0, 0, 0);
-	ATileActor_MilouBone* milouBone = nullptr;
-	milouBone = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP->GeneratedClass, position, rotation, params);
-	milouBoneToDrop = milouBone; 
+	const FVector position = GetActorLocation() + FVector(0, 2, 0);
+	const FRotator rotation = FRotator(0, 0, 0);
+	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP, position, rotation, params);
 }
-
 
 UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat, int backgroundAlpha) const
 {
@@ -378,10 +373,16 @@ UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat, int backgro
 
 void ATile::RefreshLinks()
 {
-	const ATile* leftTile = _gameManager->GetTile(_row, _column - 1);
-	const ATile* rightTile = _gameManager->GetTile(_row, _column + 1);
-	const ATile* upTile = _gameManager->GetTile(_row + 1, _column);
-	const ATile* downTile = _gameManager->GetTile(_row - 1, _column);
+
+	if(!IsValid(_gridManager))
+	{
+		UE_LOG(LogTemp, Error, TEXT("gridManager is null" ));
+		return;
+	}
+	const ATile* leftTile = _gridManager->GetTile(_row, _column - 1);
+	const ATile* rightTile = _gridManager->GetTile(_row, _column + 1);
+	const ATile* upTile = _gridManager->GetTile(_row + 1, _column);
+	const ATile* downTile = _gridManager->GetTile(_row - 1, _column);
 
 	if(leftTile == nullptr || !leftTile->_walkable || !leftTile->_rightLink)
 	{
@@ -402,6 +403,7 @@ void ATile::RefreshLinks()
 	{
 		_downLink = false;
 	}
+	_gridManager = nullptr;
 }
 
 void ATile::RefreshTileBackgroundRenderer(int alpha)

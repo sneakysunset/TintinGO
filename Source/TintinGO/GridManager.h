@@ -1,10 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "MainGameMode.h"
 #include "GameFramework/Actor.h"
 #include "GridManager.generated.h"
-
-class AMainGameMode;
 
 UCLASS()
 class TINTINGO_API AGridManager : public AActor
@@ -20,13 +19,18 @@ public:
     UFUNCTION(CallInEditor, Category = "GridManager")
     void UpdateLinks();
 
-    UPROPERTY(EditAnywhere)
+	UFUNCTION()
+	ATile* GetTile(int32 i, int32 j);
+
+	UPROPERTY(EditAnywhere)
     UBlueprint* _tileBP;
 
     UPROPERTY(BlueprintReadWrite, EditAnywhere)
     bool _useEditorTick;
 
-
+	UPROPERTY()
+	TArray<FTileArray> _gridTiles; 
+	
 protected:
     virtual void BeginPlay() override;
 

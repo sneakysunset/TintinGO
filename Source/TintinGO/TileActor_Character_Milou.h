@@ -7,6 +7,8 @@
 #include "TileActor_Character_Milou.generated.h"
 
 
+class ATileActor_MilouBone;
+
 UCLASS()
 class TINTINGO_API ATileActor_Character_Milou : public ATileActor_Character
 {
@@ -18,6 +20,9 @@ public:
 	static ATileActor_Character_Milou* GetInstance();
 	static ATileActor_Character_Milou* SingletonInstance;
 
+	UPROPERTY()
+	ATileActor_MilouBone* _milouBoneToDrop;
+	
 	UPROPERTY()
 	bool isBoundToTintin;
 

@@ -3,7 +3,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "Barrier.h"
-#include "GridManager.h"
 #include "MainGameMode.generated.h"
 
 class ATileActor_Character_Peruvien;
@@ -33,19 +32,16 @@ class TINTINGO_API AMainGameMode : public AGameModeBase
 	virtual ~AMainGameMode() override;
 
 public:	
-    UFUNCTION(CallInEditor, Category = "GridManager")
-    void InitializeGrid();
-
-    UFUNCTION(CallInEditor, Category = "GridManager")
-    void UpdateLinks();
-
     UFUNCTION()
     ATile* WorldCoordinatesToTilePosition(const FVector& worldCoordinates);
 
     UFUNCTION()
         void LateInit();
 
+	UPROPERTY()
 	float timePassed = 0;
+
+	UPROPERTY()
 	bool hasLateInit = false;
 
     UPROPERTY(EditAnywhere)
@@ -76,16 +72,11 @@ public:
     ATile* GetNextTileInPath(ATile* tile);
 
     UFUNCTION()
-    ATile* GetTile(int32 i, int32 j);
     ATile* GetEndTile() const{return _endTile;}
 
     UPROPERTY()
     ATile* _endTile;
     
-    UPROPERTY(BlueprintReadWrite, EditAnywhere)
-    bool _useEditorTick;
-
-
     UPROPERTY()
     TArray<FTileArray> _gridTiles;
     
@@ -106,8 +97,6 @@ protected:
 
     virtual void Tick(float DeltaTime) override;
 
-    virtual bool ShouldTickIfViewportsOnly() const override;
-
 public:
     UPROPERTY(EditAnywhere, Category = "Grid Generation")
     int32 _rows;
@@ -118,14 +107,14 @@ public:
     UPROPERTY(EditAnywhere, Category = "Grid Generation")
     double _tileWidth;
 
-    UFUNCTION(CallInEditor, Category = "Events")
-    void BlueprintEditorTick(float DeltaTime);
-
 	UFUNCTION()
     void GameOver() const;
 
 	UFUNCTION()
 	void OnWin() const;
+
+	UFUNCTION()
+	ATile* GetTile(int32 i, int32 j);
 
 	FOnClickDelegate OnClickD;
     FUIMilouClick OnMilouBoneClick;

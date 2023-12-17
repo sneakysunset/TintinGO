@@ -91,11 +91,70 @@ void AGridManager::InitializeGrid()
 
 void AGridManager::UpdateLinks()
 {
-	//UE_LOG(LogTemp, Warning, TEXT("grid tiles size %d"), tile.Tiles.Num());
-	TArray<AActor*> tiles;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATile::StaticClass(), tiles);
-	for(const auto tile : tiles)
+	TArray<AActor*> ActorsToFind;
+	TArray<ATile*> tiles;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATile::StaticClass(), ActorsToFind);
+	_gridTiles.Empty();
+	_rows = 0;
+	_columns = 0;
+	for (int i = 0; i < ActorsToFind.Num(); i++)
 	{
-		Cast<ATile>(tile)->RefreshLinks();
+		ATile* tile = Cast<ATile>(ActorsToFind[i]);
+		if(tile->_row > _rows) _rows = tile->_row;
+		if(tile->_column > _columns) _columns = tile->_column;
+		tiles.Add(tile);
 	}
+	_rows++;
+	_columns++;
+	for(int i = 0; i < _rows; i++)
+	{
+		_gridTiles.Add(FTileArray());
+		for(int j = 0; j < _columns; j++)
+		{
+			_gridTiles[i].Tiles.Add(nullptr);
+		}
+	}
+	
+	//UE_LOG(LogTemp, Error, TEXT("TEST %d %d" ), _gridTiles.Num(), _gridTiles[0].Tiles.Num());
+	
+	for(int i = 0; i < tiles.Num(); i++)
+	{
+		_gridTiles[tiles[i]->_row].Tiles[tiles[i]->_column] = tiles[i];
+		//UE_LOG(LogTemp, Error, TEXT("TEST %d %d" ),tiles[i]->_row, tiles[i]->_column);
+	}
+	//UE_LOG(LogTemp, Error, TEXT("TEST %d %d" ), _gridTiles.Num(), _gridTiles[0].Tiles.Num());
+	/*for(auto tileRow : _gridTiles)
+	{
+		for(auto tile : tileRow.Tiles)
+		{
+			tile->RefreshLinks();
+			//UE_LOG(LogTemp, Error, TEXT("TEST %d %d %d %d" ), _rows, _columns, tile->_row, tile->_column);
+		}
+	}*/
+	for(int i = 0; i < _gridTiles.Num(); i++)
+	{
+		for(int j = 0; j < _gridTiles[i].Tiles.Num(); j++)
+		{
+			//UE_LOG(LogTemp, Error, TEXT("TEST %d %d" ), _gridTiles[i].Tiles[j]->_row,_gridTiles[i].Tiles[j]-> _column);
+			_gridTiles[i].Tiles[j]->_gridManager = this;
+			_gridTiles[i].Tiles[j]->RefreshLinks();
+		}
+	}
+
+	_gridTiles.Empty(true);
+}
+
+ATile* AGridManager::GetTile(int32 i, int32 j)
+{
+	if (i >= 0 && i < _gridTiles.Num() && j >= 0 && j < _gridTiles[i].Tiles.Num())
+	{
+		if(!IsValid(_gridTiles[i].Tiles[j]))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("ERROR TILE : %d %d"), i, j );
+			return nullptr;
+		}
+		return _gridTiles[i].Tiles[j];
+	}
+
+	return nullptr;
 }

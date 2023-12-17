@@ -14,8 +14,24 @@ class TINTINGO_API ATileActor_Character_Condor : public ATileActor_Character
 {
 	GENERATED_BODY()
 	
-	ATileActor_Character_Condor();
+
 public:
+	ATileActor_Character_Condor();
+	
+	virtual void SetUpRotation(EAngle newAngle) override;
+
+	UFUNCTION()
+	FRotator GetTargetRotation(EAngle newAngle);
+
+	UPROPERTY(EditAnywhere)
+	float _rotateSpeed;
+
+	UPROPERTY()
+	FQuat _startRotation;
+
+	UPROPERTY()
+	FQuat _endRotation;
+	
 	UPROPERTY(EditAnywhere)
 	int32 currentNestNb;
 
@@ -27,5 +43,14 @@ public:
 
 
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
-	USoundBase* _sound_CondorOnAttack;
+	USoundBase* S_CondorAttack;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_CondorPickUpEnnemy;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_CondorPickUpMilou;
+	
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_CondorPickUpTintin;
 };

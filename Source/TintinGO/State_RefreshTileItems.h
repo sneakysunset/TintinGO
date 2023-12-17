@@ -4,29 +4,24 @@
 
 #include "CoreMinimal.h"
 #include "State.h"
-#include "GridManager.h"
-#include "State_CondorGoToNextNest.generated.h"
+#include "State_RefreshTileItems.generated.h"
 
+class ATileActor_Character_Tintin;
 /**
  * 
  */
 UCLASS()
-class TINTINGO_API UState_CondorGoToNextNest : public UState
+class TINTINGO_API UState_RefreshTileItems : public UState
 {
 	GENERATED_BODY()
 
-public:
 	virtual void OnStateEnter() override;
-	virtual void OnStateTick(float DeltaTime) override;
-	virtual void OnStateExit() override;
 
-private:
+	virtual void OnStateTick(float DeltaTime) override;
+
 	UPROPERTY()
 	UBarrier* _barrier;
 
 	UPROPERTY()
-	float rotateInterpolationValue;
-	
-	UPROPERTY()
-	bool hasBarrierCompleted = false;
+	ATileActor_Character_Tintin* _tintin;
 };

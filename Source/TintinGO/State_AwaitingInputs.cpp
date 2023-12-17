@@ -7,6 +7,7 @@
 #include "State_MilouMove.h"
 #include "State_PlayerMove.h"
 #include "State_PlayerRotate.h"
+#include "TileActor_Character_Condor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/GameFramework/PlayerController.h"
 
@@ -28,9 +29,9 @@ void UState_AwaitingInputs::OnStateEnter()
 		pc = _gameManager->pc;
 	}
 
-	if (IsValid(gridManager))
+	if (IsValid(_gameManager))
 	{
-		for(auto condor : gridManager->_condors)
+		for(auto condor : _gameManager->_condors)
 		{
 			if(condor->isWaitLastRound)
 			{
@@ -38,28 +39,28 @@ void UState_AwaitingInputs::OnStateEnter()
 
 				switch (currentTile->_nestDirection)
 				{
-				case ENestDirection::Left :
+				case EAngle::Left :
 					for (int i = currentTile->_column - 1; i >= 0; --i)
 					{
-						gridManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(1);
+						_gameManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(1);
 					}
 					break;
-				case ENestDirection::Right :
-					for (int i = currentTile->_column + 1; i < gridManager->_gridTiles[0].Tiles.Num(); ++i)
+				case EAngle::Right :
+					for (int i = currentTile->_column + 1; i < _gameManager->_gridTiles[0].Tiles.Num(); ++i)
 					{
-						gridManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(1);
+						_gameManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(1);
 					}
 					break;
-				case ENestDirection::Top :
-					for (int i = currentTile->_row + 1; i > gridManager->_gridTiles.Num(); ++i)
+				case EAngle::Up :
+					for (int i = currentTile->_row + 1; i > _gameManager->_gridTiles.Num(); ++i)
 					{
-						gridManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(1);
+						_gameManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(1);
 					}
 					break;
-				case ENestDirection::Down :
+				case EAngle::Down :
 					for (int i = currentTile->_row - 1; i >= 0; --i)
 					{
-						gridManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(1);
+						_gameManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(1);
 					}
 					break;
 				default:

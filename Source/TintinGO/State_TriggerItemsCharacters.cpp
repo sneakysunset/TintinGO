@@ -4,6 +4,7 @@
 #include "State_AwaitingInputs.h"
 #include "State_CheckWinConditions.h"
 #include "State_PeruviensMove.h"
+#include "State_RefreshTileItems.h"
 
 
 void UState_TriggerItemsCharacters::OnStateEnter()
@@ -48,7 +49,7 @@ void UState_TriggerItemsCharacters::OnStateTick(float DeltaTime)
 
 	if(_tileActors.Num() == 0)
 	{
-		_gameManager->StateChange(NewObject<UState_PeruviensMove>(UState_PeruviensMove::StaticClass()));
+		_gameManager->StateChange(NewObject<UState_RefreshTileItems>(UState_RefreshTileItems::StaticClass()));
 	}
 }
 

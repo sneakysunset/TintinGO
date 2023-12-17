@@ -23,9 +23,9 @@ public:
 
 	
 private:
+	UPROPERTY()
 	UBarrier* _barrier;
 
+	UPROPERTY()
 	ATileActor_Character_Milou* _milou;
-
-	ATileActor_MilouBone* _milouBone;
 };

@@ -5,6 +5,7 @@
 #include "MainGameMode.h"
 #include "State_AwaitingInputs.h"
 #include "State_MilouRotate.h"
+#include "State_RefreshMilouItems.h"
 #include "State_TA_Move.h"
 #include "TileActor_Character_Peruvien.h"
 #include "Kismet/GameplayStatics.h"
@@ -95,7 +96,13 @@ void UState_MilouMove::OnStateTick(float DeltaTime)
 				
 			}
 			_milou->GetCurrentTile()->SetHighlighted(false);
-			_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
+			if (_milou->GetCurrentTile() == _milou->_milouBoneToDrop->GetCurrentTile())
+			{
+				_milou->_milouBoneToDrop->OnDestroyBone();
+				_gameManager->StateChange(NewObject<UState_RefreshMilouItems>(UState_RefreshMilouItems::StaticClass()));
+			}
+			else
+				_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 		}
 	}
 	_barrier->OnTick(DeltaTime);
@@ -103,10 +110,7 @@ void UState_MilouMove::OnStateTick(float DeltaTime)
 
 void UState_MilouMove::OnStateExit()
 {
-	if (_milou->GetCurrentTile()->milouBoneToDrop)
-	{
-		_milou->GetCurrentTile()->milouBoneToDrop->OnDestroyBone();
-	}
+
 	
 	UState::OnStateExit();
 }

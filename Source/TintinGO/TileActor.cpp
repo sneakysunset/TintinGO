@@ -9,8 +9,8 @@
 
 void ATileActor::OnEndTask()
 {
-	if(_currentTile->_tileActors.Contains(this))
-		_currentTile->_tileActors.Remove(this);
+	/*if(_currentTile->_tileActors.Contains(this))
+		_currentTile->_tileActors.Remove(this);*/
 	
 	//Destroy();
 }

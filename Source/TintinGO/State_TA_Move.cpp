@@ -9,12 +9,10 @@ void UState_TA_Move::OnStateEnter()
 	if(_actorSpeed != 0)
 	{
 		_speed = _actorSpeed;
-		UE_LOG(LogTemp, Warning, TEXT("YO %f"), _speed);
 	}
 	_startPosition = _tileActor->GetActorLocation();
 	if(!IsValid(_tileActor))
 	{
-		UE_LOG(LogTemp, Error, TEXT("Not Valid Actor for move"));
 		return;
 	}
 	ATile* tile = _tileActor->GetCurrentTile();

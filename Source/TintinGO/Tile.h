@@ -26,15 +26,6 @@ enum class ETileType : uint8
 };
 
 UENUM(BlueprintType)
-enum class ENestDirection : uint8
-{
-	Left UMETA(DisplayName = "Left"),
-	Right UMETA(DisplayName = "Right"),
-	Top UMETA(DisplayName = "Top"),
-	Down UMETA(DisplayName = "Down")
-};
-
-UENUM(BlueprintType)
 enum class ETileActorType : uint8
 {
 	Bone UMETA(DisplayName = "Milou's Bone"),
@@ -70,7 +61,7 @@ public:
 	ETileType _tileType {ETileType::Neutral};
 
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
-	ENestDirection _nestDirection = ENestDirection::Left;
+	EAngle _nestDirection = EAngle::Left;
 	
 	UPROPERTY(EditAnywhere, Category = "Tile Parameters")
 	bool _walkable = true;
@@ -96,14 +87,14 @@ public:
 	UPROPERTY()
 	TArray<ATileActor*> _tileActors;
 
+	UPROPERTY()
+	AGridManager* _gridManager;
+	
 	UFUNCTION(CallInEditor , Category = "Spawn TileActors")
 	void AddTileActors();
 	
 	UFUNCTION()
 	void SpawnMilouBone();
-
-	UPROPERTY()
-	ATileActor_MilouBone* milouBoneToDrop;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 	bool _useEditorTick = true;
@@ -174,6 +165,7 @@ public:
 	void RefreshLinks();
 
 private:
+	UPROPERTY()
 	class UStaticMeshComponent* _staticMeshComponent = nullptr;
 
 	UPROPERTY()

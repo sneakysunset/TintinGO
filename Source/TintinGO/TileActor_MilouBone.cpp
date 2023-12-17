@@ -20,11 +20,15 @@ void ATileActor_MilouBone::OnEndTask()
 		_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
 	Super::OnEndTask();
 	UGameplayStatics::SpawnSoundAtLocation(this, S_BoneTrigger, GetActorLocation());
+	if(_currentTile->_tileActors.Contains(this))
+		_currentTile->_tileActors.Remove(this);
 	Destroy();
 }
 
 void ATileActor_MilouBone::OnDestroyBone()
 {
-	Super::OnEndTask();
+	if(_currentTile->_tileActors.Contains(this))
+		_currentTile->_tileActors.Remove(this);
+	Destroy();
 }
 

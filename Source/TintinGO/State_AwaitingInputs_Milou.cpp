@@ -5,13 +5,14 @@
 #include "MainGameMode.h"
 #include "State_DropMilouBoneAnimation.h"
 #include "State_MilouRotate.h"
+#include "Tile.h"
 #include "Kismet/GameplayStatics.h"
 
 void UState_AwaitingInputs_Milou::OnStateEnter()
 {
 	Super::OnStateEnter();
 	_milou->GetCurrentTile()->SpawnMilouBone();
-	gridManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
+	_gameManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
 	_tintin = ATileActor_Character_Tintin::GetInstance();
 	UGameplayStatics::SpawnSoundAtLocation(pc, _gameManager->S_buttonClick, pc->PlayerCameraManager->GetCameraLocation());
 	for (int i = 0; i < _gameManager->_gridTiles.Num(); i++)
@@ -89,6 +90,7 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 void UState_AwaitingInputs_Milou::ReceiveMiloClickDelegate()
 {
 	UGameplayStatics::SpawnSoundAtLocation(pc, _gameManager->S_buttonClick, pc->PlayerCameraManager->GetCameraLocation());
+	_milou->_milouBoneToDrop->OnDestroyBone();
 	_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 }
 

@@ -17,6 +17,12 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "AudioFile")
 	USoundBase* S_BoneTrigger;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AudioFile")
+	USoundBase* S_BoneLand;
+
+	UPROPERTY(EditDefaultsOnly, Category = "AudioFile")
+	USoundBase* S_BoneThrow;
 	
 	UFUNCTION()
 	void OnDestroyBone();
