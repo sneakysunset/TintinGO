@@ -7,6 +7,7 @@
 #include "Barrier.h"
 #include "CoreUI.h"
 #include "State_AwaitingInputs.h"
+#include "Curves/CurveFloat.h"
 #include "State_TA_Move.h"
 #include "Tile.h"
 #include "TileActor_Clue.h"
@@ -14,6 +15,8 @@
 #include "Engine/World.h"
 #include "Kismet/GameplayStatics.h"
 #include "State.h"
+#include "State_LevelEnd.h"
+#include "State_Start.h"
 
 AMainGameMode::AMainGameMode()
 {
@@ -33,15 +36,6 @@ AMainGameMode::~AMainGameMode()
 void AMainGameMode::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if(!hasLateInit)
-	{
-		timePassed += DeltaTime;
-		if(timePassed > .3f)
-		{
-			LateInit();
-			hasLateInit = true;
-		}
-	}
 	
 	if(IsValid(this) && IsValid(_currentStateType) && _currentStateType != nullptr)
 	{
@@ -78,6 +72,13 @@ void AMainGameMode::BeginPlay()
 	for(auto tile : tiles)
 	{
 		_gridTiles[tile->_row].Tiles[tile->_column] = tile;
+		for(auto item : tile->_TileItems)
+		{
+			if(item.actorType == ETileActorType::Clue)
+			{
+				_clueNumber++;
+			}
+		}
 	}
 
 	if (IsValid(YourWidgetClass))
@@ -89,16 +90,22 @@ void AMainGameMode::BeginPlay()
 			_coreUI->AddToViewport();
 		}
 	}
-	ChangeTextValue(0, FColor::Emerald);
+	_currentStateType = NewObject<UState_Start>(UState_Start::StaticClass());
+	_currentStateType->_gameManager = this;
+	UState_Start* state = Cast<UState_Start>(_currentStateType);
+	state->_widget = _coreUI;
+	state->_speed = _fadeOutScreenSpeed;
+	state->_curve = _fadeOutCurve;
+	
+	_currentStateType->OnStateEnter();
 	OnBoneConsumed.BindDynamic(this, &AMainGameMode::ChangeTextValue);
+	ChangeTextValue(0, FColor::Emerald);
 }
 
 void AMainGameMode::LateInit()
 {
 	pc = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	_currentStateType = NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass());
 	_currentStateType->_gameManager = this;
-	_currentStateType->OnStateEnter();
 }
 
 void AMainGameMode::ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile)
@@ -109,11 +116,11 @@ void AMainGameMode::ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* cu
 		for(auto body : previousTile->_tileActors)
 		{
 			if(body == nullptr) continue;
-			UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
+			//UState_TActor* state = NewObject<UState_TA_Move>(UState_TA_Move::StaticClass());
 			
 			if(!barrier->_actors.Contains(body))
 			{
-				body->ChangeState(state);
+				//body->ChangeState(state);
 				barrier->_actors.Add(body);
 			}
 		}
@@ -239,6 +246,8 @@ void AMainGameMode::ReceiveMilouUIClick()
 	}
 }
 
+
+
 void AMainGameMode::ChangeTextValue(int32 newValue, FColor DisabledColor)
 {
 	FText MyText = FText::Format(FText::FromString(TEXT("X {0}")), FText::AsNumber(newValue));
@@ -264,21 +273,44 @@ void AMainGameMode::StateChange(UState* newState)
 	_currentStateType->OnStateEnter();
 }
 
-void AMainGameMode::GameOver() const
+void AMainGameMode::StartGameOver()
 {
-	UGameplayStatics::OpenLevel(GetWorld(), *UGameplayStatics::GetCurrentLevelName(GetWorld()), true);
+	_currentStateType = NewObject<UState_LevelEnd>(UState_LevelEnd::StaticClass());
+	_currentStateType->_gameManager = this;
+	UState_LevelEnd* state = Cast<UState_LevelEnd>(_currentStateType);
+	state->_widget = _coreUI;
+	state->_speed = _fadeInScreenSpeed;
+	state->_curve = _fadeInCurve;
+	UGameplayStatics::SpawnSoundAtLocation(ATileActor_Character_Tintin::GetInstance(), S_GameOver, ATileActor_Character_Tintin::GetInstance()->GetActorLocation());
+	_nextLevelName = *UGameplayStatics::GetCurrentLevelName(GetWorld());
+	
+	_currentStateType->OnStateEnter();
 }
 
-void AMainGameMode::OnWin() const
+void AMainGameMode::OnWin()
 {
+	_currentStateType = NewObject<UState_LevelEnd>(UState_LevelEnd::StaticClass());
+	_currentStateType->_gameManager = this;
+	UState_LevelEnd* state = Cast<UState_LevelEnd>(_currentStateType);
+	state->_widget = _coreUI;
+	state->_speed = _fadeInScreenSpeed;
+	state->_curve = _fadeInCurve;
+	
 	if(UGameplayStatics::GetCurrentLevelName(GetWorld()) == FString("Level_1"))
 	{
-		UGameplayStatics::OpenLevel(GetWorld(),  *FString("Level_2"), true);
+		 _nextLevelName =  *FString("Level_2");
 	}
 	else if(UGameplayStatics::GetCurrentLevelName(GetWorld()) == FString("Level_2"))
 	{
-		UGameplayStatics::OpenLevel(GetWorld(),  *FString("Level_3"), true);
+		_nextLevelName =  *FString("Level_3");
 	}
+	
+	_currentStateType->OnStateEnter();
+}
+
+void AMainGameMode::LevelTransi() const
+{
+	UGameplayStatics::OpenLevel(GetWorld(), *_nextLevelName, true);
 }
 
 ATile* AMainGameMode::GetTile(int32 i, int32 j)

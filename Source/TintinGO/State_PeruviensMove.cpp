@@ -25,7 +25,8 @@ void UState_PeruviensMove::OnStateEnter()
 	{
 		if(peruvien->GetCurrentTile() == ATileActor_Character_Tintin::GetInstance()->GetCurrentTile())
 		{
-			_gameManager->GameOver();
+			_gameManager->StartGameOver();
+			UGameplayStatics::SpawnSoundAtLocation(peruvien, peruvien->S_PeruvienDetectTintin, peruvien->GetActorLocation());
 			//Cast<UGlobalGameManager>(UGameplayStatics::GetGameInstance(GetWorld()))->OnGameOver();
 			return;
 		}
@@ -55,7 +56,10 @@ void UState_PeruviensMove::OnStateEnter()
 		Cast<UState_TA_Move>(peruvien->_currentState_TA)->_speed = peruvien->_speed;
 		Cast<UState_TA_Move>(peruvien->_currentState_TA)->_speed = peruvien->_speed;
 		const int32 randomAudioFileIndex = FMath::RandRange(0, _gameManager->S_MoveSoundsArray.Num() - 1);
-		
+		if(peruvien->GetCurrentTile() == ATileActor_Character_Tintin::GetInstance()->GetCurrentTile())
+		{
+			UGameplayStatics::SpawnSoundAtLocation(peruvien, peruvien->S_PeruvienDetectTintin, peruvien->GetActorLocation());
+		}
 		UGameplayStatics::SpawnSoundAtLocation(peruvien, _gameManager->S_MoveSoundsArray[randomAudioFileIndex], peruvien->GetActorLocation());
 		
 	}
@@ -72,7 +76,7 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 		{
 			if(peruvien->GetCurrentTile() == tintin->GetCurrentTile())
 			{
-				_gameManager->GameOver();
+				_gameManager->StartGameOver();
 				//Cast<UGlobalGameManager>(UGameplayStatics::GetGameInstance(GetWorld()))->OnGameOver();
 				return;
 			}

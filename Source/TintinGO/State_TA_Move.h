@@ -3,6 +3,8 @@
 #include "State_TActor.h"
 #include "State_TA_Move.generated.h"
 
+class ATileActor_Character_Peruvien;
+
 UCLASS()
 class UState_TA_Move : public UState_TActor
 {
@@ -18,4 +20,5 @@ public:
 private:
 	FVector _startPosition;
 	FVector _endPosition;
+	ATileActor_Character_Peruvien* _Peruvien;
 };

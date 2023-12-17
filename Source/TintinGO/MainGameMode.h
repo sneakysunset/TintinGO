@@ -1,8 +1,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
 #include "Barrier.h"
+#include "Curves/CurveFloat.h"
+#include "GameFramework/GameModeBase.h"
 #include "MainGameMode.generated.h"
 
 class ATileActor_Character_Peruvien;
@@ -37,12 +38,6 @@ public:
 
     UFUNCTION()
         void LateInit();
-
-	UPROPERTY()
-	float timePassed = 0;
-
-	UPROPERTY()
-	bool hasLateInit = false;
 
     UPROPERTY(EditAnywhere)
     UBlueprint* _tileBP;
@@ -108,10 +103,10 @@ public:
     double _tileWidth;
 
 	UFUNCTION()
-    void GameOver() const;
+    void LevelTransi() const;
 
 	UFUNCTION()
-	void OnWin() const;
+	void OnWin();
 
 	UFUNCTION()
 	ATile* GetTile(int32 i, int32 j);
@@ -144,8 +139,24 @@ public:
     UPROPERTY(EditAnywhere)
     float _rotateSpeed;
 
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	float _fadeOutScreenSpeed;
 
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	float _fadeInScreenSpeed;
 
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	UCurveFloat* _fadeOutCurve;
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	UCurveFloat* _fadeInCurve;
+	
+	UFUNCTION()
+	void StartGameOver();
+
+	UPROPERTY()
+	FString _nextLevelName;
+	
 	UPROPERTY(EditAnywhere, Category = "UI")
 	TSubclassOf<UCoreUI> YourWidgetClass;
 
@@ -157,6 +168,9 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
 	TArray<USoundBase*> S_MoveSoundsArray;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_GameOver;
 	
 	UFUNCTION()
 	void ChangeTextValue(int32 newValue, FColor DisabledColor);

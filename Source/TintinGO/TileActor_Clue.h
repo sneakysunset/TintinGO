@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Barrier.h"
 #include "TileActor.h"
 #include "TileActor_Clue.generated.h"
 
@@ -20,8 +21,11 @@ public:
 	UFUNCTION()
 	virtual void OnEndTask() override;
 
-	virtual void Tick(float DeltaSeconds) override;
+	UFUNCTION()
+	virtual void TriggerBody() override;
 	
+	virtual void Tick(float DeltaSeconds) override;
+
 	UFUNCTION()
 	void Init();
 
@@ -31,6 +35,9 @@ public:
 	UPROPERTY()
 	bool hasInit;
 
+	UPROPERTY()
+	UBarrier* _barrier;
+	
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
 	USoundBase* S_CluePickUp;
 

@@ -26,6 +26,7 @@ void UState_PeruviensRotate::OnStateEnter()
 			peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 			peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingTintin;
 			peruvien->SetWidgetVisible(true);
+			peruvien->AddSplinePoint();
 		}
 		else if(peruvien->_currentPBehaviour == EPeruvienBehaviour::FollowingTintin)
 		{

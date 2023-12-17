@@ -53,9 +53,10 @@ void UState_PlayerMove::OnStateTick(float DeltaTime)
 	UState::OnStateTick(DeltaTime);
 	if(_barrier->_isBarriereCompleted)
 	{
-		if(_tintin->GetCurrentTile()->_tileType == ETileType::EndingPosition && _gameManager->_clueNumber == 0)
+		if(_tintin->GetCurrentTile()->_tileType == ETileType::EndingPosition && _gameManager->_clueNumber == 0 && _milou->isBoundToTintin)
 		{
 			_gameManager->OnWin();
+			return;
 		}
 
 		if(!_milou->isBoundToTintin && _tintin->GetCurrentTile() == _milou->GetCurrentTile())

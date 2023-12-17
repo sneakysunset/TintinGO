@@ -2,6 +2,7 @@
 
 #include "Tile.h"
 #include "TileActor.h"
+#include "TileActor_Character_Peruvien.h"
 
 void UState_TA_Move::OnStateEnter()
 {
@@ -22,12 +23,20 @@ void UState_TA_Move::OnStateEnter()
 		return;
 	}
 	_endPosition = tile->GetTileActorPosition(_tileActor);
+
+	_Peruvien = nullptr;
+	if(_tileActor->IsA<ATileActor_Character_Peruvien>())
+	{
+		_Peruvien = Cast<ATileActor_Character_Peruvien>(_tileActor);
+	}
 }
 
 
 void UState_TA_Move::OnStateTick(float DeltaTime)
 {
 	_tileActor->SetActorLocation(_startPosition + (_endPosition - _startPosition) * _interpolateValue);
+	if(_Peruvien != nullptr)
+	_Peruvien->AddSplinePoint();
 	UState_TActor::OnStateTick(DeltaTime);
 }
 

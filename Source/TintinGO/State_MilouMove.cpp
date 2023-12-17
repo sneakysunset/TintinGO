@@ -58,7 +58,8 @@ void UState_MilouMove::OnStateTick(float DeltaTime)
 					peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 					peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingMilou;
 					peruvien->SetWidgetVisible(true);
-					peruvien->SetSplinePoints();
+					peruvien->AddSplinePoint();
+					UE_LOG(LogTemp, Warning, TEXT("Create spline points"));
 				}
 			}
 			_gameManager->StateChange(NewObject<UState_MilouRotate>(UState_MilouRotate::StaticClass()));			
@@ -77,6 +78,8 @@ void UState_MilouMove::OnStateTick(float DeltaTime)
 						peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 						peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingMilou;
 						peruvien->SetWidgetVisible(true);
+						peruvien->AddSplinePoint();
+						UE_LOG(LogTemp, Warning, TEXT("Create spline points"));
 					}
 					else if(peruvien->GetCurrentTile() != _milou->GetCurrentTile())
 					{
@@ -85,6 +88,8 @@ void UState_MilouMove::OnStateTick(float DeltaTime)
 						peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 						peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingMilou;
 						peruvien->SetWidgetVisible(true);
+						peruvien->AddSplinePoint();
+						UE_LOG(LogTemp, Warning, TEXT("Create spline points"));
 					}
 					else if(peruvien->_currentPBehaviour == EPeruvienBehaviour::FollowingMilou)
 					{

@@ -8,6 +8,8 @@
 #include "Engine/SplineMeshActor.h"
 #include "TileActor_Character_Peruvien.generated.h"
 
+class ASplineActor;
+
 UENUM(BlueprintType)
 enum class EPeruvienBehaviour : uint8
 {
@@ -56,9 +58,6 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	UBlueprint* splineBP;
-	
-	UPROPERTY()
-	USplineComponent* splineComponent;
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* widgetParent;
@@ -68,7 +67,23 @@ public:
 
 	UFUNCTION()
 	void SetSplinePoints();
+	void UpdateSplinePoint();
 
+	UFUNCTION()
+	void AddSplinePoint();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Components")
+	UStaticMesh* splineMesh;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Components")
+	UMaterialInterface* splineMaterial;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USplineComponent* PathSpline;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TArray<USplineMeshComponent*> SplineMeshComponents;
+	
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
 	USoundBase* S_detect;
 
@@ -77,6 +92,14 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
 	USoundBase* S_ReachMilou;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_PeruvienDetectTintin;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Components")
+	TSubclassOf<ASplineActor> _splineActor;
+
+	
 protected:
 	virtual void BeginPlay() override;
 

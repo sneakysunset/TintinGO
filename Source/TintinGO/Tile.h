@@ -206,6 +206,7 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ATileActor_Character_Peruvien> _peruvienBP;
 
+public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ATileActor_Clue> _clueBP;
 	

@@ -294,9 +294,9 @@ void ATile::AddTileActors()
 #endif
 			break;
 		case ETileActorType::Clue:
+			if(_TileItems[i].clueIndex != _gameManager->_clueNumber) continue;
 			tActor = GetWorld()->SpawnActor<ATileActor_Clue>(_clueBP, position, rotation, params);
 			clueCasted = Cast<ATileActor_Clue>(tActor);
-			_gameManager->_clueNumber++;
 			clueCasted->clueNumber = _TileItems[i].clueIndex;
 			clueCasted->SetActorHiddenInGame(true);
 			UE_LOG(LogTemp, Error, TEXT("Clue Init"));
@@ -341,6 +341,7 @@ void ATile::SpawnMilouBone()
 	const FVector position = GetActorLocation() + FVector(0, 2, 0);
 	const FRotator rotation = FRotator(0, 0, 0);
 	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP, position, rotation, params);
+	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop->SetCurrentTile(this);
 }
 
 UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat, int backgroundAlpha) const

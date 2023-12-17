@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
+#include "Components/Image.h"
 #include "CoreUI.generated.h"
 
 class UButton;
@@ -23,4 +24,6 @@ public:
 	TObjectPtr<UCanvasPanel> Canvas;
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	TObjectPtr<UTextBlock> BoneNumber_Text;
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	TObjectPtr<UImage> FadeScreen;
 };

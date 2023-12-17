@@ -1,5 +1,6 @@
 #include "TileActor_Character_Peruvien.h"
 
+#include "SplineActor.h"
 #include "Tile.h"
 #include "Components/SplineMeshComponent.h"
 #include "Components/WidgetComponent.h"
@@ -10,8 +11,6 @@ ATileActor_Character_Peruvien::ATileActor_Character_Peruvien(): _startingTile(nu
                                                                 _currentPBehaviour()
 {
 	PrimaryActorTick.bCanEverTick = true;
-	//splineComponent = CreateDefaultSubobject<USplineComponent>(TEXT("SplineComponent"));
-	//splineComponent->SetClosedLoop(false);
 }
 
 void ATileActor_Character_Peruvien::SetUpRotation(EAngle newAngle)
@@ -70,6 +69,13 @@ bool ATileActor_Character_Peruvien::Detection(ATile* detectTile) const
 void ATileActor_Character_Peruvien::BeginPlay()
 {
 	Super::BeginPlay();
+	FActorSpawnParameters SpawnParams;
+	FVector Location = FVector(0.0f, 0.0f, 0.0f); // Example location
+	FRotator Rotation = FRotator(0.0f, 0.0f, 0.0f); // Example rotation
+
+	ASplineActor* actor = GetWorld()->SpawnActor<ASplineActor>(_splineActor, Location, Rotation, SpawnParams);
+	PathSpline = actor->MySplineComponent;
+	
 	_currentPBehaviour = EPeruvienBehaviour::Static;
 	PlayerController = GetWorld()->GetFirstPlayerController();
 	TInlineComponentArray<UWidgetComponent*> WidgetComponents;
@@ -86,10 +92,10 @@ void ATileActor_Character_Peruvien::BeginPlay()
 		}
 	}
 	
- 	if(splineComponents.Num() == 1)
+ 	/*if(splineComponents.Num() == 1)
 	{
 		splineComponent = splineComponents[0];
-	}
+	}*/
 	
 	GetComponents(WidgetComponents);
 	for (const UWidgetComponent* WidgetComponent : WidgetComponents)
@@ -109,25 +115,49 @@ void ATileActor_Character_Peruvien::BeginPlay()
 
 void ATileActor_Character_Peruvien::SetSplinePoints()
 {
-	/*FActorSpawnParameters params;
-	params.bNoFail = true;
-	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-	const FRotator rotation = FRotator(0, 0, 0);
-	for(int i = 0; i < PeruvienTilePath.Num(); i++)
+	// Create a spline mesh component for each segment of the spline
+	for (int32 i = 0; i < PathSpline->GetNumberOfSplinePoints() - 1; ++i)
 	{
-		const FVector position = PeruvienTilePath[i - 1]->GetActorLocation();
-		FVector nextPos = GetCurrentTile()->GetActorLocation();
-		if(i > 0) nextPos = PeruvienTilePath[i]->GetActorLocation() - PeruvienTilePath[i - 1]->GetActorLocation();
-		splineMeshs.Add(GetWorld()->SpawnActor<ASplineMeshActor>(splineBP->GeneratedClass, position, rotation, params));
-		splineMeshs.Last()->GetSplineMeshComponent()->SetStartAndEnd
-		(position +  FVector::UpVector * 100,
-		FVector::ZeroVector,
-		nextPos + FVector::UpVector * 100,
-		FVector::ZeroVector,
-		true);
-	}*/
-	//splineComponent->SetSplinePoints(splinePoints, ESplineCoordinateSpace::World,true);
+		USplineMeshComponent* SplineMeshComponent = NewObject<USplineMeshComponent>(this);
+		SplineMeshComponent->RegisterComponent();
+		SplineMeshComponent->SetMobility(EComponentMobility::Movable);
+		SplineMeshComponent->AttachToComponent(PathSpline, FAttachmentTransformRules::KeepRelativeTransform);
+		SplineMeshComponent->SetStaticMesh(splineMesh);
+		SplineMeshComponent->SetMaterial(0, splineMaterial);
+		SplineMeshComponent->SetStartScale(.03f * FVector2D::One());
+		SplineMeshComponent->SetEndScale(.03f * FVector2D::One());
+		// Set the spline points for this segment
+		FVector Start = PathSpline->GetLocationAtSplinePoint(i, ESplineCoordinateSpace::World);
+		FVector StartTangent = PathSpline->GetTangentAtSplinePoint(i, ESplineCoordinateSpace::World);
+		FVector End = PathSpline->GetLocationAtSplinePoint(i + 1, ESplineCoordinateSpace::World);
+		FVector EndTangent = PathSpline->GetTangentAtSplinePoint(i + 1, ESplineCoordinateSpace::World);
+
+		SplineMeshComponent->SetStartAndEnd(Start, StartTangent, End, EndTangent);
+		SplineMeshComponents.Add(SplineMeshComponent);
+		// Other settings for the spline mesh (material, etc.) can be configured here
+	}
+}
+
+void ATileActor_Character_Peruvien::UpdateSplinePoint()
+{
+	//PathSpline->SetLocationAtSplinePoint(0, );
+}
+
+void ATileActor_Character_Peruvien::AddSplinePoint()
+{
+	PathSpline->ClearSplinePoints();
+	for (auto meshComp : SplineMeshComponents)
+	{
+		meshComp->DestroyComponent();
+	}
+	SplineMeshComponents.Empty(true);
+	for (auto tile : PeruvienTilePath)
+	{
+		FVector location = FVector(tile->GetActorLocation() + FVector::UpVector * 40);
+		PathSpline->AddSplinePoint(location, ESplineCoordinateSpace::World, true);
+	}
+	PathSpline->AddSplinePoint( GetActorLocation() + FVector::UpVector * 40,ESplineCoordinateSpace::World, true);
+	SetSplinePoints();
 }
 
 void ATileActor_Character_Peruvien::Tick(float DeltaSeconds)

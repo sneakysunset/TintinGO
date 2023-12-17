@@ -10,6 +10,7 @@
 #include "TileActor_Character_Condor.h"
 #include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Peruvien.h"
+#include "TileActor_Character_Tintin.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -125,6 +126,25 @@ void UState_CondorDropCharacters::OnStateEnter()
 				if(Character->IsA<ATileActor_Character_Tintin>())
 				{
 					UGameplayStatics::SpawnSoundAtLocation(condor, condor->S_CondorPickUpTintin, condor->GetActorLocation());
+					for (auto peruvien : _gameManager->_peruviens)
+					{
+						ATile* tintinTile = ATileActor_Character_Tintin::GetInstance()->GetCurrentTile();
+						if(peruvien->GetCurrentTile() == tintinTile)
+						{
+							_gameManager->StartGameOver();
+							UGameplayStatics::SpawnSoundAtLocation(peruvien, peruvien->S_PeruvienDetectTintin, peruvien->GetActorLocation());
+							return;
+						}
+						if(peruvien->Detection(tintinTile))
+						{
+							_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
+							peruvien->PeruvienTilePath = _gameManager->GetPath(tintinTile, false);
+							peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
+							peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingTintin;
+							peruvien->SetWidgetVisible(true);
+							peruvien->AddSplinePoint();
+						}
+					}
 				}
 				else if(Character->IsA<ATileActor_Character_Milou>())
 				{
@@ -133,6 +153,23 @@ void UState_CondorDropCharacters::OnStateEnter()
 				else if(Character->IsA<ATileActor_Character_Peruvien>())
 				{
 					UGameplayStatics::SpawnSoundAtLocation(condor, condor->S_CondorPickUpEnnemy, condor->GetActorLocation());
+					ATileActor_Character_Peruvien* peruvien = Cast<ATileActor_Character_Peruvien>(Character);
+					ATile* tintinTile = ATileActor_Character_Tintin::GetInstance()->GetCurrentTile();
+					if(peruvien->GetCurrentTile() == tintinTile)
+					{
+						_gameManager->StartGameOver();
+						UGameplayStatics::SpawnSoundAtLocation(peruvien, peruvien->S_PeruvienDetectTintin, peruvien->GetActorLocation());
+						return;
+					}
+					if(peruvien->Detection(tintinTile))
+					{
+						_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
+						peruvien->PeruvienTilePath = _gameManager->GetPath(tintinTile, false);
+						peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
+						peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingTintin;
+						peruvien->SetWidgetVisible(true);
+						peruvien->AddSplinePoint();
+					}
 				}
 				
 				Cast<UState_TA_Move>(Character->_currentState_TA)->_actorSpeed = condor->_speed / distance;
