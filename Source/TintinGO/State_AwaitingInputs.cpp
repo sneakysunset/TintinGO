@@ -70,6 +70,7 @@ void UState_AwaitingInputs::OnStateEnter()
 		}
 	}
 
+	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("Awaiting Inputs State Enter"));
 }
 

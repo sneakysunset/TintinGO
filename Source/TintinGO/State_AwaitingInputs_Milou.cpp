@@ -14,6 +14,7 @@ void UState_AwaitingInputs_Milou::OnStateEnter()
 	_milou->GetCurrentTile()->SpawnMilouBone();
 	_gameManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
 	_tintin = ATileActor_Character_Tintin::GetInstance();
+	_tintin->SetTintinMesh(ETintinState::Throwing);
 	UGameplayStatics::SpawnSoundAtLocation(pc, _gameManager->S_buttonClick, pc->PlayerCameraManager->GetCameraLocation());
 	for (int i = 0; i < _gameManager->_gridTiles.Num(); i++)
 	{
@@ -91,6 +92,7 @@ void UState_AwaitingInputs_Milou::ReceiveMiloClickDelegate()
 {
 	UGameplayStatics::SpawnSoundAtLocation(pc, _gameManager->S_buttonClick, pc->PlayerCameraManager->GetCameraLocation());
 	_milou->_milouBoneToDrop->OnDestroyBone();
+	_tintin->SetTintinMesh(ETintinState::Running);
 	_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 }
 

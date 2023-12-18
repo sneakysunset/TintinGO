@@ -266,7 +266,6 @@ void AMainGameMode::ChangeTextValue(int32 newValue, FColor DisabledColor)
 {
 	FText MyText = FText::Format(FText::FromString(TEXT("X {0}")), FText::AsNumber(newValue));
 	_coreUI->BoneNumber_Text->SetText(MyText);
-	UE_LOG(LogTemp, Warning, TEXT("boneNumber %d"), newValue);
 	if(newValue == 0)
 	{
 		_coreUI->ButtonMilou->SetIsEnabled(false);
@@ -335,4 +334,17 @@ ATile* AMainGameMode::GetTile(int32 i, int32 j)
 	}
 
 	return nullptr;
+}
+
+ATile* AMainGameMode::GetForwardTile(const ATile* tile, EAngle angle)
+{
+	ATile* resultTile = nullptr;
+	switch(angle)
+	{
+		case EAngle::Up: resultTile = GetTile(tile->_row + 1, tile->_column); break;
+		case EAngle::Left: resultTile = GetTile(tile->_row, tile->_column -1); break;
+		case EAngle::Right: resultTile = GetTile(tile->_row, tile->_column + 1); break;
+		case EAngle::Down: resultTile = GetTile(tile->_row - 1, tile->_column); break;
+	}
+	return resultTile;
 }

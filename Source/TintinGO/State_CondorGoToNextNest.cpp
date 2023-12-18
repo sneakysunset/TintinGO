@@ -10,6 +10,7 @@
 void UState_CondorGoToNextNest::OnStateEnter()
 {
 	UState::OnStateEnter();
+	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("Condor Wait State Enter"));
 	for (const auto condor : _gameManager->_condors)
 	{

@@ -10,6 +10,9 @@
 void UState_RefreshMilouItems::OnStateEnter()
 {
 	Super::OnStateEnter();
+
+	if(_gameManager->DebugStateChange)
+		UE_LOG(LogTemp, Warning, TEXT("Refresh Milou Tile Items State Enter"));	
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 	_milou = ATileActor_Character_Milou::GetInstance();
 	

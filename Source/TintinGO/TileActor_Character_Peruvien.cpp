@@ -154,7 +154,7 @@ void ATileActor_Character_Peruvien::Tick(float DeltaSeconds)
 		Direction.Normalize();
 
 		FRotator LookAtRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
-		LookAtRotation.Yaw += 90.0f;
+		//LookAtRotation.Yaw += 90.0f;
 
 		exclamativeMark->SetWorldRotation(LookAtRotation);
 	}

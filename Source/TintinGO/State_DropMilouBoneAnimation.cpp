@@ -9,11 +9,13 @@
 #include "State_MilouRotate.h"
 #include "State_TA_Move.h"
 #include "TileActor.h"
+#include "TileActor_Character_Tintin.h"
 #include "Kismet/GameplayStatics.h"
 
 void UState_DropMilouBoneAnimation::OnStateEnter()
 {
 	UState::OnStateEnter();
+	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("Milou Bone Throw State Enter"));
 
 	_milou = ATileActor_Character_Milou::GetInstance();
@@ -46,4 +48,5 @@ void UState_DropMilouBoneAnimation::OnStateTick(float DeltaTime)
 void UState_DropMilouBoneAnimation::OnStateExit()
 {
 	UState::OnStateExit();
+	ATileActor_Character_Tintin::GetInstance()->SetTintinMesh(ETintinState::Running);
 }
