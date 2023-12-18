@@ -26,14 +26,8 @@ public:
 	
 	virtual void Tick(float DeltaSeconds) override;
 
-	UFUNCTION()
-	void Init();
-
-	UPROPERTY()
-	float initTimer;
-
-	UPROPERTY()
-	bool hasInit;
+	virtual void BeginPlay() override;
+	void ClueAnimation(float DeltaSeconds);
 
 	UPROPERTY()
 	UBarrier* _barrier;
@@ -43,4 +37,29 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
 	USoundBase* S_EndTileActivated;
+
+	UPROPERTY(EditDefaultsOnly)
+	float _heightToGoUp;
+
+	UPROPERTY(EditDefaultsOnly)
+	float _animationSpeed;
+
+	UPROPERTY(EditDefaultsOnly)
+	UCurveFloat* _animCurve;
+	
+	UPROPERTY()
+	float _startHeight;
+
+	UPROPERTY()
+	float _endHeight;
+	
+	UPROPERTY()
+	UStaticMeshComponent* MeshComponent;
+
+	UPROPERTY()
+	float _interpolateValue;
+
+	UPROPERTY()
+	bool ascending;
+
 };

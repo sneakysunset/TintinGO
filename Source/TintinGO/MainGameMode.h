@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Barrier.h"
+#include "TileActor_Character.h"
 #include "Curves/CurveFloat.h"
 #include "GameFramework/GameModeBase.h"
 #include "MainGameMode.generated.h"
@@ -110,6 +111,7 @@ public:
 
 	UFUNCTION()
 	ATile* GetTile(int32 i, int32 j);
+	ATile* GetForwardTile(const ATile* tile, EAngle angle);
 
 	FOnClickDelegate OnClickD;
     FUIMilouClick OnMilouBoneClick;
@@ -126,6 +128,9 @@ public:
 	
     UPROPERTY()
     int32 _milouBonesNumber;
+
+	UPROPERTY(EditDefaultsOnly)
+	bool DebugStateChange;
 	
     UFUNCTION(BlueprintCallable)
     void ReceiveMilouUIClick();

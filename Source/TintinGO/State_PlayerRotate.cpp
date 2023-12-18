@@ -11,8 +11,8 @@
 void UState_PlayerRotate::OnStateEnter()
 {
 	Super::OnStateEnter();
-
-	UE_LOG(LogTemp, Warning, TEXT("State Enter Player Rotate"));
+	if(_gameManager->DebugStateChange)
+	UE_LOG(LogTemp, Warning, TEXT("Player Rotate State Enter"));
 	_tintin = ATileActor_Character_Tintin::GetInstance();
 	_milou = ATileActor_Character_Milou::GetInstance();
 	const ATile* tile = _tintin->GetCurrentTile();

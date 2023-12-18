@@ -17,7 +17,8 @@
 void UState_CondorAttack::OnStateEnter()
 {
 	UState::OnStateEnter();
-
+	if(_gameManager->DebugStateChange)
+		UE_LOG(LogTemp, Warning, TEXT("Condor Attack State Enter"));
 
 
 	for(const auto condor : _gameManager->_condors)

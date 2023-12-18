@@ -12,11 +12,12 @@
 void UState_PlayerMove::OnStateEnter()
 {
 	UState::OnStateEnter();
+	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("Player Move State Enter"));
 	
 	_tintin = ATileActor_Character_Tintin::GetInstance();
 	_milou = ATileActor_Character_Milou::GetInstance();
-	
+
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 	
 	ATile* previousTintinTile =_tintin->GetCurrentTile();
@@ -62,6 +63,8 @@ void UState_PlayerMove::OnStateTick(float DeltaTime)
 		if(!_milou->isBoundToTintin && _tintin->GetCurrentTile() == _milou->GetCurrentTile())
 		{
 			_milou->isBoundToTintin = true;
+			_milou->SetMilouMesh(EMilouState::Standing);
+
 			const int32 randomAudioFileIndex = FMath::RandRange(0, _tintin->S_pickUpMilou.Num() - 1);
 		
 			UGameplayStatics::SpawnSoundAtLocation(_tintin, _tintin->S_pickUpMilou[randomAudioFileIndex], _tintin->GetActorLocation());

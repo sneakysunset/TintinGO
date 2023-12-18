@@ -13,6 +13,10 @@
 void UState_RefreshTileItems::OnStateEnter()
 {
 	Super::OnStateEnter();
+
+	if(_gameManager->DebugStateChange)
+		UE_LOG(LogTemp, Warning, TEXT("Refresh Tintin Tile Items State Enter"));
+	
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 	_tintin = ATileActor_Character_Tintin::GetInstance();
 	

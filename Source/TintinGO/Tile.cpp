@@ -298,8 +298,7 @@ void ATile::AddTileActors()
 			tActor = GetWorld()->SpawnActor<ATileActor_Clue>(_clueBP, position, rotation, params);
 			clueCasted = Cast<ATileActor_Clue>(tActor);
 			clueCasted->clueNumber = _TileItems[i].clueIndex;
-			clueCasted->SetActorHiddenInGame(true);
-			UE_LOG(LogTemp, Error, TEXT("Clue Init"));
+			//clueCasted->SetActorHiddenInGame(true);
 			break;
 		case ETileActorType::Peruvien:
 			tActor = GetWorld()->SpawnActor<ATileActor_Character_Peruvien>(_peruvienBP, position, rotation, params);

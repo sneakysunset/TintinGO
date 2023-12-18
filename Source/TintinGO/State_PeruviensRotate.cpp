@@ -14,11 +14,14 @@
 void UState_PeruviensRotate::OnStateEnter()
 {
 	Super::OnStateEnter();
+	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("State Enter Peruvien Rotate"));
+	
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 	ATile* tintinTile = ATileActor_Character_Tintin::GetInstance()->GetCurrentTile();
 	for (auto peruvien : _gameManager->_peruviens)
 	{
+		//DETECTION AVANT ROTATION
 		if(peruvien->Detection(tintinTile))
 		{
 			_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
@@ -28,22 +31,28 @@ void UState_PeruviensRotate::OnStateEnter()
 			peruvien->SetWidgetVisible(true);
 			peruvien->AddSplinePoint();
 		}
+		//ADD TINTIN DIRECTION TILE TO PATH IF NO TINTIN DETECTION
 		else if(peruvien->_currentPBehaviour == EPeruvienBehaviour::FollowingTintin)
 		{
 			peruvien->_currentPBehaviour = EPeruvienBehaviour::SearchingTintin;
-			peruvien->_tintinAngle = ATileActor_Character_Tintin::GetInstance()->angle;
+			const ATile* lastTile = peruvien->PeruvienTilePath[0];
+			const EAngle tintinAngle = ATileActor_Character_Tintin::GetInstance()->angle;
+			peruvien->PeruvienTilePath.Insert(_gameManager->GetForwardTile(lastTile, tintinAngle), 0);
 		}
 
-		if(peruvien->_currentPBehaviour == EPeruvienBehaviour::SearchingTintin && peruvien->PeruvienTilePath.Num() == 0)
+		/*if(peruvien->_currentPBehaviour == EPeruvienBehaviour::SearchingTintin && peruvien->PeruvienTilePath.Num() == 0)
 		{
 			_barrier->_actors.Add(peruvien);
 			continue;
-		}
-		
+		}*/
+
+		//RESET ANGLE ON STARTING TILE
 		if(peruvien->GetNextTile() == nullptr || peruvien->GetNextTile() == peruvien->GetCurrentTile())
 		{
 			if(peruvien->_currentPBehaviour == EPeruvienBehaviour::Static && peruvien->angle != peruvien ->_startingAngle)
+			{
 				_barrier->_actors.Add(peruvien);
+			}
 			continue;
 		}
 
@@ -61,6 +70,8 @@ void UState_PeruviensRotate::OnStateTick(float DeltaTime)
 		ATile* tintinTile = ATileActor_Character_Tintin::GetInstance()->GetCurrentTile();
 		for(auto peruvien : _gameManager->_peruviens)
 		{
+			//DETECTION AFTER ROTATE
+
 			if(peruvien->Detection(tintinTile))
 			{
 				_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());

@@ -1,5 +1,6 @@
 #include "TileActor_Character_Peruvien.h"
 
+#include "MainGameMode.h"
 #include "SplineActor.h"
 #include "Tile.h"
 #include "Components/SplineMeshComponent.h"
@@ -78,37 +79,16 @@ void ATileActor_Character_Peruvien::BeginPlay()
 	
 	_currentPBehaviour = EPeruvienBehaviour::Static;
 	PlayerController = GetWorld()->GetFirstPlayerController();
-	TInlineComponentArray<UWidgetComponent*> WidgetComponents;
-	TInlineComponentArray<USplineComponent*> splineComponents;
 	
-	TArray<UStaticMeshComponent*> Components;
+	TInlineComponentArray<UStaticMeshComponent*> Components;
 	GetComponents<UStaticMeshComponent>(Components);
 
-	for (auto sm : Components)
+	for (int i = 0; i < Components.Num(); i++)
 	{
-		if(sm->GetName() == "Slope")
+		if(Components[i]->GetName() == "Exclamation Mark")
 		{
-			widgetParent = sm;
-		}
-	}
-	
- 	/*if(splineComponents.Num() == 1)
-	{
-		splineComponent = splineComponents[0];
-	}*/
-	
-	GetComponents(WidgetComponents);
-	for (const UWidgetComponent* WidgetComponent : WidgetComponents)
-	{
-		if (WidgetComponent->GetUserWidgetObject())
-		{
-			// Directly assign the user widget to YourWidgetInstance
-			WidgetInstance = WidgetComponent->GetUserWidgetObject();
-			// Do something with YourWidgetInstance
-			if (WidgetInstance)
-			{
-				WidgetInstance->SetVisibility(ESlateVisibility::Hidden);
-			}
+			exclamativeMark = Components[i];
+			exclamativeMark->SetVisibility(false);
 		}
 	}
 }
@@ -163,35 +143,33 @@ void ATileActor_Character_Peruvien::AddSplinePoint()
 void ATileActor_Character_Peruvien::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	if (WidgetInstance)
+
+	const APlayerCameraManager* CameraManager = UGameplayStatics::GetPlayerCameraManager(this, 0);
+	if(IsValid(CameraManager) && IsValid(exclamativeMark))
 	{
-		if (IsValid(PlayerController) && IsValid(widgetParent))
-		{
-			const FVector StaticMeshLocation = widgetParent->GetComponentLocation();
-			const FVector CameraLocation = PlayerController->PlayerCameraManager->GetCameraLocation();
+		const FVector CameraLocation = CameraManager->GetCameraLocation();
 
-			// Calculate the direction to the camera
-			const FVector ToCameraDirection = (CameraLocation - StaticMeshLocation).GetSafeNormal();
+		FVector Direction = CameraLocation - exclamativeMark->GetComponentLocation();
+		Direction.Z = 0;
+		Direction.Normalize();
 
-			// Calculate the rotation to make the static mesh face the camera only around its up axis
-			FRotator LookAtRotation = FRotationMatrix::MakeFromX(ToCameraDirection).Rotator();
-			LookAtRotation.Pitch = 0.0f; // Keep the rotation around the up axis only
-			// Set the rotation of the static mesh component
-			widgetParent->SetRelativeRotation(LookAtRotation);
-		}
+		FRotator LookAtRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
+		//LookAtRotation.Yaw += 90.0f;
+
+		exclamativeMark->SetWorldRotation(LookAtRotation);
 	}
 }
 
 void ATileActor_Character_Peruvien::SetWidgetVisible(bool isVisible) const
 {
-	if(isVisible && WidgetInstance->GetVisibility() == ESlateVisibility::Hidden)
+	if(isVisible && !exclamativeMark->IsVisible())
 	{
 		UGameplayStatics::SpawnSoundAtLocation(this, S_detect, GetActorLocation());
-		WidgetInstance->SetVisibility(ESlateVisibility::Visible);
+		exclamativeMark->SetVisibility(true);
 	}
-	else if(!isVisible && WidgetInstance->GetVisibility() != ESlateVisibility::Hidden)
+	else if(!isVisible && exclamativeMark->IsVisible())
 	{
 		UGameplayStatics::SpawnSoundAtLocation(this, S_lostDetect, GetActorLocation());
-		WidgetInstance->SetVisibility(ESlateVisibility::Hidden);
+		exclamativeMark->SetVisibility(false);
 	}
 }

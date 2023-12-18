@@ -17,6 +17,7 @@
 void UState_CondorDropCharacters::OnStateEnter()
 {
 	UState::OnStateEnter();
+	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("Condor Wait State Enter"));
 
 	ATile* targetTile;
