@@ -9,6 +9,8 @@
 
 class ATileActor_Character_Peruvien;
 class ATileActor_Character_Condor;
+class ATileActor_Clue;
+class UCoreUI;
 class UState;
 
 DECLARE_DYNAMIC_DELEGATE(FOnClickDelegate);
