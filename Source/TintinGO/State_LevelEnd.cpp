@@ -9,6 +9,8 @@
 void UState_LevelEnd::OnStateEnter()
 {
 	Super::OnStateEnter();
+	if(_gameManager->DebugStateChange)
+		UE_LOG(LogTemp, Warning, TEXT("Level End Transi State Enter"));
 	_interpolateValue = 0;
 	_startAlpha = 0;
 	_endAlpha = 1;

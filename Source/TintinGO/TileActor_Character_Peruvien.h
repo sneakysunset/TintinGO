@@ -32,9 +32,6 @@ public:
 
 	virtual void SetUpRotation(EAngle newAngle) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widgets")
-	UUserWidget* WidgetInstance;
-	
 	UPROPERTY()
 	ATile* _startingTile;
 
@@ -60,7 +57,7 @@ public:
 	UBlueprint* splineBP;
 
 	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* widgetParent;
+	UStaticMeshComponent* exclamativeMark;
 	
 	UFUNCTION()
 	void SetWidgetVisible(bool isVisible) const;

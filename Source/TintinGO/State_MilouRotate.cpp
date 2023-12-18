@@ -12,7 +12,7 @@
 void UState_MilouRotate::OnStateEnter()
 {
 	Super::OnStateEnter();
-
+	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("State Enter Milou Rotate"));
 	_milou = ATileActor_Character_Milou::GetInstance();
 	if(_milou->isBoundToTintin || _milou->MilouTilePath.Num() == 0)

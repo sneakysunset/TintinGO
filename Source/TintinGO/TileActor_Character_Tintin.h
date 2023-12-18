@@ -6,6 +6,13 @@
 #include "TileActor_Character.h"
 #include "TileActor_Character_Tintin.generated.h"
 
+UENUM(BlueprintType)
+enum class ETintinState : uint8
+{
+	Running UMETA(DisplayName = "Running"),
+	Throwing UMETA(DisplayName = "Throwing")
+};
+
 UCLASS()
 class TINTINGO_API ATileActor_Character_Tintin : public ATileActor_Character
 {
@@ -23,7 +30,16 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
 	USoundBase* S_LevelStart;
+
+	UFUNCTION()
+	void SetTintinMesh(ETintinState state);
 	
 protected:
-virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
+	
+	UPROPERTY()
+	TMap<ETintinState , UStaticMeshComponent*> _tintinMeshes;
+
+	UPROPERTY()
+	UStaticMeshComponent* bone;
 };

@@ -9,6 +9,14 @@
 
 class ATileActor_MilouBone;
 
+UENUM(BlueprintType)
+enum class EMilouState : uint8
+{
+	Sitting UMETA(DisplayName = "Sitting"),
+	Running UMETA(DisplayName = "Running"),
+	Standing UMETA(DisplayName = "Standing")
+};
+
 UCLASS()
 class TINTINGO_API ATileActor_Character_Milou : public ATileActor_Character
 {
@@ -37,8 +45,13 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
 	USoundBase* S_milouStartMoving;
+
+	UFUNCTION()
+	void SetMilouMesh(EMilouState state);
 	
 protected:
 	virtual void BeginPlay() override;
-	
+
+	UPROPERTY()
+	TMap<EMilouState , UStaticMeshComponent*> _milouMeshes;
 };

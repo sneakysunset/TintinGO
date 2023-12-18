@@ -14,13 +14,40 @@ ATileActor_Clue::ATileActor_Clue()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void ATileActor_Clue::OnEndTask()
+
+
+void ATileActor_Clue::BeginPlay()
 {
-	_gameManager->_clueNumber--;
-	Super::OnEndTask();
-	if(_currentTile->_tileActors.Contains(this))
-		_currentTile->_tileActors.Remove(this);
-	Destroy();
+	Super::BeginPlay();
+
+	TInlineComponentArray<UStaticMeshComponent*> Components;
+	GetComponents<UStaticMeshComponent>(Components);
+	for (auto component : Components)
+	{
+		if(component->GetName() == TEXT("QuestionMark"))
+		{
+			MeshComponent = component;
+			break;
+		}
+	}
+	_startHeight = MeshComponent->GetComponentLocation().Z;
+	_endHeight = _startHeight + _heightToGoUp;
+}
+
+void ATileActor_Clue::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	
+	if(_barrier != nullptr && _barrier->_isBarriereCompleted)
+	{
+		_isTaskOver = true;
+	}
+	else if(_barrier != nullptr && !_barrier->_isBarriereCompleted)
+	{
+		_barrier->OnTick(DeltaSeconds);
+	}
+
+	ClueAnimation(DeltaSeconds);
 }
 
 void ATileActor_Clue::TriggerBody()
@@ -65,38 +92,29 @@ void ATileActor_Clue::TriggerBody()
 	}
 }
 
-void ATileActor_Clue::Tick(float DeltaSeconds)
+void ATileActor_Clue::OnEndTask()
 {
-	Super::Tick(DeltaSeconds);
-	if(initTimer < .3f)
-	{
-		initTimer += DeltaSeconds;
-	}
-	else if(!hasInit)
-	{
-		hasInit = true;
-		Init();
-	}
-
-	
-	if(_barrier != nullptr && _barrier->_isBarriereCompleted)
-	{
-		_isTaskOver = true;
-	}
-	else if(_barrier != nullptr && !_barrier->_isBarriereCompleted)
-	{
-		_barrier->OnTick(DeltaSeconds);
-	}
+	_gameManager->_clueNumber--;
+	Super::OnEndTask();
+	if(_currentTile->_tileActors.Contains(this))
+		_currentTile->_tileActors.Remove(this);
+	Destroy();
 }
 
 
-void ATileActor_Clue::Init()
+void ATileActor_Clue::ClueAnimation(float DeltaSeconds)
 {
-	if(clueNumber == _gameManager->_clueNumber)
+	_interpolateValue += ascending ? _animationSpeed * DeltaSeconds : -_animationSpeed * DeltaSeconds;
+	_interpolateValue = FMath::Clamp(_interpolateValue, 0, 1);
+	const FVector position = FVector(MeshComponent->GetComponentLocation().X, MeshComponent->GetComponentLocation().Y, FMath::Lerp(_startHeight, _endHeight, _animCurve->FloatCurve.Eval(_interpolateValue)));
+	MeshComponent->SetWorldLocation(position);
+
+	if(_interpolateValue >= 1 && ascending)
 	{
-		SetActorHiddenInGame(false);
+		ascending = false;
+	}
+	else if(_interpolateValue <= 0 && !ascending)
+	{
+		ascending = true;
 	}
 }
-
-
-

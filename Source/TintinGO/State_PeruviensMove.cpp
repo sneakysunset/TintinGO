@@ -16,6 +16,7 @@
 void UState_PeruviensMove::OnStateEnter()
 {
 	Super::OnStateEnter();
+	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("State Enter Peruvien move"));
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 	TArray<ATile*> previousTiles;
@@ -23,34 +24,42 @@ void UState_PeruviensMove::OnStateEnter()
 	ATile* tintinTile = ATileActor_Character_Tintin::GetInstance()->GetCurrentTile();
 	for (auto peruvien : _gameManager->_peruviens)
 	{
+		//GAME OVER QUAND PERUVIEN SUR MEME TILE QUE TINTIN
 		if(peruvien->GetCurrentTile() == ATileActor_Character_Tintin::GetInstance()->GetCurrentTile())
 		{
 			_gameManager->StartGameOver();
 			UGameplayStatics::SpawnSoundAtLocation(peruvien, peruvien->S_PeruvienDetectTintin, peruvien->GetActorLocation());
-			//Cast<UGlobalGameManager>(UGameplayStatics::GetGameInstance(GetWorld()))->OnGameOver();
 			return;
 		}
+
+		//DETECTION TINTIN
 		if(peruvien->Detection(tintinTile))
 		{
 			_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
 			peruvien->PeruvienTilePath.Empty();
 			peruvien->PeruvienTilePath = _gameManager->GetPath(tintinTile, false);
+			
+			//SI TINTIN EST DEVANT LE PERUVIEN GAME OVER
 			if(FMath::Abs(peruvien->GetCurrentTile()->_row + peruvien->GetCurrentTile()->_column - tintinTile->_row - tintinTile->_column) == 1)
 			{
 				peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 			}
 			peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingTintin;
 		}
+
+		//SKIP TOUR SI PERUVIEN N'A PAS DE DESTINATION. POTENTIELEMENT A CHANGER POUR EVITER TOUR DE FLOTTEMENT
 		if(peruvien->GetNextTile() == nullptr || peruvien->GetNextTile() == peruvien->GetCurrentTile())
 			continue;
+		
 		previousTiles.Add(peruvien->GetCurrentTile());
 		peruviens.Add(peruvien);
 		peruvien->SetCurrentTile(peruvien->GetNextTile());
 	}
+
+	//SET UP BARRIER EN CAS DE DEPLACEMENT
 	for (int32 i = 0; i < peruviens.Num(); i++)
 		_gameManager->ChangeTile(_barrier, previousTiles[i], peruviens[i]->GetCurrentTile());
 	_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
-	
 	for (const auto peruvien : peruviens)
 	{
 		Cast<UState_TA_Move>(peruvien->_currentState_TA)->_speed = peruvien->_speed;
@@ -74,25 +83,37 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 		
 		for (auto peruvien : _gameManager->_peruviens)
 		{
+			//GAME OVER
 			if(peruvien->GetCurrentTile() == tintin->GetCurrentTile())
 			{
 				_gameManager->StartGameOver();
-				//Cast<UGlobalGameManager>(UGameplayStatics::GetGameInstance(GetWorld()))->OnGameOver();
+				return;
+			}
+			
+			//SI LE PERUVIEN APRES SON DEPLACEMENT EST A UNE CASE DE TINTIN GAME OVER
+			if(peruvien->Detection(tintin->GetCurrentTile()) && FMath::Abs(peruvien->GetCurrentTile()->_row + peruvien->GetCurrentTile()->_column - tintin->GetCurrentTile()->_row - tintin->GetCurrentTile()->_column) == 1)
+			{
+				//peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
+				_gameManager->StateChange(NewObject<UState_PeruviensMove>(StaticClass()));
+				peruvien->PeruvienTilePath.Empty();
 				return;
 			}
 			
 			if(peruvien->PeruvienTilePath.Num() > 0)
 			{
 				peruvien->PeruvienTilePath.Pop();
+				//CONTINUE CHEMIN ACTIF DU PERUVIEN
 				if(peruvien->PeruvienTilePath.Num() > 0)
 				{
 					peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 				}
-				else if(peruvien->_currentPBehaviour == EPeruvienBehaviour::FollowingTintin || peruvien->_currentPBehaviour == EPeruvienBehaviour::SearchingTintin)
+				//SI PERUVIEN SUIT TINTIN ET N A PAS DE PROCHAINE TILE
+				/*else if(peruvien->_currentPBehaviour == EPeruvienBehaviour::FollowingTintin || peruvien->_currentPBehaviour == EPeruvienBehaviour::SearchingTintin)
 				{
 					peruvien->SetNextTile(nullptr);
 					peruvien->SetWidgetVisible(false);
-				}
+				}*/
+				//SI PERUVIEN NE SUIT RIEN N'A PAS DE PROCHAINE TILE ET N'EST PAS SUR SA POSITION DE DEPART RETURN
 				else if(peruvien->GetCurrentTile() != peruvien->_startingTile)
 				{
 					if(peruvien->_currentPBehaviour == EPeruvienBehaviour::FollowingMilou)
@@ -105,6 +126,7 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 					peruvien->_currentPBehaviour = EPeruvienBehaviour::Returning;
 					peruvien->SetWidgetVisible(false);
 				}
+				//SI PERUVIEN NE SUIT RIEN ET EST SUR SA TILE DE DEPART
 				else
 				{
 					peruvien->SetNextTile(nullptr);

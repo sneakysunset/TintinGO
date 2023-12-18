@@ -11,7 +11,8 @@ void UState_TriggerItemsCharacters::OnStateEnter()
 {
 	UState::OnStateEnter();
 	_tintin = ATileActor_Character_Tintin::GetInstance();
-	UE_LOG(LogTemp, Warning, TEXT("Trigger Items / Characters State Enter %d, %d"), _tintin->GetCurrentTile()->_row, _tintin->GetCurrentTile()->_column);
+	if(_gameManager->DebugStateChange)
+		UE_LOG(LogTemp, Warning, TEXT("Trigger Items / Characters State Enter"));
 	for(int i = 0; i < _tintin->GetCurrentTile()->_tileActors.Num(); i++)
 	{
 		_tileActors.Add(_tintin->GetCurrentTile()->_tileActors[i]);

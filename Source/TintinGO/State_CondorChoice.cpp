@@ -12,6 +12,7 @@
 void UState_CondorChoice::OnStateEnter()
 {
 	UState::OnStateEnter();
+	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("Condor Choice State Enter"));
 	for (auto condor : _gameManager->_condors)
 	{

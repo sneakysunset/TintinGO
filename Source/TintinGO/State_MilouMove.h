@@ -18,6 +18,7 @@ public:
 
 private:
 	ATileActor_Character_Milou* _milou;
+	ATileActor_Character_Tintin* _tintin;
 	UBarrier* _barrier;
 
 	void PeruvienDetectionAllDirection() const;
