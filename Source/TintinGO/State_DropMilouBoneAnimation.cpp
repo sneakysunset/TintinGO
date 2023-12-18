@@ -4,10 +4,9 @@
 #include "State_DropMilouBoneAnimation.h"
 
 #include "GameManager.h"
-#include "GridManager.h"
 #include "MainGameMode.h"
+#include "State_MilouBone_Move.h"
 #include "State_MilouRotate.h"
-#include "State_TA_Move.h"
 #include "TileActor.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -26,9 +25,9 @@ void UState_DropMilouBoneAnimation::OnStateEnter()
 	_milou->_milouBoneToDrop->SetCurrentTile(nextTile);
 	
 	_gameManager->ChangeTile(_barrier, previousTile, _milou->_milouBoneToDrop->GetCurrentTile());
-	_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
-	Cast<UState_TA_Move>(_milou->_milouBoneToDrop->_currentState_TA)->_actorSpeed = _milou->_milouBoneToDrop->_speed;
-	Cast<UState_TA_Move>(_milou->_milouBoneToDrop->_currentState_TA)->_speed = _milou->_milouBoneToDrop->_speed;
+	_barrier->OnBarrierIni(UState_MilouBone_Move::StaticClass());
+	Cast<UState_MilouBone_Move>(_milou->_milouBoneToDrop->_currentState_TA)->_actorSpeed = _milou->_milouBoneToDrop->_speed;
+	Cast<UState_MilouBone_Move>(_milou->_milouBoneToDrop->_currentState_TA)->_speed = _milou->_milouBoneToDrop->_speed;
 	UGameplayStatics::SpawnSoundAtLocation(_milou, _milou->_milouBoneToDrop->S_BoneThrow, _milou->_milouBoneToDrop->GetActorLocation());
 }
 
