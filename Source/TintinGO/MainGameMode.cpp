@@ -72,13 +72,13 @@ void AMainGameMode::BeginPlay()
 	for(auto tile : tiles)
 	{
 		_gridTiles[tile->_row].Tiles[tile->_column] = tile;
-		for(auto item : tile->_TileItems)
+		/*for(auto item : tile->_TileItems)
 		{
 			if(item.actorType == ETileActorType::Clue)
 			{
 				_clueNumber++;
 			}
-		}
+		}*/
 	}
 
 	if (IsValid(YourWidgetClass))
