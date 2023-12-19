@@ -212,6 +212,8 @@ void UState_CondorDropCharacters::OnStateTick(float DeltaTime)
 					if(character->IsA<ATileActor_Character_Peruvien>())
 					{
 						ATileActor_Character_Peruvien* peruvien = Cast<ATileActor_Character_Peruvien>(character);
+
+						_gameManager->SetTilesPeruvienColor(true, peruvien->angle,peruvien->GetCurrentTile());
 						_gameManager->MarkStepsOnGrid(character->GetCurrentTile());
 						peruvien->PeruvienTilePath = _gameManager->GetPath(peruvien->_startingTile, false);
 						peruvien->_currentPBehaviour = EPeruvienBehaviour::Returning;

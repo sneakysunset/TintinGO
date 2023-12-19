@@ -11,6 +11,7 @@
 #include "State_TA_Move.h"
 #include "Tile.h"
 #include "TileActor_Character_Condor.h"
+#include "TileActor_Character_Peruvien.h"
 #include "GameFramework/GameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -220,7 +221,6 @@ void UState_CondorAttack::OnStateEnter()
 			default:
 				break;
 		}
-
 		FVector TargetDirection = condor->GetNextTile()->GetActorLocation() - condor->GetActorLocation();
 		const FRotator TargetRotation = TargetDirection.Rotation();
 		condor->_startRotation = condor->GetActorRotation().Quaternion();
@@ -245,6 +245,14 @@ void UState_CondorAttack::OnStateTick(float DeltaTime)
 		condor->SetActorRotation(rot);
 		rotateInterpolationValue +=DeltaTime * condor->_rotateSpeed;
 		rotateInterpolationValue =  FMath::Clamp(rotateInterpolationValue, 0, 1);
+		for(auto character : condor->_characters)
+		{
+			if(character->IsA<ATileActor_Character_Peruvien>())
+			{
+				auto peruvien = Cast<ATileActor_Character_Peruvien>(character);
+				_gameManager->SetTilesPeruvienColor(false, peruvien->angle,peruvien->GetCurrentTile());
+			}
+		}
 	}
 	
 	if(_barrier->_isBarriereCompleted)

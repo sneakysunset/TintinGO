@@ -113,7 +113,9 @@ public:
 
 	UFUNCTION()
 	ATile* GetTile(int32 i, int32 j);
+	ATile* GetTileIfAccessible(int32 i, int32 j, EAngle angle);
 	ATile* GetForwardTile(const ATile* tile, EAngle angle);
+	void SetTilesPeruvienColor(bool toVisible, EAngle direction, const ATile* startTile);
 
 	FOnClickDelegate OnClickD;
     FUIMilouClick OnMilouBoneClick;

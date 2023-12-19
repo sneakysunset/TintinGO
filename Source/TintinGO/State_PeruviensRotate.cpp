@@ -21,6 +21,8 @@ void UState_PeruviensRotate::OnStateEnter()
 	ATile* tintinTile = ATileActor_Character_Tintin::GetInstance()->GetCurrentTile();
 	for (auto peruvien : _gameManager->_peruviens)
 	{
+
+		
 		//DETECTION AVANT ROTATION
 		if(peruvien->Detection(tintinTile))
 		{
@@ -38,6 +40,7 @@ void UState_PeruviensRotate::OnStateEnter()
 			const ATile* lastTile = peruvien->PeruvienTilePath[0];
 			const EAngle tintinAngle = ATileActor_Character_Tintin::GetInstance()->angle;
 			peruvien->PeruvienTilePath.Insert(_gameManager->GetForwardTile(lastTile, tintinAngle), 0);
+			peruvien->AddSplinePoint();
 		}
 
 		/*if(peruvien->_currentPBehaviour == EPeruvienBehaviour::SearchingTintin && peruvien->PeruvienTilePath.Num() == 0)
@@ -55,10 +58,15 @@ void UState_PeruviensRotate::OnStateEnter()
 			}
 			continue;
 		}
+		_gameManager->SetTilesPeruvienColor(false, peruvien->angle, peruvien->GetCurrentTile());
 
 		_barrier->_actors.Add(peruvien);
 	}
 
+	if(_barrier->_actors.Num() == 0)
+	{
+		_gameManager->StateChange(NewObject<UState_CondorChoice>(UState_CondorChoice::StaticClass()));
+	}
 	_barrier->OnBarrierIni(UState_TA_Rotate::StaticClass());
 }
 
@@ -71,7 +79,7 @@ void UState_PeruviensRotate::OnStateTick(float DeltaTime)
 		for(auto peruvien : _gameManager->_peruviens)
 		{
 			//DETECTION AFTER ROTATE
-
+			_gameManager->SetTilesPeruvienColor(true, peruvien->angle, peruvien->GetCurrentTile());
 			if(peruvien->Detection(tintinTile))
 			{
 				_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
@@ -79,6 +87,7 @@ void UState_PeruviensRotate::OnStateTick(float DeltaTime)
 				peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 				peruvien->_currentPBehaviour = EPeruvienBehaviour::FollowingTintin;
 				peruvien->SetWidgetVisible(true);
+				peruvien->AddSplinePoint();
 			}
 		}
 		_gameManager->StateChange(NewObject<UState_CondorChoice>(UState_CondorChoice::StaticClass()));

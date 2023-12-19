@@ -24,6 +24,11 @@ void UState_PeruviensMove::OnStateEnter()
 	ATile* tintinTile = ATileActor_Character_Tintin::GetInstance()->GetCurrentTile();
 	for (auto peruvien : _gameManager->_peruviens)
 	{
+		if(IsValid(peruvien->GetNextTile()))
+		{
+			_gameManager->SetTilesPeruvienColor(false, peruvien->angle, peruvien->GetCurrentTile());
+		}
+		
 		//GAME OVER QUAND PERUVIEN SUR MEME TILE QUE TINTIN
 		if(peruvien->GetCurrentTile() == ATileActor_Character_Tintin::GetInstance()->GetCurrentTile())
 		{
@@ -70,7 +75,7 @@ void UState_PeruviensMove::OnStateEnter()
 			UGameplayStatics::SpawnSoundAtLocation(peruvien, peruvien->S_PeruvienDetectTintin, peruvien->GetActorLocation());
 		}
 		UGameplayStatics::SpawnSoundAtLocation(peruvien, _gameManager->S_MoveSoundsArray[randomAudioFileIndex], peruvien->GetActorLocation());
-		
+
 	}
 }
 
@@ -83,6 +88,8 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 		
 		for (auto peruvien : _gameManager->_peruviens)
 		{
+			_gameManager->SetTilesPeruvienColor(true, peruvien->angle, peruvien->GetCurrentTile());
+			
 			//GAME OVER
 			if(peruvien->GetCurrentTile() == tintin->GetCurrentTile())
 			{
@@ -142,6 +149,7 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 					peruvien->PeruvienTilePath = _gameManager->GetPath(peruvien->_startingTile, false);
 					peruvien->SetNextTile(peruvien->PeruvienTilePath.Last());
 					peruvien->_currentPBehaviour = EPeruvienBehaviour::Returning;
+					peruvien->AddSplinePoint();
 				}
 				else peruvien->_currentPBehaviour = EPeruvienBehaviour::Static;
 				peruvien->SetWidgetVisible(false);

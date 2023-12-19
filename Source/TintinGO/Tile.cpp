@@ -46,6 +46,37 @@ void ATile::BeginPlay()
 	{
 		return;
 	}
+
+	for(int i = 0; i < Components.Num(); i++)
+	{
+		if(Components[i]->GetName() == "AdditionalCircle")
+		{
+			_additionalCircle = Components[i];
+			_additionalCircle->SetVisibility(false);
+			_startAdditionalCircleScale = _additionalCircle->GetComponentScale();
+			_endAdditionalCircleScale = _startAdditionalCircleScale - _scaleChangeMagnitude * FVector::One();
+		}
+		else if(Components[i]->GetName() == "EnnemyCircle")
+		{
+			_ennemyCircleComponent = Components[i];
+		}
+		else if(Components[i]->GetName() == "directionalPlaneRight")
+		{
+			_ennemyCircleRight= Components[i];
+		}
+		else if(Components[i]->GetName() == "directionalPlaneLeft")
+		{
+			_ennemyCircleLeft = Components[i];
+		}
+		else if(Components[i]->GetName() == "directionalPlaneUp")
+		{
+			_ennemyCircleUp = Components[i];
+		}
+		else if(Components[i]->GetName() == "directionalPlaneDown")
+		{
+			_ennemyCircleDown = Components[i];
+		}
+	}
 	
 	AddTileActors();
 
@@ -67,7 +98,7 @@ void ATile::BeginPlay()
 	{
 		actor->SetActorLocation(GetTileActorPosition(actor));
 	}
-
+	
 	SetHighlighted(false);
 }
 
@@ -81,6 +112,11 @@ void ATile::Tick(float DeltaTime)
 	}
 
 #endif
+
+	if(IsValid(_additionalCircle) && _additionalCircle->IsVisible())
+	{
+		RefreshAdditionalTileScale(DeltaTime);
+	}
 }
 
 bool ATile::ShouldTickIfViewportsOnly() const
@@ -131,8 +167,6 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 
 void ATile::AddTintin()
 {
-	
-	
 	FActorSpawnParameters params;
 	params.ObjectFlags |= RF_Transient;
 	params.bNoFail = true;
@@ -156,7 +190,6 @@ void ATile::AddTintin()
 	character->SetActorLocation(GetTileActorPosition(character));
 	milou->SetActorLocation(GetTileActorPosition(milou));
 }
-
 
 void ATile::AddCondor()
 {
@@ -197,9 +230,13 @@ void ATile::SetTilesInBoneRangeMat(bool toBone)
 	if(toBone)
 	{
 		_staticMeshComponent->SetMaterial(0, DynamicMat(_InBoneRangeMat, _currentBackgroundAlpha));
+		_additionalCircle->SetVisibility(true);
+
 	}
 	else
 	{
+		_additionalCircle->SetVisibility(false);
+
 		switch (_tileType)
 		{
 		case ETileType::Neutral:
@@ -429,7 +466,45 @@ void ATile::RefreshTileBackgroundRenderer(int alpha)
 	}
 }
 
+void ATile::RefreshAdditionalTileScale(float DeltaSeconds)
+{
+	_interpolateValue += DeltaSeconds * _additionalCircleSpeed;
+	if(_interpolateValue >= 1) _interpolateValue = 0;
+	_additionalCircle->SetWorldScale3D(FMath::Lerp(_startAdditionalCircleScale, _endAdditionalCircleScale, _additionalCircleCurve->FloatCurve.Eval(_interpolateValue)));
+}
 
+void ATile::SetEnnemyDirection(bool toVisible, EAngle direction, bool onlyCircle) const
+{
+	if(toVisible)
+	{
+		_ennemyCircleComponent->SetVisibility(true);
+		if(!onlyCircle)
+		{
+			switch(direction)
+			{
+				case EAngle::Up:
+					_ennemyCircleUp->SetVisibility(true);
+					break;
+				case EAngle::Down:
+					_ennemyCircleDown->SetVisibility(true);
+					break;
+				case EAngle::Right:
+					_ennemyCircleRight->SetVisibility(true);
+					break;
+				case EAngle::Left:
+					_ennemyCircleLeft->SetVisibility(true);
+					break;
+			}
+		}
+	}
+	else
+	{
+		_ennemyCircleComponent->SetVisibility(false);
+		_ennemyCircleUp->SetVisibility(false);
+		_ennemyCircleDown->SetVisibility(false);
+		_ennemyCircleRight->SetVisibility(false);
+		_ennemyCircleLeft->SetVisibility(false);
+	}
 
-
+}
 

@@ -155,6 +155,12 @@ public:
 	UFUNCTION()
 	void RefreshTileBackgroundRenderer(int alpha);
 
+	UFUNCTION()
+	void RefreshAdditionalTileScale(float DeltaSeconds);
+
+	UFUNCTION()
+	void SetEnnemyDirection(bool toVisible, EAngle direction, bool onlyCircle) const;
+
 	UPROPERTY()
 	float _positionCircleRadius = 1;
 
@@ -207,8 +213,44 @@ private:
 	TSubclassOf<ATileActor_Character_Peruvien> _peruvienBP;
 
 public:
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
 	TSubclassOf<ATileActor_Clue> _clueBP;
+
+	UPROPERTY()
+	UStaticMeshComponent* _additionalCircle;
+
+	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
+	UCurveFloat* _additionalCircleCurve;
+
+	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
+	float _additionalCircleSpeed;
+
+	UPROPERTY()
+	float _interpolateValue;
+
+	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
+	float _scaleChangeMagnitude;
+
+	UPROPERTY()
+	FVector _startAdditionalCircleScale;
+
+	UPROPERTY()
+	FVector _endAdditionalCircleScale;
+
+	UPROPERTY()
+	UStaticMeshComponent* _ennemyCircleComponent;
+
+	UPROPERTY()
+	UStaticMeshComponent* _ennemyCircleRight;
+
+	UPROPERTY()
+	UStaticMeshComponent* _ennemyCircleLeft;
+	
+	UPROPERTY()
+	UStaticMeshComponent* _ennemyCircleUp;
+
+	UPROPERTY()
+	UStaticMeshComponent* _ennemyCircleDown;
 	
 protected:
 	virtual void BeginPlay() override;
