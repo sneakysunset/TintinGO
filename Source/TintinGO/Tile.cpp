@@ -341,6 +341,7 @@ void ATile::SpawnMilouBone()
 	const FRotator rotation = FRotator(0, 0, 0);
 	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP, position, rotation, params);
 	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop->SetCurrentTile(this);
+	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop->SetActorScale3D(FVector3d(0.25f, 0.25f, 0.25f));
 }
 
 UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat, int backgroundAlpha) const

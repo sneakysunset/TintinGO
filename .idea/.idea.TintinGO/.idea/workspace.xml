@@ -11,14 +11,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18a00cf5-8619-465a-9e48-0ecda5c9207c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_MilouBone_Move.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Source/TintinGO/State_MilouBone_Move.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TintinGO/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/Level_1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/Level_1.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/Link1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/Link1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Materials/WalkableWithLinks.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Materials/WalkableWithLinks.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/MainGameMode.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/MainGameMode.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_DropMilouBoneAnimation.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_DropMilouBoneAnimation.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Milou_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Milou_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Tintin_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_Character_Tintin_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/TileActor_MilouBone_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/TileActor_MilouBone_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/State_MilouBone_Move.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/State_MilouBone_Move.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TintinGO/Tile.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,28 +43,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Merge&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;UnrealLogSettings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "Branch__Flo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "UnrealLogSettings",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\Florian\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\Florian\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\Florian\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\Florian\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\Florian\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
+      "C:\\Users\\Florian\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="C++ Project.TintinGO">
     <configuration name="TintinGO" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -335,6 +333,7 @@
       <workItem from="1702332169008" duration="3125000" />
       <workItem from="1702684996923" duration="47000" />
       <workItem from="1702918424407" duration="5769000" />
+      <workItem from="1702994218651" duration="6759000" />
     </task>
     <servers />
   </component>

@@ -29,8 +29,7 @@ void UState_MilouBone_Move::OnStateEnter()
 void UState_MilouBone_Move::OnStateTick(float DeltaTime)
 {
 	
-	_tileActor->SetActorLocation(_startPosition + (((FVector::UpVector * sin(_interpolateValue * 3.15)) * 5) + (_endPosition - _startPosition)) * _interpolateValue);
-	UE_LOG(LogTemp, Warning, TEXT("%f"), (FVector::UpVector * (sin(_interpolateValue * 3.15)) * 5).Z);
+	_tileActor->SetActorLocation(_startPosition + (((FVector::UpVector * sin(_interpolateValue * 3.15)) * 250) + (_endPosition - _startPosition)) * _interpolateValue);
 	UState_TActor::OnStateTick(DeltaTime);
 }
 
