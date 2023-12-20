@@ -24,7 +24,7 @@ ATileActor_Cadenas::ATileActor_Cadenas()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-public void ATileActor_Cadenas::UnlockCadenas()
+void ATileActor_Cadenas::UnlockCadenas() const
 {
-	
+	_staticMeshComponent->SetVisibility(false);
 }
