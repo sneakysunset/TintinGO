@@ -46,9 +46,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	UCurveFloat* _animCurve;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ATileActor_Clue> _clueBP;
 	
 	UPROPERTY()
 	float _startHeight;
