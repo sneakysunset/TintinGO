@@ -11,14 +11,17 @@ class TINTINGO_API ATileActor_Cadenas : public ATileActor
 {
 	GENERATED_BODY()
 
+	ATileActor_Cadenas();
+	
 	virtual void BeginPlay() override;
 	
 public:
 	static ATileActor_Cadenas* GetInstance();
 	static ATileActor_Cadenas* SingletonInstance;
 
-	UPROPERTY()
-	void UnlockCadenas();
+	UFUNCTION()
+	void UnlockCadenas() const;
 
+	UPROPERTY()
 	UStaticMeshComponent* _staticMeshComponent;
 };
