@@ -6,9 +6,8 @@
 #include "State.h"
 #include "State_MilouRotate.generated.h"
 
-/**
- * 
- */
+class ATileActor_Character_Milou;
+
 UCLASS()
 class TINTINGO_API UState_MilouRotate : public UState
 {

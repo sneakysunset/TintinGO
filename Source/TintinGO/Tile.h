@@ -141,13 +141,13 @@ public:
 
 	
 	UFUNCTION()
-	void SetHighlighted(bool toHightlight);
+	void SetHighlighted(bool toHightlight) const;
 
 	UFUNCTION()
 	void SetTilesInBoneRangeMat(bool toBone);
 
 	UFUNCTION()
-	void SetHighlightedPath(bool toHightlight);
+	void SetHighlightedPath(bool toHightlight) const;
 	
 	UFUNCTION()
 	FVector GetTileActorPosition(ATileActor* tileActor);
@@ -195,25 +195,23 @@ private:
 	UFUNCTION()
 	void AddTintin();
 
-	void AddCondor();
-
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Tintin> _tintinBP;
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Milou> _milouBP;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Condor> _condorBP;
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_MilouBone> _milouBoneBP;
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Peruvien> _peruvienBP;
 
 public:
-	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Clue> _clueBP;
 
 	UPROPERTY()

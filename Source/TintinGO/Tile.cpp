@@ -38,18 +38,14 @@ void ATile::BeginPlay()
 	_currentBackgroundAlpha = 0;
 	TArray<UStaticMeshComponent*> Components;
 	GetComponents<UStaticMeshComponent>(Components);
-	if(Components.Num() > 0)
-	{
-		_staticMeshComponent = Components[0];
-	}
-	else
-	{
-		return;
-	}
 
 	for(int i = 0; i < Components.Num(); i++)
 	{
-		if(Components[i]->GetName() == "AdditionalCircle")
+		if(Components[i]->GetName() == "Plane")
+		{
+			_staticMeshComponent = Components[i];
+		}
+		else if(Components[i]->GetName() == "AdditionalCircle")
 		{
 			_additionalCircle = Components[i];
 			_additionalCircle->SetVisibility(false);
@@ -80,6 +76,8 @@ void ATile::BeginPlay()
 	
 	AddTileActors();
 
+	SetHighlighted(false);
+
 	if(!_walkable)
 	{
 		SetActorHiddenInGame(true);
@@ -99,7 +97,6 @@ void ATile::BeginPlay()
 		actor->SetActorLocation(GetTileActorPosition(actor));
 	}
 	
-	SetHighlighted(false);
 }
 
 void ATile::Tick(float DeltaTime)
@@ -191,12 +188,7 @@ void ATile::AddTintin()
 	milou->SetActorLocation(GetTileActorPosition(milou));
 }
 
-void ATile::AddCondor()
-{
-
-}
-
-void ATile::SetHighlighted(bool toHightlight)
+void ATile::SetHighlighted(bool toHightlight) const
 {
 	if(!_walkable) return;
 	if(toHightlight)
@@ -231,7 +223,6 @@ void ATile::SetTilesInBoneRangeMat(bool toBone)
 	{
 		_staticMeshComponent->SetMaterial(0, DynamicMat(_InBoneRangeMat, _currentBackgroundAlpha));
 		_additionalCircle->SetVisibility(true);
-
 	}
 	else
 	{
@@ -258,7 +249,7 @@ void ATile::SetTilesInBoneRangeMat(bool toBone)
 	}
 }
 
-void ATile::SetHighlightedPath(bool toHightlight) 
+void ATile::SetHighlightedPath(bool toHightlight) const
 {
 	if(toHightlight)
 	{

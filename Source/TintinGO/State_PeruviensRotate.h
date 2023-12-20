@@ -6,9 +6,8 @@
 #include "State.h"
 #include "State_PeruviensRotate.generated.h"
 
-/**
- * 
- */
+class UBarrier;
+
 UCLASS()
 class TINTINGO_API UState_PeruviensRotate : public UState
 {
