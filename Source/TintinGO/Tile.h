@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
+class ATileActor_Cadenas;
 class ATileActor_MilouBone;
 class AGridManager;
 class ATileActor_Character_Milou;
@@ -89,12 +90,18 @@ public:
 
 	UPROPERTY()
 	AGridManager* _gridManager;
-	
+
+	UFUNCTION()
+	void AddTintin();
+
 	UFUNCTION(CallInEditor , Category = "Spawn TileActors")
 	void AddTileActors();
 	
 	UFUNCTION()
 	void SpawnMilouBone();
+
+	UFUNCTION()
+	void AddCadenas();
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 	bool _useEditorTick = true;
@@ -191,36 +198,34 @@ private:
 
 	UFUNCTION(CallInEditor)
 	void BlueprintEditorTick(float DeltaTime);
-	
-	UFUNCTION()
-	void AddTintin();
 
-	void AddCondor();
-
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Tintin> _tintinBP;
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Milou> _milouBP;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Condor> _condorBP;
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_MilouBone> _milouBoneBP;
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Peruvien> _peruvienBP;
 
-public:
-	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
+	TSubclassOf<ATileActor_Cadenas> _cadenasBP;
+	
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Clue> _clueBP;
 
+public:
 	UPROPERTY()
 	UStaticMeshComponent* _additionalCircle;
 
-	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
-	UCurveFloat* _additionalCircleCurve;
+	//UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
+	//UCurveFloat* _additionalCircleCurve;
 
 	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
 	float _additionalCircleSpeed;

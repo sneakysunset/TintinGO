@@ -5,6 +5,7 @@
 
 #include "GridManager.h"
 #include "MainGameMode.h"
+#include "TileActor_Cadenas.h"
 #include "TileActor_Character_Condor.h"
 #include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Peruvien.h"
@@ -191,11 +192,6 @@ void ATile::AddTintin()
 	milou->SetActorLocation(GetTileActorPosition(milou));
 }
 
-void ATile::AddCondor()
-{
-
-}
-
 void ATile::SetHighlighted(bool toHightlight)
 {
 	if(!_walkable) return;
@@ -332,6 +328,7 @@ void ATile::AddTileActors()
 			break;
 		case ETileActorType::Clue:
 			if(_TileItems[i].clueIndex != _gameManager->_clueNumber) continue;
+			verify(_clueBP);
 			tActor = GetWorld()->SpawnActor<ATileActor_Clue>(_clueBP, position, rotation, params);
 			clueCasted = Cast<ATileActor_Clue>(tActor);
 			clueCasted->clueNumber = _TileItems[i].clueIndex;
@@ -378,6 +375,26 @@ void ATile::SpawnMilouBone()
 	const FRotator rotation = FRotator(0, 0, 0);
 	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP, position, rotation, params);
 	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop->SetCurrentTile(this);
+}
+
+void ATile::AddCadenas()
+{
+	/*FActorSpawnParameters params;
+	params.ObjectFlags |= RF_Transient;
+	params.bNoFail = true;
+	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	const FVector position = GetActorLocation();
+	
+	const FRotator rotation = FRotator(0, 0, 0);
+	//if(!IsValid(_tintinBP) || !IsValid(_milouBP)) return;
+	ATileActor_Cadenas* character = GetWorld()->SpawnActor<ATileActor_Cadenas>(_cadenasBP, position, rotation, params);
+
+#if WITH_EDITOR
+	character->SetActorLabel(FString::Printf(TEXT("Cadenas")));
+#endif
+	character->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+	character->SetCurrentTile(this);
+	character->SetActorLocation(GetTileActorPosition(character));*/
 }
 
 UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat, int backgroundAlpha) const
@@ -470,7 +487,7 @@ void ATile::RefreshAdditionalTileScale(float DeltaSeconds)
 {
 	_interpolateValue += DeltaSeconds * _additionalCircleSpeed;
 	if(_interpolateValue >= 1) _interpolateValue = 0;
-	_additionalCircle->SetWorldScale3D(FMath::Lerp(_startAdditionalCircleScale, _endAdditionalCircleScale, _additionalCircleCurve->FloatCurve.Eval(_interpolateValue)));
+	_additionalCircle->SetWorldScale3D(FMath::Lerp(_startAdditionalCircleScale, _endAdditionalCircleScale, /*_additionalCircleCurve->FloatCurve.Eval(_interpolateValue)*/_interpolateValue));
 }
 
 void ATile::SetEnnemyDirection(bool toVisible, EAngle direction, bool onlyCircle) const
