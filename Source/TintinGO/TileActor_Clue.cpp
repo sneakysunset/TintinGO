@@ -73,8 +73,8 @@ void ATileActor_Clue::TriggerBody()
 					params.bNoFail = true;
 					params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 					params.ObjectFlags |= RF_Transient;
-					FRotator rotation = FRotator(0, 0, 0);
-					FVector position = _gameManager->_gridTiles[i].Tiles[j]->GetActorLocation();
+					const FRotator rotation = FRotator(0, 0, 0);
+					const FVector position = _gameManager->_gridTiles[i].Tiles[j]->GetActorLocation();
 					const auto newClue = GetWorld()->SpawnActor<ATileActor_Clue>(_gameManager->_gridTiles[i].Tiles[j]->_clueBP, position, rotation, params);
 					//_gameManager->_clues.Add(newClue);
 					UGameplayStatics::SpawnSoundAtLocation(this, S_CluePickUp, GetActorLocation());

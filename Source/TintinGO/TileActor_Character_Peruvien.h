@@ -80,6 +80,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TArray<USplineMeshComponent*> SplineMeshComponents;
+
+	UPROPERTY()
+	UStaticMeshComponent* splineStartPoint;
 	
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
 	USoundBase* S_detect;
@@ -96,9 +99,18 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
 	TSubclassOf<ASplineActor> _splineActor;
 
+	UPROPERTY()
+	float _timeToLateInit = .15;
+
+	UPROPERTY()
+	bool _hasLateInit;
+
+	UPROPERTY()
+	float _timePassed;
 	
 protected:
 	virtual void BeginPlay() override;
+	void LateInit();
 
 	virtual void Tick(float DeltaSeconds) override;
 };

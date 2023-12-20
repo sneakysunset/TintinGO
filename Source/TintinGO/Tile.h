@@ -141,19 +141,25 @@ public:
 
 	
 	UFUNCTION()
-	void SetHighlighted(bool toHightlight);
+	void SetHighlighted(bool toHightlight) const;
 
 	UFUNCTION()
 	void SetTilesInBoneRangeMat(bool toBone);
 
 	UFUNCTION()
-	void SetHighlightedPath(bool toHightlight);
+	void SetHighlightedPath(bool toHightlight) const;
 	
 	UFUNCTION()
 	FVector GetTileActorPosition(ATileActor* tileActor);
 	
 	UFUNCTION()
 	void RefreshTileBackgroundRenderer(int alpha);
+
+	UFUNCTION()
+	void RefreshAdditionalTileScale(float DeltaSeconds);
+
+	UFUNCTION()
+	void SetEnnemyDirection(bool toVisible, EAngle direction, bool onlyCircle) const;
 
 	UPROPERTY()
 	float _positionCircleRadius = 1;
@@ -189,26 +195,60 @@ private:
 	UFUNCTION()
 	void AddTintin();
 
-	void AddCondor();
-
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Tintin> _tintinBP;
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Milou> _milouBP;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Condor> _condorBP;
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_MilouBone> _milouBoneBP;
 	
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Peruvien> _peruvienBP;
 
 public:
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Clue> _clueBP;
+
+	UPROPERTY()
+	UStaticMeshComponent* _additionalCircle;
+
+	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
+	UCurveFloat* _additionalCircleCurve;
+
+	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
+	float _additionalCircleSpeed;
+
+	UPROPERTY()
+	float _interpolateValue;
+
+	UPROPERTY(EditDefaultsOnly, Category = AdditionalCircle)
+	float _scaleChangeMagnitude;
+
+	UPROPERTY()
+	FVector _startAdditionalCircleScale;
+
+	UPROPERTY()
+	FVector _endAdditionalCircleScale;
+
+	UPROPERTY()
+	UStaticMeshComponent* _ennemyCircleComponent;
+
+	UPROPERTY()
+	UStaticMeshComponent* _ennemyCircleRight;
+
+	UPROPERTY()
+	UStaticMeshComponent* _ennemyCircleLeft;
+	
+	UPROPERTY()
+	UStaticMeshComponent* _ennemyCircleUp;
+
+	UPROPERTY()
+	UStaticMeshComponent* _ennemyCircleDown;
 	
 protected:
 	virtual void BeginPlay() override;

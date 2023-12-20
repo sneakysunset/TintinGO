@@ -17,6 +17,7 @@
 #include "State.h"
 #include "State_LevelEnd.h"
 #include "State_Start.h"
+#include "TileActor_Character_Peruvien.h"
 
 AMainGameMode::AMainGameMode()
 {
@@ -336,15 +337,59 @@ ATile* AMainGameMode::GetTile(int32 i, int32 j)
 	return nullptr;
 }
 
+ATile* AMainGameMode::GetTileIfAccessible(int32 i, int32 j, EAngle angle)
+{
+	if (i >= 0 && i < _gridTiles.Num() && j >= 0 && j < _gridTiles[i].Tiles.Num())
+	{
+		ATile* nextTile = _gridTiles[i].Tiles[j];
+		if(nextTile->_walkable)
+		{
+			switch(angle)
+			{
+				case EAngle::Right: if(nextTile->_rightLink) return nextTile; break;
+				case EAngle::Left: if(nextTile->_leftLink) return nextTile; break;
+				case EAngle::Up: if(nextTile->_upLink) return nextTile; break;
+				case EAngle::Down: if(nextTile->_downLink) return nextTile; break;
+			}
+		}
+	}
+
+	return nullptr;
+}
+
 ATile* AMainGameMode::GetForwardTile(const ATile* tile, EAngle angle)
 {
 	ATile* resultTile = nullptr;
 	switch(angle)
 	{
-		case EAngle::Up: resultTile = GetTile(tile->_row + 1, tile->_column); break;
-		case EAngle::Left: resultTile = GetTile(tile->_row, tile->_column -1); break;
-		case EAngle::Right: resultTile = GetTile(tile->_row, tile->_column + 1); break;
-		case EAngle::Down: resultTile = GetTile(tile->_row - 1, tile->_column); break;
+		case EAngle::Up: resultTile = GetTileIfAccessible(tile->_row + 1, tile->_column, EAngle::Down); break;
+		case EAngle::Left: resultTile = GetTileIfAccessible(tile->_row, tile->_column -1, EAngle::Right); break;
+		case EAngle::Right: resultTile = GetTileIfAccessible(tile->_row, tile->_column + 1, EAngle::Left); break;
+		case EAngle::Down: resultTile = GetTileIfAccessible(tile->_row - 1, tile->_column, EAngle::Up); break;
 	}
 	return resultTile;
+}
+
+void AMainGameMode::SetTilesPeruvienColor(bool toVisible, EAngle direction, const ATile* startTile)
+{
+	const ATile* forwardTile = GetForwardTile(startTile, direction);
+	if(IsValid(forwardTile))
+	{
+		startTile->SetEnnemyDirection(toVisible, direction, false);
+		const ATile* forwardForwardTile = GetForwardTile(forwardTile, direction);
+		if(IsValid(forwardForwardTile))
+		{
+			forwardTile->SetEnnemyDirection(toVisible, direction, false);
+			forwardForwardTile->SetEnnemyDirection(toVisible, direction, true);
+		}
+		else
+		{
+			forwardTile->SetEnnemyDirection(toVisible, direction, true);
+		}
+	}
+	else
+	{
+		startTile->SetEnnemyDirection(toVisible, direction, true);
+	}
+	
 }

@@ -14,6 +14,71 @@ ATileActor_Character_Peruvien::ATileActor_Character_Peruvien(): _startingTile(nu
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+void ATileActor_Character_Peruvien::BeginPlay()
+{
+	Super::BeginPlay();
+	FActorSpawnParameters SpawnParams;
+	FVector Location = FVector(0.0f, 0.0f, 0.0f); // Example location
+	FRotator Rotation = FRotator(0.0f, 0.0f, 0.0f); // Example rotation
+
+	ASplineActor* actor = GetWorld()->SpawnActor<ASplineActor>(_splineActor, Location, Rotation, SpawnParams);
+	PathSpline = actor->MySplineComponent;
+	
+	_currentPBehaviour = EPeruvienBehaviour::Static;
+	PlayerController = GetWorld()->GetFirstPlayerController();
+	
+	TInlineComponentArray<UStaticMeshComponent*> Components;
+	GetComponents<UStaticMeshComponent>(Components);
+
+	for (int i = 0; i < Components.Num(); i++)
+	{
+		if(Components[i]->GetName() == "Exclamation Mark")
+		{
+			exclamativeMark = Components[i];
+			exclamativeMark->SetVisibility(false);
+		}
+		else if(Components[i]->GetName() == "Pathfind")
+		{
+			splineStartPoint = Components[i];
+		}
+	}
+}
+
+void ATileActor_Character_Peruvien::LateInit()
+{
+	_gameManager->SetTilesPeruvienColor(true, angle, GetCurrentTile());
+}
+
+void ATileActor_Character_Peruvien::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	const APlayerCameraManager* CameraManager = UGameplayStatics::GetPlayerCameraManager(this, 0);
+	if(IsValid(CameraManager) && IsValid(exclamativeMark))
+	{
+		const FVector CameraLocation = CameraManager->GetCameraLocation();
+
+		FVector Direction = CameraLocation - exclamativeMark->GetComponentLocation();
+		Direction.Z = 0;
+		Direction.Normalize();
+
+		FRotator LookAtRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
+		//LookAtRotation.Yaw += 90.0f;
+
+		exclamativeMark->SetWorldRotation(LookAtRotation);
+	}
+
+	if(!_hasLateInit)
+	{
+		_timePassed += DeltaSeconds;
+		if(_timePassed > _timeToLateInit)
+		{
+			_hasLateInit = true;
+			LateInit();
+		}
+	}
+}
+
 void ATileActor_Character_Peruvien::SetUpRotation(EAngle newAngle)
 {
 	angle = newAngle;
@@ -67,32 +132,6 @@ bool ATileActor_Character_Peruvien::Detection(ATile* detectTile) const
 	}
 }
 
-void ATileActor_Character_Peruvien::BeginPlay()
-{
-	Super::BeginPlay();
-	FActorSpawnParameters SpawnParams;
-	FVector Location = FVector(0.0f, 0.0f, 0.0f); // Example location
-	FRotator Rotation = FRotator(0.0f, 0.0f, 0.0f); // Example rotation
-
-	ASplineActor* actor = GetWorld()->SpawnActor<ASplineActor>(_splineActor, Location, Rotation, SpawnParams);
-	PathSpline = actor->MySplineComponent;
-	
-	_currentPBehaviour = EPeruvienBehaviour::Static;
-	PlayerController = GetWorld()->GetFirstPlayerController();
-	
-	TInlineComponentArray<UStaticMeshComponent*> Components;
-	GetComponents<UStaticMeshComponent>(Components);
-
-	for (int i = 0; i < Components.Num(); i++)
-	{
-		if(Components[i]->GetName() == "Exclamation Mark")
-		{
-			exclamativeMark = Components[i];
-			exclamativeMark->SetVisibility(false);
-		}
-	}
-}
-
 void ATileActor_Character_Peruvien::SetSplinePoints()
 {
 	// Create a spline mesh component for each segment of the spline
@@ -131,33 +170,24 @@ void ATileActor_Character_Peruvien::AddSplinePoint()
 		meshComp->DestroyComponent();
 	}
 	SplineMeshComponents.Empty(true);
+	bool firstTile = true;
 	for (auto tile : PeruvienTilePath)
 	{
-		FVector location = FVector(tile->GetActorLocation() + FVector::UpVector * 40);
-		PathSpline->AddSplinePoint(location, ESplineCoordinateSpace::World, true);
+		if(firstTile)
+		{
+			firstTile = false;
+			FVector location = FVector(tile->GetActorLocation());
+			PathSpline->AddSplinePoint(location, ESplineCoordinateSpace::World, true);
+			continue;
+		}
+		if(tile != GetCurrentTile())
+		{
+			FVector location = FVector(tile->GetActorLocation() + FVector::UpVector * 40);
+			PathSpline->AddSplinePoint(location, ESplineCoordinateSpace::World, true);
+		}
 	}
-	PathSpline->AddSplinePoint( GetActorLocation() + FVector::UpVector * 40,ESplineCoordinateSpace::World, true);
+	PathSpline->AddSplinePoint( splineStartPoint->GetComponentLocation() ,ESplineCoordinateSpace::World, true);
 	SetSplinePoints();
-}
-
-void ATileActor_Character_Peruvien::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-
-	const APlayerCameraManager* CameraManager = UGameplayStatics::GetPlayerCameraManager(this, 0);
-	if(IsValid(CameraManager) && IsValid(exclamativeMark))
-	{
-		const FVector CameraLocation = CameraManager->GetCameraLocation();
-
-		FVector Direction = CameraLocation - exclamativeMark->GetComponentLocation();
-		Direction.Z = 0;
-		Direction.Normalize();
-
-		FRotator LookAtRotation = FRotationMatrix::MakeFromX(Direction).Rotator();
-		//LookAtRotation.Yaw += 90.0f;
-
-		exclamativeMark->SetWorldRotation(LookAtRotation);
-	}
 }
 
 void ATileActor_Character_Peruvien::SetWidgetVisible(bool isVisible) const

@@ -62,4 +62,6 @@ public:
 	UPROPERTY()
 	bool ascending;
 
+	/*UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ATileActor_Clue> _clueBP;*/
 };
