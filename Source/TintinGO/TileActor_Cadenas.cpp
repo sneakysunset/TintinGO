@@ -1,9 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "TileActor_Cadenas.h"
 
-ATileActor_Cadenas* ATileActor_Cadenas::SingletonInstance = nullptr;
+
+ATileActor_Cadenas::ATileActor_Cadenas()
+{
+	PrimaryActorTick.bCanEverTick = true;
+}
 
 void ATileActor_Cadenas::BeginPlay()
 {
@@ -11,20 +12,33 @@ void ATileActor_Cadenas::BeginPlay()
 	TArray<UStaticMeshComponent*> Components;
 	GetComponents<UStaticMeshComponent>(Components);
 	_staticMeshComponent = Components[0];
+	for (const auto Mesh : Components)
+	{
+		if(Mesh->GetName() == "Mesh")
+		{
+			_staticMeshComponent = Mesh;
+			_startHeight = _staticMeshComponent->GetComponentLocation().Z;
+			_endHeight = _startHeight + _heightToGoUp;
+		}
+	}
 }
 
-ATileActor_Cadenas* ATileActor_Cadenas::GetInstance() 
+void ATileActor_Cadenas::Tick(float DeltaSeconds)
 {
-	return SingletonInstance;
-}
-
-ATileActor_Cadenas::ATileActor_Cadenas()
-{
-	SingletonInstance = this;
-	PrimaryActorTick.bCanEverTick = true;
+	Super::Tick(DeltaSeconds);
+	UE_LOG(LogTemp, Warning, TEXT("LOCK moving"));
+	CadenasAnimation(DeltaSeconds);
 }
 
 void ATileActor_Cadenas::UnlockCadenas() const
 {
 	_staticMeshComponent->SetVisibility(false);
+}
+
+void ATileActor_Cadenas::CadenasAnimation(float DeltaSeconds)
+{
+	_interpolateValue += _animationSpeed * DeltaSeconds;
+	if(_interpolateValue >= 1) _interpolateValue = 0;
+	const FVector position = FVector(_staticMeshComponent->GetComponentLocation().X, _staticMeshComponent->GetComponentLocation().Y, FMath::Lerp(_startHeight, _endHeight, _animCurve->FloatCurve.Eval(_interpolateValue)));
+	_staticMeshComponent->SetWorldLocation(position);
 }

@@ -6,8 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
-class ATileActor_MilouBone;
 class AGridManager;
+class ATileActor_Cadenas;
+class ATileActor_MilouBone;
 class ATileActor_Character_Milou;
 class ATileActor_Character_Tintin;
 class ATileActor_Character_Peruvien;
@@ -195,6 +196,9 @@ private:
 	UFUNCTION()
 	void AddTintin();
 
+	UFUNCTION()
+	void AddCadenas();
+	
 	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Tintin> _tintinBP;
 	
@@ -210,6 +214,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Peruvien> _peruvienBP;
 
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
+	TSubclassOf<ATileActor_Cadenas> _cadenasBP;
+	
 public:
 	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Clue> _clueBP;

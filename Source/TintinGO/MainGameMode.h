@@ -7,6 +7,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "MainGameMode.generated.h"
 
+class ATileActor_Cadenas;
 class ATileActor_Character_Peruvien;
 class ATileActor_Character_Condor;
 class ATileActor_Clue;
@@ -89,7 +90,10 @@ public:
     
     UPROPERTY()
     TArray<ATile*> _nests;
-    
+
+	UPROPERTY()
+	ATileActor_Cadenas* _cadenas;
+	
 protected:
     virtual void BeginPlay() override;
 

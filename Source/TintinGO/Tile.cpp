@@ -5,6 +5,7 @@
 
 #include "GridManager.h"
 #include "MainGameMode.h"
+#include "TileActor_Cadenas.h"
 #include "TileActor_Character_Condor.h"
 #include "TileActor_Character_Milou.h"
 #include "TileActor_Character_Peruvien.h"
@@ -87,7 +88,10 @@ void ATile::BeginPlay()
 		AddTintin();
 
 	if (_tileType == ETileType::EndingPosition)
+	{
 		_gameManager->_endTile = this;
+		AddCadenas();
+	}
 		
 	if (_tileType == ETileType::NestPosition)
 		_gameManager->_nests.Add(this);
@@ -186,6 +190,26 @@ void ATile::AddTintin()
 	character->SetCurrentTile(this);
 	character->SetActorLocation(GetTileActorPosition(character));
 	milou->SetActorLocation(GetTileActorPosition(milou));
+}
+
+void ATile::AddCadenas()
+{
+	FActorSpawnParameters params;
+	params.ObjectFlags |= RF_Transient;
+	params.bNoFail = true;
+	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	const FVector position = GetActorLocation();
+	
+	const FRotator rotation = FRotator(0, 0, 0);
+	//if(!IsValid(_tintinBP) || !IsValid(_milouBP)) return;
+	ATileActor_Cadenas* cadenas = GetWorld()->SpawnActor<ATileActor_Cadenas>(_cadenasBP, position, rotation, params);
+	//cadenas->SetUpRotation(_tintinAngle);
+#if WITH_EDITOR
+	cadenas->SetActorLabel(FString::Printf(TEXT("Tintin")));
+#endif
+	cadenas->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+	cadenas->SetCurrentTile(this);
+	cadenas->SetActorLocation(GetTileActorPosition(cadenas));
 }
 
 void ATile::SetHighlighted(bool toHightlight) const

@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -13,15 +11,36 @@ class TINTINGO_API ATileActor_Cadenas : public ATileActor
 
 	ATileActor_Cadenas();
 	
+protected:
 	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaSeconds) override;
 	
 public:
-	static ATileActor_Cadenas* GetInstance();
-	static ATileActor_Cadenas* SingletonInstance;
-
 	UFUNCTION()
 	void UnlockCadenas() const;
 
+	UFUNCTION()
+	void CadenasAnimation(float DeltaSeconds);
+	
 	UPROPERTY()
 	UStaticMeshComponent* _staticMeshComponent;
+
+	UPROPERTY(EditDefaultsOnly)
+	float _heightToGoUp;
+
+	UPROPERTY(EditDefaultsOnly)
+	float _animationSpeed;
+
+	UPROPERTY(EditDefaultsOnly)
+	UCurveFloat* _animCurve;
+	
+	UPROPERTY()
+	float _startHeight;
+
+	UPROPERTY()
+	float _endHeight;
+	
+	UPROPERTY()
+	float _interpolateValue;
 };
