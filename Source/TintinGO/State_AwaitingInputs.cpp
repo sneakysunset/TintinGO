@@ -131,7 +131,7 @@ void UState_AwaitingInputs::ProcessMousePositionInput()
 	if(_hitTile != hitTile)
 	{
 		if(IsValid(_hitTile))
-			_hitTile->SetHighlighted(false);
+			DisableTiles();
 		_hitTile = hitTile;
 	}
 	else if(_hitTile == hitTile)
@@ -166,7 +166,7 @@ void UState_AwaitingInputs::ProcessPlayerInputs()
 		}
 		else
 		{
-			_hitTile->SetHighlighted(false);
+			DisableTiles();
 			isTileAccessible = false;
 			_hitTile = nullptr;
 		}
@@ -209,6 +209,13 @@ void UState_AwaitingInputs::ReceiveMiloClickDelegate()
 void UState_AwaitingInputs::DisableTiles()
 {
 	if(!IsValid(_hitTile)) return;
-	_hitTile->SetHighlighted(false);
+	if(!IsA<UState_AwaitingInputs_Milou>())
+	{
+		_hitTile->SetHighlighted(false);
+	}
+	else
+	{
+		_hitTile->SetHighlightedPath(false);
+	}
 }
 

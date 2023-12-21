@@ -55,7 +55,7 @@ void UState_AwaitingInputs_Milou::ProcessPlayerInputs()
 				_milou->MilouTilePath[i]->SetHighlightedPath(false);
 			}
 		}
-		_hitTile->SetHighlighted(true);
+		_hitTile->SetHighlightedPath(true);
 		isTileAccessible = true;
 
 		_milou->MilouTilePath = _gameManager->GetPath(_hitTile, false);
@@ -70,7 +70,7 @@ void UState_AwaitingInputs_Milou::ProcessPlayerInputs()
 	else
 	{
 		check(_hitTile);
-		_hitTile->SetHighlighted(false);
+		_hitTile->SetHighlightedPath(false);
 		DisableTiles();
 		isTileAccessible = false;
 	}
@@ -135,7 +135,7 @@ void UState_AwaitingInputs_Milou::OnStateExit()
 void UState_AwaitingInputs_Milou::DisableTiles()
 {
 	if(!IsValid(_milou)) return;
-	if(_milou->MilouTilePath.Num() > 1)
+	if(_milou->MilouTilePath.Num() >= 1)
 	{
 		for (int i = 0; i < _milou->MilouTilePath.Num(); i++)
 		{
