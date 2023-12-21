@@ -104,7 +104,7 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 void UState_AwaitingInputs_Milou::ReceiveMiloClickDelegate()
 {
 	UGameplayStatics::SpawnSoundAtLocation(pc, _gameManager->S_buttonClick, pc->PlayerCameraManager->GetCameraLocation());
-	_milou->_milouBoneToDrop->OnDestroyBone();
+	//_milou->_milouBoneToDrop->OnDestroyBone();
 	_tintin->SetTintinMesh(ETintinState::Running);
 	_gameManager->StateChange(NewObject<UState_AwaitingInputs>(UState_AwaitingInputs::StaticClass()));
 }

@@ -42,6 +42,8 @@ void AMainGameMode::Tick(float DeltaTime)
 	{
 		_currentStateType->OnStateTick(DeltaTime);
 	}
+
+	UpdateMusic(DeltaTime);
 }
 
 
@@ -101,6 +103,17 @@ void AMainGameMode::BeginPlay()
 	_currentStateType->OnStateEnter();
 	OnBoneConsumed.BindDynamic(this, &AMainGameMode::ChangeTextValue);
 	ChangeTextValue(0, FColor::Emerald);
+	_puruitMusicAudioComponent = NewObject<UAudioComponent>(this);
+	_puruitMusicAudioComponent->SetSound(S_pursuitMusic);
+	_puruitMusicAudioComponent->RegisterComponent();
+	_puruitMusicAudioComponent->SetVolumeMultiplier(0.1);
+	_musicAudioComponent = NewObject<UAudioComponent>(this);
+	_musicAudioComponent->SetSound(S_music);
+	_musicAudioComponent->RegisterComponent();
+	_musicFadeInterpolateValue = 1;
+	_musicCurve = _musicFadeUpCurve;
+	_pursuitMusicCurve = _musicFadeDownCurve;
+	chaseMusic = false;
 }
 
 void AMainGameMode::LateInit()
@@ -279,6 +292,8 @@ void AMainGameMode::ChangeTextValue(int32 newValue, FColor DisabledColor)
 	}
 }
 
+
+
 void AMainGameMode::StateChange(UState* newState)
 {
 	_currentStateType->OnStateExit();
@@ -391,5 +406,32 @@ void AMainGameMode::SetTilesPeruvienColor(bool toVisible, EAngle direction, cons
 	{
 		startTile->SetEnnemyDirection(toVisible, direction, true);
 	}
+
+
 	
+}
+
+void AMainGameMode::ChangeMusic()
+{
+	if(_pursuitPeruviens.Num() > 0 && chaseMusic) return;
+	else if(_pursuitPeruviens.Num() > 0 && !chaseMusic) chaseMusic = true;
+	else if(_pursuitPeruviens.Num() == 0 && !chaseMusic) return;
+	else if(_pursuitPeruviens.Num() == 0 && chaseMusic) chaseMusic = false;
+
+	_musicFadeInterpolateValue = 0;
+	_musicCurve = chaseMusic ? _musicFadeDownCurve : _musicFadeUpCurve;
+	_pursuitMusicCurve = chaseMusic ? _musicFadeUpCurve : _musicFadeDownCurve;
+	//_musicAudioComponent->AdjustVolume(2, musicAudioTarget, EAudioFaderCurve::Linear);
+	//_puruitMusicAudioComponent->AdjustVolume(2, pursuitMusicAudioTarget, EAudioFaderCurve::Linear);
+	//UE_LOG(LogTemp, Warning, TEXT("MUSIC CHANGE music = %f and pursuit = %f"), musicAudioTarget, pursuitMusicAudioTarget);
+}
+
+void AMainGameMode::UpdateMusic(float DeltaTime)
+{
+	if(_musicFadeInterpolateValue <= 1)
+	{
+		_musicFadeInterpolateValue += DeltaTime * _fadeTime;
+		_musicAudioComponent->SetVolumeMultiplier(_musicCurve->FloatCurve.Eval(_musicFadeInterpolateValue));
+		_puruitMusicAudioComponent->SetVolumeMultiplier(_pursuitMusicCurve->FloatCurve.Eval(_musicFadeInterpolateValue));
+	}
 }

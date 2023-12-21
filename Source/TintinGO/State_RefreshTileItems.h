@@ -6,6 +6,8 @@
 #include "State.h"
 #include "State_RefreshTileItems.generated.h"
 
+class UBarrier;
+
 class ATileActor_Character_Tintin;
 /**
  * 

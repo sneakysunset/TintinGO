@@ -54,6 +54,6 @@ private:
 	UPROPERTY()
 	AMainGameMode* _gameManager;
 
-	UPROPERTY(EditAnywhere, Category = AudioFiles)
-	USoundBase* music;
+	/*UPROPERTY(EditAnywhere, Category = AudioFiles)
+	USoundBase* music;*/
 };

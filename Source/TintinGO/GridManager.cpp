@@ -34,7 +34,7 @@ void AGridManager::Tick(float DeltaTime)
 void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
-	UGameplayStatics::SpawnSoundAtLocation(this, music, GetActorLocation());
+	//UGameplayStatics::SpawnSoundAtLocation(this, music, GetActorLocation());
 	_gameManager = Cast<AMainGameMode>(GetWorld()->GetAuthGameMode());
 	_gameManager->_tileWidth = _tileWidth;
 }

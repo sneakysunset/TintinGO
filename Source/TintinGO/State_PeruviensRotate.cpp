@@ -101,5 +101,24 @@ void UState_PeruviensRotate::OnStateTick(float DeltaTime)
 
 void UState_PeruviensRotate::OnStateExit()
 {
+	for(auto peruvien : _gameManager->_peruviens)
+	{
+		if(peruvien->_currentPBehaviour == EPeruvienBehaviour::FollowingTintin || peruvien->_currentPBehaviour == EPeruvienBehaviour::SearchingTintin)
+		{
+			if(!_gameManager->_pursuitPeruviens.Contains(peruvien))
+			{
+				_gameManager->_pursuitPeruviens.Add(peruvien);
+				_gameManager->ChangeMusic();
+			}
+		}
+		else
+		{
+			if(_gameManager->_pursuitPeruviens.Contains(peruvien))
+			{
+				_gameManager->_pursuitPeruviens.Remove(peruvien);
+				_gameManager->ChangeMusic();
+			}
+		}
+	}
 	Super::OnStateExit();
 }

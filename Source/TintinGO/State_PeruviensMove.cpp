@@ -43,7 +43,6 @@ void UState_PeruviensMove::OnStateEnter()
 			_gameManager->MarkStepsOnGrid(peruvien->GetCurrentTile());
 			peruvien->PeruvienTilePath.Empty();
 			peruvien->PeruvienTilePath = _gameManager->GetPath(tintinTile, false);
-			
 			//SI TINTIN EST DEVANT LE PERUVIEN GAME OVER
 			if(FMath::Abs(peruvien->GetCurrentTile()->_row + peruvien->GetCurrentTile()->_column - tintinTile->_row - tintinTile->_column) == 1)
 			{
@@ -89,6 +88,7 @@ void UState_PeruviensMove::OnStateTick(float DeltaTime)
 		for (auto peruvien : _gameManager->_peruviens)
 		{
 			_gameManager->SetTilesPeruvienColor(true, peruvien->angle, peruvien->GetCurrentTile());
+			
 			
 			//GAME OVER
 			if(peruvien->GetCurrentTile() == tintin->GetCurrentTile())

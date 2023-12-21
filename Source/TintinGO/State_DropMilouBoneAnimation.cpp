@@ -22,7 +22,7 @@ void UState_DropMilouBoneAnimation::OnStateEnter()
 	ATileActor_Character_Tintin::GetInstance()->GetCurrentTile()->SpawnMilouBone();
 	
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
-	if(_gameManager->_milouSign != nullptr)
+	if(_gameManager->_milouSign != nullptr && _gameManager->_endTile != _milou->MilouTilePath[0])
 	{
 		_milouSignBarrier = NewObject<UBarrier>(UBarrier::StaticClass());
 		for (auto actor : _gameManager->_endTile->_tileActors)

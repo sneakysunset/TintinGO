@@ -4,9 +4,10 @@
 #include "Barrier.h"
 #include "TileActor_Character.h"
 #include "Curves/CurveFloat.h"
+#include "Components/AudioComponent.h"
+#include "Sound/SoundSubmix.h"
 #include "GameFramework/GameModeBase.h"
 #include "MainGameMode.generated.h"
-
 class ATileActor_MilouSign;
 class ATileActor_Cadenas;
 class ATileActor_Character_Peruvien;
@@ -130,6 +131,8 @@ public:
 
 	UFUNCTION()
 	void SetTilesPeruvienColor(bool toVisible, EAngle direction, const ATile* startTile);
+	void SetSubmixVolume(USoundSubmix* Submix, float VolumeLevel) const;
+	void CrossfadeSubmixes(USoundSubmix* FromSubmix, USoundSubmix* ToSubmix, float Duration);
 
 	FOnClickDelegate OnClickD;
     FUIMilouClick OnMilouBoneClick;
@@ -209,7 +212,50 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
 	USoundBase* S_TileClick;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_pursuitMusic;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_music;
+	
+	UPROPERTY(EditAnywhere, Category = "Audio")
+	UAudioComponent* _musicAudioComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Audio")
+	UAudioComponent* _puruitMusicAudioComponent;
 	
 	UFUNCTION()
 	void ChangeTextValue(int32 newValue, FColor DisabledColor);
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	float _fadeTime;
+
+	UPROPERTY()
+	float _musicFadeInterpolateValue;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	UCurveFloat* _musicFadeUpCurve;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	UCurveFloat* _musicFadeDownCurve;
+
+	UPROPERTY()
+	UCurveFloat* _musicCurve;
+
+	UPROPERTY()
+	UCurveFloat* _pursuitMusicCurve;
+	
+	UPROPERTY()
+	bool chaseMusic;
+
+	UFUNCTION()
+	void ChangeMusic();
+
+	UFUNCTION()
+	void UpdateMusic(float DeltaTime);
+	
+public:
+	UPROPERTY()
+	TArray<ATileActor_Character_Peruvien*> _pursuitPeruviens;
 };
