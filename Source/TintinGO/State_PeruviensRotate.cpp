@@ -89,6 +89,10 @@ void UState_PeruviensRotate::OnStateTick(float DeltaTime)
 				peruvien->SetWidgetVisible(true);
 				peruvien->AddSplinePoint();
 			}
+			else if(peruvien->PeruvienTilePath.Num() > 0)
+			{
+				peruvien->AddSplinePoint();
+			}
 		}
 		_gameManager->StateChange(NewObject<UState_CondorChoice>(UState_CondorChoice::StaticClass()));
 	}

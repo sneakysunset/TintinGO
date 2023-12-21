@@ -27,5 +27,8 @@ private:
 	UBarrier* _barrier;
 
 	UPROPERTY()
+	UBarrier* _milouSignBarrier;
+	
+	UPROPERTY()
 	ATileActor_Character_Milou* _milou;
 };

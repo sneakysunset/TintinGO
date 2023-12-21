@@ -1,24 +1,28 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
 #pragma once
 
 #include "CoreMinimal.h"
 #include "TileActor.h"
-#include "TileActor_Cadenas.generated.h"
+#include "TileActor_MilouSign.generated.h"
 
+/**
+ * 
+ */
 UCLASS()
-class TINTINGO_API ATileActor_Cadenas : public ATileActor
+class TINTINGO_API ATileActor_MilouSign : public ATileActor
 {
 	GENERATED_BODY()
 
-	ATileActor_Cadenas();
+	ATileActor_MilouSign();
 	
 protected:
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
 	
-public:
 	UFUNCTION()
-	void CadenasAnimation(float DeltaSeconds);
+	void MilouSignAnimation(float DeltaSeconds);
 	
 	UPROPERTY()
 	UStaticMeshComponent* _staticMeshComponent;
@@ -37,7 +41,8 @@ public:
 
 	UPROPERTY()
 	float _endHeight;
-	
+
+public:
 	UPROPERTY()
 	float _interpolateValue;
 };

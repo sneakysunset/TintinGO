@@ -6,6 +6,7 @@
 #include "State_DropMilouBoneAnimation.h"
 #include "State_MilouRotate.h"
 #include "Tile.h"
+#include "TileActor_MilouSign.h"
 #include "Kismet/GameplayStatics.h"
 
 void UState_AwaitingInputs_Milou::OnStateEnter()
@@ -81,7 +82,10 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 	if(isTileAccessible)
 	{
 		if(_milou->isBoundToTintin)
+		{
 			_milou->isBoundToTintin = false;
+			_gameManager->_endTile->SpawnMilouSign();
+		}
 		_milou->SetNextTile(_milou->MilouTilePath.Last());
 		_gameManager->_milouBonesNumber--;
 		if(_gameManager->OnBoneConsumed.IsBound())
@@ -91,6 +95,7 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 		UGameplayStatics::SpawnSoundAtLocation(_tintin, _tintin->S_throwBoneArray[randomAudioFileIndex], _tintin->GetActorLocation());
 		UGameplayStatics::SpawnSoundAtLocation(_milou, _milou->S_milouStartMoving, _milou->GetActorLocation());
 
+		
 		_gameManager->StateChange(NewObject<UState_DropMilouBoneAnimation>(UState_DropMilouBoneAnimation::StaticClass()));
 	}
 

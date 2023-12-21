@@ -28,11 +28,6 @@ void ATileActor_Cadenas::Tick(float DeltaSeconds)
 	CadenasAnimation(DeltaSeconds);
 }
 
-void ATileActor_Cadenas::UnlockCadenas() const
-{
-	_staticMeshComponent->SetVisibility(false);
-}
-
 void ATileActor_Cadenas::CadenasAnimation(float DeltaSeconds)
 {
 	_interpolateValue += _animationSpeed * DeltaSeconds;

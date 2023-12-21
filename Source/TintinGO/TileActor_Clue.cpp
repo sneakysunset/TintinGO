@@ -69,8 +69,8 @@ void ATileActor_Clue::TriggerBody()
 	if(clueNumber == 1)
 	{
 		UGameplayStatics::SpawnSoundAtLocation(this, S_EndTileActivated, GetActorLocation());
-		ATile* endTile = _gameManager->_cadenas->GetCurrentTile();
-		if(endTile->_tileActors.Contains(_gameManager->_cadenas)) endTile->_tileActors.Remove(_gameManager->_cadenas);
+		ATile* endTile = _gameManager->_endTile;
+		if(_gameManager->_cadenas != nullptr && endTile->_tileActors.Contains(_gameManager->_cadenas)) endTile->_tileActors.Remove(_gameManager->_cadenas);
 		for(int i = 0; i < endTile->_tileActors.Num(); i++)
 		{
 			_barrier->_actors.Add(endTile->_tileActors[i]);

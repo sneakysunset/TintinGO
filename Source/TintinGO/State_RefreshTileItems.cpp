@@ -24,6 +24,14 @@ void UState_RefreshTileItems::OnStateEnter()
 	{
 		_barrier->_actors.Add(actor);
 	}
+
+	if(_gameManager->_endTile != _tintin->GetCurrentTile())
+	{
+		for(auto actor : _gameManager->_endTile->_tileActors)
+		{
+			_barrier->_actors.Add(actor);
+		}
+	}
 	
 	_barrier->OnBarrierIni(UState_TA_Move::StaticClass());
 }

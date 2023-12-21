@@ -7,6 +7,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "MainGameMode.generated.h"
 
+class ATileActor_MilouSign;
 class ATileActor_Cadenas;
 class ATileActor_Character_Peruvien;
 class ATileActor_Character_Condor;
@@ -93,6 +94,9 @@ public:
 
 	UPROPERTY()
 	ATileActor_Cadenas* _cadenas;
+
+	UPROPERTY()
+	ATileActor_MilouSign* _milouSign;
 	
 protected:
     virtual void BeginPlay() override;

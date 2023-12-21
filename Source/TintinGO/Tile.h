@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
+class ATileActor_MilouSign;
 class AGridManager;
 class ATileActor_Cadenas;
 class ATileActor_MilouBone;
@@ -96,6 +97,9 @@ public:
 	
 	UFUNCTION()
 	void SpawnMilouBone();
+	
+	UFUNCTION()
+	void SpawnMilouSign();
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Editor Parameters")
 	bool _useEditorTick = true;
@@ -198,6 +202,7 @@ private:
 
 	UFUNCTION()
 	void AddCadenas();
+
 	
 	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Character_Tintin> _tintinBP;
@@ -216,6 +221,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
 	TSubclassOf<ATileActor_Cadenas> _cadenasBP;
+
+	UPROPERTY(EditDefaultsOnly, Category = Blueprints)
+	TSubclassOf<ATileActor_MilouSign> _milouSignBP;
 	
 public:
 	UPROPERTY(EditDefaultsOnly, Category = Blueprints)

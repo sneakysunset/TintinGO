@@ -13,6 +13,7 @@
 #include "TileActor_Character.h"
 #include "TileActor_Clue.h"
 #include "TileActor_MilouBone.h"
+#include "TileActor_MilouSign.h"
 
 ATile::ATile() 
 {
@@ -213,6 +214,30 @@ void ATile::AddCadenas()
 	_gameManager->_endTile = this;
 	_gameManager->_cadenas->angle = _tintinAngle;
 	_gameManager->_cadenas->SetUpRotation(_tintinAngle);
+}
+
+void ATile::SpawnMilouSign()
+{
+	FActorSpawnParameters params;
+	params.ObjectFlags |= RF_Transient;
+	params.bNoFail = true;
+	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	const FVector position = GetActorLocation();
+	
+	const FRotator rotation = FRotator(0, 0, 0);
+	//if(!IsValid(_tintinBP) || !IsValid(_milouBP)) return;
+	_gameManager->_milouSign = GetWorld()->SpawnActor<ATileActor_MilouSign>(_milouSignBP, position, rotation, params);
+	//cadenas->SetUpRotation(_tintinAngle);
+	#if WITH_EDITOR
+	_gameManager->_milouSign->SetActorLabel(FString::Printf(TEXT("Tintin")));
+#endif
+	_gameManager->_milouSign->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+	_gameManager->_milouSign->SetCurrentTile(this);
+	_gameManager->_milouSign->angle = _tintinAngle;
+	_gameManager->_milouSign->SetUpRotation(_tintinAngle);
+	if(_gameManager->_cadenas != nullptr)
+		_gameManager->_milouSign->_interpolateValue = _gameManager->_cadenas->_interpolateValue;
+
 }
 
 void ATile::SetHighlighted(bool toHightlight) const

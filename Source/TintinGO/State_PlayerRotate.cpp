@@ -4,6 +4,7 @@
 #include "State_PlayerRotate.h"
 
 #include "GameManager.h"
+#include "MainGameMode.h"
 #include "State_PlayerMove.h"
 #include "Tile.h"
 #include "TileActor_Character_Tintin.h"

@@ -7,6 +7,7 @@
 #include "State_TriggerItemsCharacters.h"
 #include "GlobalGameManager.h"
 #include "MainGameMode.h"
+#include "TileActor_MilouSign.h"
 #include "Kismet/GameplayStatics.h"
 
 void UState_PlayerMove::OnStateEnter()
@@ -65,6 +66,11 @@ void UState_PlayerMove::OnStateTick(float DeltaTime)
 			_milou->isBoundToTintin = true;
 			_milou->SetMilouMesh(EMilouState::Standing);
 
+			if(_gameManager->_milouSign->GetCurrentTile()->_tileActors.Contains(_gameManager->_milouSign))
+			{
+				_gameManager->_milouSign->GetCurrentTile()->_tileActors.Remove(_gameManager->_milouSign);
+			}
+			_gameManager->_milouSign->Destroy();
 			const int32 randomAudioFileIndex = FMath::RandRange(0, _tintin->S_pickUpMilou.Num() - 1);
 		
 			UGameplayStatics::SpawnSoundAtLocation(_tintin, _tintin->S_pickUpMilou[randomAudioFileIndex], _tintin->GetActorLocation());

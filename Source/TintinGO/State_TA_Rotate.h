@@ -3,6 +3,8 @@
 #include "State_TActor.h"
 #include "State_TA_Rotate.generated.h"
 
+class ATileActor_Character_Peruvien;
+
 UCLASS()
 class UState_TA_Rotate : public UState_TActor
 {
@@ -19,4 +21,7 @@ private:
 	
 	FRotator _startRotation;
 	FRotator _endRotation;
+
+	UPROPERTY()
+	ATileActor_Character_Peruvien* _Peruvien;
 };

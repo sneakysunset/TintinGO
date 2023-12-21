@@ -58,11 +58,19 @@ void UState_TA_Rotate::OnStateEnter()
 	}
 	character->angle = angle;
 	_endRotation = FQuat::MakeFromEuler(FVector::UpVector * (angleValue + character->_baseAngleOffset)).Rotator();
+	
+	_Peruvien = nullptr;
+	if(_tileActor->IsA<ATileActor_Character_Peruvien>())
+	{
+		_Peruvien = Cast<ATileActor_Character_Peruvien>(_tileActor);
+	}
 }
 
 void UState_TA_Rotate::OnStateTick(float DeltaTime)
 {
 	_tileActor->SetActorRotation(FQuat::Slerp(_startRotation.Quaternion(), _endRotation.Quaternion(), _interpolateValue));
+	if(_Peruvien != nullptr)
+		_Peruvien->AddSplinePoint();
 	Super::OnStateTick(DeltaTime);
 }
 
