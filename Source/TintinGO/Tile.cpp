@@ -202,14 +202,15 @@ void ATile::AddCadenas()
 	
 	const FRotator rotation = FRotator(0, 0, 0);
 	//if(!IsValid(_tintinBP) || !IsValid(_milouBP)) return;
-	ATileActor_Cadenas* cadenas = GetWorld()->SpawnActor<ATileActor_Cadenas>(_cadenasBP, position, rotation, params);
+	_gameManager->_cadenas = GetWorld()->SpawnActor<ATileActor_Cadenas>(_cadenasBP, position, rotation, params);
 	//cadenas->SetUpRotation(_tintinAngle);
 #if WITH_EDITOR
-	cadenas->SetActorLabel(FString::Printf(TEXT("Tintin")));
+	_gameManager->_cadenas->SetActorLabel(FString::Printf(TEXT("Tintin")));
 #endif
-	cadenas->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
-	cadenas->SetCurrentTile(this);
-	cadenas->SetActorLocation(GetTileActorPosition(cadenas));
+	_gameManager->_cadenas->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
+	_gameManager->_cadenas->SetCurrentTile(this);
+	_gameManager->_cadenas->SetActorLocation(GetTileActorPosition(_gameManager->_cadenas));
+	_gameManager->_endTile = this;
 }
 
 void ATile::SetHighlighted(bool toHightlight) const

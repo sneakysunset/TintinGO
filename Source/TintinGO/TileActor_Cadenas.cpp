@@ -11,7 +11,6 @@ void ATileActor_Cadenas::BeginPlay()
 	Super::BeginPlay();
 	TArray<UStaticMeshComponent*> Components;
 	GetComponents<UStaticMeshComponent>(Components);
-	_staticMeshComponent = Components[0];
 	for (const auto Mesh : Components)
 	{
 		if(Mesh->GetName() == "Mesh")
@@ -26,7 +25,6 @@ void ATileActor_Cadenas::BeginPlay()
 void ATileActor_Cadenas::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	UE_LOG(LogTemp, Warning, TEXT("LOCK moving"));
 	CadenasAnimation(DeltaSeconds);
 }
 
