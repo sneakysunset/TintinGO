@@ -17,6 +17,8 @@ void UState_CondorWait::OnStateEnter()
 	
 	for (auto condor : _gameManager->_condors)
 	{
+		condor->SetCondorSitting(false);
+
 		condor->_characters.Empty();
 		condor->isWaitLastRound = true;
 	}

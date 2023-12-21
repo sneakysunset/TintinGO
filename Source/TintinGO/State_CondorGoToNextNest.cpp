@@ -57,6 +57,7 @@ void UState_CondorGoToNextNest::OnStateTick(float DeltaTime)
 				rotateInterpolationValue = 0;
 				condor->_startRotation = condor->GetActorRotation().Quaternion();
 				condor->_endRotation = condor->GetTargetRotation(condor->GetCurrentTile()->_nestDirection).Quaternion();
+				condor->SetCondorSitting(true);
 			}
 			hasBarrierCompleted = true;
 		}

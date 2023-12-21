@@ -74,6 +74,10 @@ void ATile::BeginPlay()
 		{
 			_ennemyCircleDown = Components[i];
 		}
+		else if(Components[i]->GetName() == "CondorPlane")
+		{
+			_condorAttackTile = Components[i];
+		}
 	}
 	
 	AddTileActors();
@@ -82,7 +86,7 @@ void ATile::BeginPlay()
 
 	if(!_walkable)
 	{
-		SetActorHiddenInGame(true);
+		_staticMeshComponent->SetHiddenInGame(true);
 	}
 	
 	if(_tileType == ETileType::StartingPosition)
@@ -162,7 +166,8 @@ void ATile::BlueprintEditorTick(float DeltaTime)
 			break;
 		}
 	}
-	else {
+	else
+	{
 		_staticMeshComponent->SetMaterial(0, _unwalkableMat);
 	}
 }
@@ -490,7 +495,15 @@ void ATile::RefreshLinks()
 
 void ATile::RefreshTileBackgroundRenderer(int alpha)
 {
-	_currentBackgroundAlpha = _currentBackgroundAlpha = alpha;
+	if(alpha == 1)
+	{
+		_condorAttackTile->SetHiddenInGame(false);
+	}
+	else
+	{
+		_condorAttackTile->SetHiddenInGame(true);
+	}
+	/*_currentBackgroundAlpha = _currentBackgroundAlpha = alpha;
 	
 	switch (_tileType)
 	{
@@ -508,7 +521,7 @@ void ATile::RefreshTileBackgroundRenderer(int alpha)
 			break;
 		default:
 			break;
-	}
+	}*/
 }
 
 void ATile::RefreshAdditionalTileScale(float DeltaSeconds)

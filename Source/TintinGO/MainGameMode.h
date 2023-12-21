@@ -121,8 +121,14 @@ public:
 
 	UFUNCTION()
 	ATile* GetTile(int32 i, int32 j);
+
+	UFUNCTION()
 	ATile* GetTileIfAccessible(int32 i, int32 j, EAngle angle);
+
+	UFUNCTION()
 	ATile* GetForwardTile(const ATile* tile, EAngle angle);
+
+	UFUNCTION()
 	void SetTilesPeruvienColor(bool toVisible, EAngle direction, const ATile* startTile);
 
 	FOnClickDelegate OnClickD;
@@ -197,6 +203,12 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
 	USoundBase* S_GameOver;
+	
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_TileHover;
+
+	UPROPERTY(EditDefaultsOnly, Category = AudioFiles)
+	USoundBase* S_TileClick;
 	
 	UFUNCTION()
 	void ChangeTextValue(int32 newValue, FColor DisabledColor);

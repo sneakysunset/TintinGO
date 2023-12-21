@@ -264,6 +264,9 @@ public:
 
 	UPROPERTY()
 	UStaticMeshComponent* _ennemyCircleDown;
+
+	UPROPERTY()
+	UStaticMeshComponent* _condorAttackTile;
 	
 protected:
 	virtual void BeginPlay() override;

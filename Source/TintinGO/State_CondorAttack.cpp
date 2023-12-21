@@ -31,25 +31,25 @@ void UState_CondorAttack::OnStateEnter()
 			switch (currentTile->_nestDirection)
 			{
 				case EAngle::Left :
-					for (int i = currentTile->_column - 1; i >= 0; --i)
+					for (int i = currentTile->_column; i >= 0; i--)
 					{
 						_gameManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(0);
 					}
 					break;
 				case EAngle::Right :
-					for (int i = currentTile->_column + 1; i < _gameManager->_gridTiles[0].Tiles.Num(); ++i)
+					for (int i = currentTile->_column; i < _gameManager->_gridTiles[0].Tiles.Num(); i++)
 					{
 						_gameManager->_gridTiles[currentTile->_row].Tiles[i]->RefreshTileBackgroundRenderer(0);
 					}
 					break;
 				case EAngle::Up :
-					for (int i = currentTile->_row + 1; i > _gameManager->_gridTiles.Num(); ++i)
+					for (int i = currentTile->_row; i > _gameManager->_gridTiles.Num(); i++)
 					{
 						_gameManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(0);
 					}
 					break;
 				case EAngle::Down :
-					for (int i = currentTile->_row - 1; i >= 0; --i)
+					for (int i = currentTile->_row; i >= 0; i--)
 					{
 						_gameManager->_gridTiles[i].Tiles[currentTile->_column]->RefreshTileBackgroundRenderer(0);
 					}
