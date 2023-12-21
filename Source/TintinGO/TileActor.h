@@ -8,6 +8,15 @@
 class AMainGameMode;
 class ATile;
 
+UENUM(BlueprintType)
+enum class EAngle : uint8
+{
+	Right = 0 UMETA(DisplayName = "Right"),
+	Left = 1 UMETA(DisplayName = "Left"),
+	Up = 2 UMETA(DisplayName = "Up"),
+	Down = 4 UMETA(DisplayName = "Down")
+};
+
 UCLASS()
 class TINTINGO_API ATileActor : public AActor
 {
@@ -26,6 +35,16 @@ public:
 	
 	virtual ATile* GetCurrentTile() const;
 	virtual void SetCurrentTile(ATile* tile);
+
+	UPROPERTY(EditAnywhere)
+	float _baseAngleOffset;
+
+	UFUNCTION()
+	virtual void SetUpRotation(EAngle newAngle);
+
+	UPROPERTY()
+	EAngle angle;
+	
 	bool _isTaskOver;
 
 	UPROPERTY(EditAnywhere)

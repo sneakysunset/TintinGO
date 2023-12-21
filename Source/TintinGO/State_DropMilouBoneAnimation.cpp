@@ -18,6 +18,7 @@ void UState_DropMilouBoneAnimation::OnStateEnter()
 	UE_LOG(LogTemp, Warning, TEXT("Milou Bone Throw State Enter"));
 
 	_milou = ATileActor_Character_Milou::GetInstance();
+	ATileActor_Character_Tintin::GetInstance()->GetCurrentTile()->SpawnMilouBone();
 	
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
 	
@@ -25,12 +26,14 @@ void UState_DropMilouBoneAnimation::OnStateEnter()
 
 	ATile* nextTile = _milou->MilouTilePath[0];
 	_milou->_milouBoneToDrop->SetCurrentTile(nextTile);
-	
+
 	_gameManager->ChangeTile(_barrier, previousTile, _milou->_milouBoneToDrop->GetCurrentTile());
 	_barrier->OnBarrierIni(UState_MilouBone_Move::StaticClass());
 	Cast<UState_MilouBone_Move>(_milou->_milouBoneToDrop->_currentState_TA)->_actorSpeed = _milou->_milouBoneToDrop->_speed;
 	Cast<UState_MilouBone_Move>(_milou->_milouBoneToDrop->_currentState_TA)->_speed = _milou->_milouBoneToDrop->_speed;
 	UGameplayStatics::SpawnSoundAtLocation(_milou, _milou->_milouBoneToDrop->S_BoneThrow, _milou->_milouBoneToDrop->GetActorLocation());
+	ATileActor_Character_Tintin::GetInstance()->SetTintinMesh(ETintinState::Running);
+
 }
 
 void UState_DropMilouBoneAnimation::OnStateTick(float DeltaTime)
@@ -47,5 +50,4 @@ void UState_DropMilouBoneAnimation::OnStateTick(float DeltaTime)
 void UState_DropMilouBoneAnimation::OnStateExit()
 {
 	UState::OnStateExit();
-	ATileActor_Character_Tintin::GetInstance()->SetTintinMesh(ETintinState::Running);
 }

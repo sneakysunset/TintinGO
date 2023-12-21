@@ -29,9 +29,12 @@ void UState_CondorDropCharacters::OnStateEnter()
 		if (condor->_characters.Num() > 0)
 		{
 			ATile* previousTile = condor->GetCurrentTile();
+
 			switch (nextNestTile->_nestDirection)
 			{
+
 				case EAngle::Left :
+				{
 					targetTile = _gameManager->GetTile(nextNestTile->_row, nextNestTile->_column - 1);
 					condor->SetNextTile(targetTile );
 					condor->SetCurrentTile(condor->GetNextTile());
@@ -50,8 +53,10 @@ void UState_CondorDropCharacters::OnStateEnter()
 						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
 					break;
+				}
 				
 				case EAngle::Right :
+				{
 					targetTile = _gameManager->GetTile(nextNestTile->_row, nextNestTile->_column + 1);
 					condor->SetNextTile(targetTile );
 					condor->SetCurrentTile(condor->GetNextTile());
@@ -70,8 +75,10 @@ void UState_CondorDropCharacters::OnStateEnter()
 						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
 					break;
+				}
 				
 				case EAngle::Up :
+				{
 					targetTile = _gameManager->GetTile(nextNestTile->_row + 1, nextNestTile->_column);
 					condor->SetNextTile(targetTile);
 					condor->SetCurrentTile(condor->GetNextTile());
@@ -90,8 +97,10 @@ void UState_CondorDropCharacters::OnStateEnter()
 						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
 					break;
+				}
 				
 				case EAngle::Down :
+				{
 					targetTile = _gameManager->GetTile(nextNestTile->_row - 1, nextNestTile->_column);
 					condor->SetNextTile(targetTile);
 					condor->SetCurrentTile(condor->GetNextTile());
@@ -110,10 +119,8 @@ void UState_CondorDropCharacters::OnStateEnter()
 						Character->SetCurrentTile(Character->GetNextTile());
 						_gameManager->ChangeTile(_barrier, previousTile, Character->GetCurrentTile());
 					}
-				
-				
 					break;
-				
+				}
 				default:
 					break;
 			}

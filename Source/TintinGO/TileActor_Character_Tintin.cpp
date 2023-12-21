@@ -65,3 +65,24 @@ void ATileActor_Character_Tintin::SetTintinMesh(ETintinState state)
 		}
 	}
 }
+
+void ATileActor_Character_Tintin::RotateTintinToTargetTile(ATile* targetTile, float DeltaTime)
+{
+	if(_targetTile != targetTile)
+	{
+		_targetTile = targetTile;
+		_interpolateValue = 0;
+		const FVector TargetDirection = _targetTile->GetActorLocation() - GetActorLocation();
+		FRotator TargetRotation = TargetDirection.Rotation();
+		TargetRotation.Yaw += 90;
+		_startRotation = GetActorRotation().Quaternion();
+		_endRotation = TargetRotation.Quaternion();
+	}
+
+	if(_interpolateValue <= 1)
+	{
+		_interpolateValue += _rotationThrowSpeed * DeltaTime;
+		const FQuat rot =  FQuat::Slerp(_startRotation, _endRotation, _interpolateValue);
+		SetActorRotation(rot);
+	}
+}

@@ -211,6 +211,8 @@ void ATile::AddCadenas()
 	_gameManager->_cadenas->SetCurrentTile(this);
 	_gameManager->_cadenas->SetActorLocation(GetTileActorPosition(_gameManager->_cadenas));
 	_gameManager->_endTile = this;
+	_gameManager->_cadenas->angle = _tintinAngle;
+	_gameManager->_cadenas->SetUpRotation(_tintinAngle);
 }
 
 void ATile::SetHighlighted(bool toHightlight) const
@@ -351,6 +353,8 @@ void ATile::AddTileActors()
 			tActor = GetWorld()->SpawnActor<ATileActor_Clue>(_clueBP, position, rotation, params);
 			clueCasted = Cast<ATileActor_Clue>(tActor);
 			clueCasted->clueNumber = _TileItems[i].clueIndex;
+			clueCasted->angle = _TileItems[i].angle;
+			clueCasted->SetUpRotation(clueCasted->angle);
 			//clueCasted->SetActorHiddenInGame(true);
 			break;
 		case ETileActorType::Peruvien:
@@ -389,8 +393,8 @@ void ATile::SpawnMilouBone()
 	FActorSpawnParameters params;
 	params.bNoFail = true;
 	params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-	const FVector position = GetActorLocation() + FVector(0, 2, 0);
+	auto tintin = ATileActor_Character_Tintin::GetInstance();
+	const FVector position = tintin->bone->GetComponentLocation();
 	const FRotator rotation = FRotator(0, 0, 0);
 	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop = GetWorld()->SpawnActor<ATileActor_MilouBone>(_milouBoneBP, position, rotation, params);
 	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop->SetCurrentTile(this);

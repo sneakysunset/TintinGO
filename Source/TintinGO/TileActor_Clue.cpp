@@ -106,6 +106,8 @@ void ATileActor_Clue::TriggerBody()
 							_barrier->_actors.Add(_gameManager->_gridTiles[i].Tiles[j]->_tileActors[f]);
 						}
 						newClue->clueNumber = clueNumber - 1;
+						newClue->angle = _gameManager->_gridTiles[i].Tiles[j]->_TileItems[k].angle;
+						newClue->SetUpRotation(newClue->angle);
 						isOver= true;
 						break;
 					}

@@ -33,6 +33,27 @@ public:
 
 	UFUNCTION()
 	void SetTintinMesh(ETintinState state);
+
+	UFUNCTION()
+	void RotateTintinToTargetTile(ATile* targetTile, float DeltaTime);
+
+	UPROPERTY()
+	ATile* _targetTile;
+
+	UPROPERTY()
+	float _interpolateValue;
+
+	UPROPERTY(EditDefaultsOnly, Category = TintinRotationThrow)
+	float _rotationThrowSpeed;
+
+	UPROPERTY()
+	FQuat _startRotation;
+
+	UPROPERTY()
+	FQuat _endRotation;
+	
+	UPROPERTY()
+	UStaticMeshComponent* bone;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -40,6 +61,4 @@ protected:
 	UPROPERTY()
 	TMap<ETintinState , UStaticMeshComponent*> _tintinMeshes;
 
-	UPROPERTY()
-	UStaticMeshComponent* bone;
 };

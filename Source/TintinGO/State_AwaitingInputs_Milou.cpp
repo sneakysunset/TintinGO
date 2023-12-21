@@ -11,7 +11,6 @@
 void UState_AwaitingInputs_Milou::OnStateEnter()
 {
 	Super::OnStateEnter();
-	_milou->GetCurrentTile()->SpawnMilouBone();
 	_gameManager->MarkStepsOnGrid(ATileActor_Character_Milou::GetInstance()->GetCurrentTile());
 	_tintin = ATileActor_Character_Tintin::GetInstance();
 	_tintin->SetTintinMesh(ETintinState::Throwing);
@@ -28,6 +27,15 @@ void UState_AwaitingInputs_Milou::OnStateEnter()
 			}
 		}
 	}
+}
+
+void UState_AwaitingInputs_Milou::OnStateTick(float DeltaTime)
+{
+	if(_hitTile != nullptr)
+	{
+		_tintin->RotateTintinToTargetTile(_hitTile, DeltaTime);
+	}
+	Super::OnStateTick(DeltaTime);
 }
 
 void UState_AwaitingInputs_Milou::ProcessPlayerInputs()
@@ -78,7 +86,7 @@ void UState_AwaitingInputs_Milou::ReceiveLeftMouseClick()
 		_gameManager->_milouBonesNumber--;
 		if(_gameManager->OnBoneConsumed.IsBound())
 			_gameManager->OnBoneConsumed.Execute(_gameManager->_milouBonesNumber, FColor::Emerald);
-		int32 randomAudioFileIndex = FMath::RandRange(0, _tintin->S_throwBoneArray.Num() - 1);
+		const int32 randomAudioFileIndex = FMath::RandRange(0, _tintin->S_throwBoneArray.Num() - 1);
 		
 		UGameplayStatics::SpawnSoundAtLocation(_tintin, _tintin->S_throwBoneArray[randomAudioFileIndex], _tintin->GetActorLocation());
 		UGameplayStatics::SpawnSoundAtLocation(_milou, _milou->S_milouStartMoving, _milou->GetActorLocation());

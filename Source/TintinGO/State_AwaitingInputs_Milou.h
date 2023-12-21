@@ -13,6 +13,7 @@ class TINTINGO_API UState_AwaitingInputs_Milou : public UState_AwaitingInputs
 	GENERATED_BODY()
 public:
 	virtual void OnStateEnter() override;
+	virtual void OnStateTick(float DeltaTime) override;
 	virtual void ProcessPlayerInputs() override;
 	virtual void ReceiveLeftMouseClick() override;
 	virtual void ReceiveMiloClickDelegate() override;
