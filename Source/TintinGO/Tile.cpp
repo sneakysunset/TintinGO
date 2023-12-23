@@ -24,12 +24,6 @@ ATile::ATile()
 	_upLink = false;
 	_downLink = false;
 	_step = -1;
-	/*static ConstructorHelpers::FObjectFinder<ATileActor_Character_Tintin> meshFinder(TEXT("/Script/Engine.Blueprint'/Game/BluePrints/TileActor_Character_Tintin_BP.TileActor_Character_Tintin_BP'"));
-	_tintinBP =  meshFinder.Object;
-	static ConstructorHelpers::FObjectFinder<ATileActor_Character_Milou> meshFinder2(TEXT("/Script/Engine.Blueprint'/Game/BluePrints/TileActor_Character_Milou_BP.TileActor_Character_Milou_BP'"));
-	_milouBP =  meshFinder2.Object;*/
-
-
 }
 
 void ATile::BeginPlay()
@@ -41,6 +35,7 @@ void ATile::BeginPlay()
 	TArray<UStaticMeshComponent*> Components;
 	GetComponents<UStaticMeshComponent>(Components);
 
+	//Get references to all the dynamics static mesh components I'll be using.
 	for(int i = 0; i < Components.Num(); i++)
 	{
 		if(Components[i]->GetName() == "Plane")
@@ -79,9 +74,11 @@ void ATile::BeginPlay()
 			_condorAttackTile = Components[i];
 		}
 	}
-	
+
+	//Instantiate all Tile actors (Except singletons)
 	AddTileActors();
 
+	//UpdateMaterials to the appropriate ones.
 	SetHighlighted(false);
 
 	if(!_walkable)
@@ -101,6 +98,7 @@ void ATile::BeginPlay()
 	if (_tileType == ETileType::NestPosition)
 		_gameManager->_nests.Add(this);
 
+	//Place actors on tiles in a circle around the middle if there are more than one.
 	for (auto actor : _tileActors)
 	{
 		actor->SetActorLocation(GetTileActorPosition(actor));
@@ -111,20 +109,23 @@ void ATile::BeginPlay()
 void ATile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	//Editor Shenanigans (not sure this is a word)
 #if WITH_EDITOR
 	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor)
 	{
 		BlueprintEditorTick(DeltaTime);
 	}
-
 #endif
 
+	//Indicator of target tiles when throwing the bone. Update the scale for animation.
 	if(IsValid(_additionalCircle) && _additionalCircle->IsVisible())
 	{
 		RefreshAdditionalTileScale(DeltaTime);
 	}
 }
 
+//Editor stuff
 bool ATile::ShouldTickIfViewportsOnly() const
 {
 	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor && _useEditorTick)
@@ -137,17 +138,22 @@ bool ATile::ShouldTickIfViewportsOnly() const
 	}
 }
 
+//Editor Update Material.
 void ATile::BlueprintEditorTick(float DeltaTime)
 {
-	TArray<UStaticMeshComponent*> Components;
-	GetComponents<UStaticMeshComponent>(Components);
-	if(Components.Num() > 0)
+	if(_staticMeshComponent == nullptr)
 	{
-		_staticMeshComponent = Components[0];
-	}
-	else
-	{
-		return;
+		TArray<UStaticMeshComponent*> Components;
+		GetComponents<UStaticMeshComponent>(Components);
+		for (int i = 0; i < Components.Num(); i++)
+		{
+			if(Components[i]->GetName() == "Plane")
+			{
+				_staticMeshComponent = Components[i];
+				 break;
+			}
+				
+		}
 	}
 	if (_walkable) {
 			
@@ -430,6 +436,8 @@ void ATile::SpawnMilouBone()
 	ATileActor_Character_Milou::GetInstance()->_milouBoneToDrop->SetCurrentTile(this);
 }
 
+
+//Function to update materials while taking into account material paramters that depend on global functions.
 UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat, int backgroundAlpha) const
 {
 	UMaterialInstanceDynamic* dynamicMaterial = UMaterialInstanceDynamic::Create(mat , nullptr);
@@ -458,6 +466,7 @@ UMaterialInstanceDynamic* ATile::DynamicMat(UMaterialInterface* mat, int backgro
 	return dynamicMaterial;
 }
 
+//Update the links around the tile. Is usually called from the gridManager.
 void ATile::RefreshLinks()
 {
 
@@ -493,6 +502,7 @@ void ATile::RefreshLinks()
 	_gridManager = nullptr;
 }
 
+//Used to work with alpha so a float. Changed technology but didn't take the time to switch for a boolean instead.
 void ATile::RefreshTileBackgroundRenderer(int alpha)
 {
 	if(alpha == 1)
@@ -524,6 +534,7 @@ void ATile::RefreshTileBackgroundRenderer(int alpha)
 	}*/
 }
 
+//Feedback Animation Actualisation when throwing bone.
 void ATile::RefreshAdditionalTileScale(float DeltaSeconds)
 {
 	_interpolateValue += DeltaSeconds * _additionalCircleSpeed;
@@ -531,6 +542,7 @@ void ATile::RefreshAdditionalTileScale(float DeltaSeconds)
 	_additionalCircle->SetWorldScale3D(FMath::Lerp(_startAdditionalCircleScale, _endAdditionalCircleScale, _additionalCircleCurve->FloatCurve.Eval(_interpolateValue)));
 }
 
+//Feedback plane activation for ennemy vision range.
 void ATile::SetEnnemyDirection(bool toVisible, EAngle direction, bool onlyCircle) const
 {
 	if(toVisible)

@@ -9,8 +9,6 @@ AClickInputManager::AClickInputManager()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-
-
 void AClickInputManager::BeginPlay()
 {
 	Super::BeginPlay();
@@ -20,9 +18,9 @@ void AClickInputManager::BeginPlay()
 void AClickInputManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
+//Native ue5 function that lets be register a method to be triggered when an input is thrown. I am here binding OnMouseClick to Left Mouse Click.
 void AClickInputManager::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -50,7 +48,5 @@ void AClickInputManager::OnMouseClick()
 	{
 		_gameManager->OnClickD.Execute();
 	}
-    //State* state = _gameManager->_states[_gameManager->_currentStateType];
-    //state->ReceiveLeftMouseClick();
 }
 	

@@ -34,23 +34,13 @@ AMainGameMode::~AMainGameMode()
 	OnBoneConsumed.Clear();
 }
 
-void AMainGameMode::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	
-	if(IsValid(this) && IsValid(_currentStateType) && _currentStateType != nullptr)
-	{
-		_currentStateType->OnStateTick(DeltaTime);
-	}
-
-	UpdateMusic(DeltaTime);
-}
-
-
 void AMainGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	TArray<AActor*> ActorsToFind;
+
+	//Populate _gridTiles with the tiles in the scene.
+	//I am using such a dirty way because I had some urgent package crashs (that were not happening in editor)
 	TArray<ATile*> tiles;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATile::StaticClass(), ActorsToFind);
 	_rows = 0;
@@ -93,6 +83,8 @@ void AMainGameMode::BeginPlay()
 			_coreUI->AddToViewport();
 		}
 	}
+
+	//Initialize States 
 	_currentStateType = NewObject<UState_Start>(UState_Start::StaticClass());
 	_currentStateType->_gameManager = this;
 	UState_Start* state = Cast<UState_Start>(_currentStateType);
@@ -101,8 +93,30 @@ void AMainGameMode::BeginPlay()
 	state->_curve = _fadeOutCurve;
 	
 	_currentStateType->OnStateEnter();
+
+	//UIBinding and initialization
 	OnBoneConsumed.BindDynamic(this, &AMainGameMode::ChangeTextValue);
 	ChangeTextValue(0, FColor::Emerald);
+
+	InitializeMusic();
+}
+
+void AMainGameMode::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
+	if(IsValid(this) && IsValid(_currentStateType) && _currentStateType != nullptr)
+	{
+		_currentStateType->OnStateTick(DeltaTime);
+	}
+
+	UpdateMusic(DeltaTime);
+}
+
+void AMainGameMode::InitializeMusic()
+{
+	//We have 2 main musics that switch when a peruvien detects tintin and switchs back when no one detects tintin.
+	//To have smooth transitions I had to set up some things later used.
 	_puruitMusicAudioComponent = NewObject<UAudioComponent>(this);
 	_puruitMusicAudioComponent->SetSound(S_pursuitMusic);
 	_puruitMusicAudioComponent->RegisterComponent();
@@ -116,15 +130,18 @@ void AMainGameMode::BeginPlay()
 	chaseMusic = false;
 }
 
+//Late Init is started At the end of startState. It is helpful to avoid packaging crashs
+//that were triggered because the exectution order was fucked up.
 void AMainGameMode::LateInit()
 {
 	pc = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	_currentStateType->_gameManager = this;
 }
 
+//When actors change tile in a state this will add all the tile actors in the previous and destination tiles
+//to the barrier in order to change their positions on the tile acoordingly to the new number of tileActors.
 void AMainGameMode::ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* currentTile)
 {
-
 	if(IsValid(previousTile))
 	{
 		for(auto body : previousTile->_tileActors)
@@ -155,6 +172,7 @@ void AMainGameMode::ChangeTile(UBarrier* barrier, ATile* previousTile, ATile* cu
 	}
 }
 
+//Initialize Pathfinding. Marks all tile with the number of movements that seperate them from the center tile.
 void AMainGameMode::MarkStepsOnGrid(ATile* CenterTile)
 {
 	check(CenterTile != nullptr);
@@ -171,6 +189,8 @@ void AMainGameMode::MarkStepsOnGrid(ATile* CenterTile)
 	
 }
 
+//Set the steps for pathfinding on all the adjacent tiles to the parameter tile. If the tile is already marked with
+//a lower number or is inaccessible it will be skipped.
 void AMainGameMode::SetStepOnAdjacentsRecursive(ATile* tile)
 {
 	//Haut-> Bas -> Droite -> Gauche
@@ -180,6 +200,7 @@ void AMainGameMode::SetStepOnAdjacentsRecursive(ATile* tile)
 	SetStepOnAdjacentTile(tile, FVector2D(0, -1));
 }
 
+//The single process of the above method.
 void AMainGameMode::SetStepOnAdjacentTile(ATile* tile, FVector2D direction)
 {
 	if(TileIsAvailable(tile, direction))
@@ -190,6 +211,7 @@ void AMainGameMode::SetStepOnAdjacentTile(ATile* tile, FVector2D direction)
 	}
 }
 
+//Check if the targetted tile should be marked for pathfinding.
 bool AMainGameMode::TileIsAvailable(ATile* tile, FVector2D direction)
 {
 	if(tile->_row + direction.X >= 0 && tile->_row + direction.X < _gridTiles.Num() &&
@@ -214,6 +236,8 @@ bool AMainGameMode::TileIsAvailable(ATile* tile, FVector2D direction)
 	}
 }
 
+//Returns an array of tiles containing the quickest way to the center
+//tile called in the last MarkStepsOnGrid starting at the endTile.
 TArray<ATile*> AMainGameMode::GetPath(ATile* endTile, bool getCurrentTile)
 {
 	TArray<ATile*> path;
@@ -229,6 +253,8 @@ TArray<ATile*> AMainGameMode::GetPath(ATile* endTile, bool getCurrentTile)
 	return path;
 }
 
+//Function used to generate the array in GetPath. Order is important here as
+//it will define pathfinding directional priority.
 ATile* AMainGameMode::GetNextTileInPath(ATile* tile)
 {
 	if(tile->_row + 1 >= 0 && tile->_row + 1 < _gridTiles.Num() && _gridTiles[tile->_row + 1].Tiles[tile->_column]->_step == tile->_step - 1 && tile->_upLink)
@@ -242,6 +268,8 @@ ATile* AMainGameMode::GetNextTileInPath(ATile* tile)
 	else return nullptr;
 }
 
+//Transforms a FVector position to the corresponding tile position.
+//If the position is outside the bounds of the grid nullptr will be returned.
 ATile* AMainGameMode::WorldCoordinatesToTilePosition(const FVector& worldCoordinates)
 {
 	const int32 x = FMath::RoundToInt32( static_cast<float>(FMath::CeilToInt32(worldCoordinates.X)) / (_tileWidth * 100.0f)) ;
@@ -252,6 +280,7 @@ ATile* AMainGameMode::WorldCoordinatesToTilePosition(const FVector& worldCoordin
 		return nullptr;
 }
 
+//Delegate function receiver.
 void AMainGameMode::ReceiveMilouUIClick()
 {
 	if(OnMilouBoneClick.IsBound())
@@ -260,22 +289,25 @@ void AMainGameMode::ReceiveMilouUIClick()
 	}
 }
 
+//Delegate function receiver.
 void AMainGameMode::ReceiveNextLevelClick1()
 {
 	UGameplayStatics::OpenLevel(GetWorld(), TEXT("Level_1"), true);
 }
 
+//Delegate function receiver.
 void AMainGameMode::ReceiveNextLevelClick2()
 {
 	UGameplayStatics::OpenLevel(GetWorld(), TEXT("Level_2"), true);
 }
 
+//Delegate function receiver.
 void AMainGameMode::ReceiveNextLevelClick3()
 {
 	UGameplayStatics::OpenLevel(GetWorld(), TEXT("Level_3"), true);
 }
 
-
+//Delegate function receiver to change the bone button.
 void AMainGameMode::ChangeTextValue(int32 newValue, FColor DisabledColor)
 {
 	FText MyText = FText::Format(FText::FromString(TEXT("X {0}")), FText::AsNumber(newValue));
@@ -292,8 +324,7 @@ void AMainGameMode::ChangeTextValue(int32 newValue, FColor DisabledColor)
 	}
 }
 
-
-
+//Change State
 void AMainGameMode::StateChange(UState* newState)
 {
 	_currentStateType->OnStateExit();
@@ -302,6 +333,7 @@ void AMainGameMode::StateChange(UState* newState)
 	_currentStateType->OnStateEnter();
 }
 
+//Start Game over transition state to get fade out and delay.
 void AMainGameMode::StartGameOver()
 {
 	_currentStateType = NewObject<UState_LevelEnd>(UState_LevelEnd::StaticClass());
@@ -316,6 +348,7 @@ void AMainGameMode::StartGameOver()
 	_currentStateType->OnStateEnter();
 }
 
+//Start Win transition state to get fade out and delay.
 void AMainGameMode::OnWin()
 {
 	_currentStateType = NewObject<UState_LevelEnd>(UState_LevelEnd::StaticClass());
@@ -337,6 +370,7 @@ void AMainGameMode::OnWin()
 	_currentStateType->OnStateEnter();
 }
 
+//Load new level.
 void AMainGameMode::LevelTransi() const
 {
 	UGameplayStatics::OpenLevel(GetWorld(), *_nextLevelName, true);
@@ -372,6 +406,7 @@ ATile* AMainGameMode::GetTileIfAccessible(int32 i, int32 j, EAngle angle)
 	return nullptr;
 }
 
+//Get the tile in the direction specified.
 ATile* AMainGameMode::GetForwardTile(const ATile* tile, EAngle angle)
 {
 	ATile* resultTile = nullptr;
@@ -385,6 +420,7 @@ ATile* AMainGameMode::GetForwardTile(const ATile* tile, EAngle angle)
 	return resultTile;
 }
 
+//Update visual feedback for the peruviens detect range.
 void AMainGameMode::SetTilesPeruvienColor(bool toVisible, EAngle direction, const ATile* startTile)
 {
 	const ATile* forwardTile = GetForwardTile(startTile, direction);
@@ -411,6 +447,7 @@ void AMainGameMode::SetTilesPeruvienColor(bool toVisible, EAngle direction, cons
 	
 }
 
+//Initialization of smooth switch between nomal music and pursuit music.
 void AMainGameMode::ChangeMusic()
 {
 	if(_pursuitPeruviens.Num() > 0 && chaseMusic) return;
@@ -426,6 +463,7 @@ void AMainGameMode::ChangeMusic()
 	//UE_LOG(LogTemp, Warning, TEXT("MUSIC CHANGE music = %f and pursuit = %f"), musicAudioTarget, pursuitMusicAudioTarget);
 }
 
+//Smoothe switch between musics.
 void AMainGameMode::UpdateMusic(float DeltaTime)
 {
 	if(_musicFadeInterpolateValue <= 1)

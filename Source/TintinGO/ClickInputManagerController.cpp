@@ -10,6 +10,7 @@ AClickInputManagerController::AClickInputManagerController()
     
 }
 
+//Generate my inputs mapping and actions UObjects.
 void AClickInputManagerController::SetupInputComponent()
 {
     Super::SetupInputComponent();

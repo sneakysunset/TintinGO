@@ -101,8 +101,9 @@ public:
 	
 protected:
     virtual void BeginPlay() override;
+	void InitializeMusic();
 
-    virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaTime) override;
 
 public:
     UPROPERTY(EditAnywhere, Category = "Grid Generation")

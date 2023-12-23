@@ -9,6 +9,7 @@
 #include "TileActor.h"
 #include "Tile.h"
 
+//Change state of every actor to the specified state in the parameters.
 void UBarrier::OnBarrierIni(TSubclassOf<UState_TActor> newState)
 {
 	for (int i = 0; i < _actors.Num(); i++)
@@ -24,8 +25,6 @@ void UBarrier::OnTick(float DeltaTime)
 		if(_actors[i] == nullptr || _actors[i]->_currentState_TA->_isStateComplete)
 		{
 			_actors[i]->ChangeState(NewObject<UState_TA_Neutral>(UState_TA_Neutral::StaticClass()));
-
-			//UE_LOG(LogTemp, Warning, TEXT("Barrier num %d %s on Tile : %d %d"), _actors.Num(), *_actors[i]->GetName(), _actors[i]->GetCurrentTile()->_row,_actors[i]->GetCurrentTile()->_column);
 			_actors.RemoveAt(i);
 			i--;
 		}
@@ -34,5 +33,4 @@ void UBarrier::OnTick(float DeltaTime)
 	{
 		_isBarriereCompleted = true;
 	}
-	
 }

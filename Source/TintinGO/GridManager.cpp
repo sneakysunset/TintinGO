@@ -21,20 +21,16 @@ void AGridManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 #if WITH_EDITOR
-	//UE_LOG(LogTemp, Warning, TEXT("Test"));
 	if (GetWorld() != nullptr && GetWorld()->WorldType == EWorldType::Editor)
 	{
 		BlueprintEditorTick(DeltaTime);
 	}
-
 #endif
-
 }
 
 void AGridManager::BeginPlay()
 {
 	Super::BeginPlay();
-	//UGameplayStatics::SpawnSoundAtLocation(this, music, GetActorLocation());
 	_gameManager = Cast<AMainGameMode>(GetWorld()->GetAuthGameMode());
 	_gameManager->_tileWidth = _tileWidth;
 }
@@ -55,6 +51,7 @@ void AGridManager::BlueprintEditorTick(float DeltaTime)
 {
 }
 
+//Creates Grid.
 void AGridManager::InitializeGrid()	
 {
 	TArray<AActor*> tiles;
@@ -89,6 +86,7 @@ void AGridManager::InitializeGrid()
 	}
 }
 
+//Update the links around tile in editor.
 void AGridManager::UpdateLinks()
 {
 	TArray<AActor*> ActorsToFind;
@@ -144,6 +142,7 @@ void AGridManager::UpdateLinks()
 	_gridTiles.Empty(true);
 }
 
+//Old duplicate function from AGameManager but that I also use in editor so i kept it here.
 ATile* AGridManager::GetTile(int32 i, int32 j)
 {
 	if (i >= 0 && i < _gridTiles.Num() && j >= 0 && j < _gridTiles[i].Tiles.Num())
