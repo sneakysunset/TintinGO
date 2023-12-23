@@ -3,8 +3,6 @@
 
 #include "TileActor_Clue.h"
 
-#include "GameManager.h"
-#include "GridManager.h"
 #include "MainGameMode.h"
 #include "State_TA_Move.h"
 #include "TileActor_Cadenas.h"

@@ -1,18 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "State_CondorAttack.h"
 
-#include "GameManager.h"
-#include "GridManager.h"
 #include "MainGameMode.h"
-#include "State_AwaitingInputs.h"
 #include "State_CondorDropCharacters.h"
 #include "State_TA_Move.h"
 #include "Tile.h"
 #include "TileActor_Character_Condor.h"
 #include "TileActor_Character_Peruvien.h"
-#include "GameFramework/GameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 
 void UState_CondorAttack::OnStateEnter()

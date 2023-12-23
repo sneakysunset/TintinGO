@@ -1,9 +1,6 @@
 ﻿#include "State_TriggerItemsCharacters.h"
 
-#include "GameManager.h"
 #include "State_AwaitingInputs.h"
-#include "State_CheckWinConditions.h"
-#include "State_PeruviensMove.h"
 #include "State_RefreshTileItems.h"
 
 

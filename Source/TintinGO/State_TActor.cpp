@@ -1,8 +1,6 @@
 #include "State_TActor.h"
 
-#include "GameManager.h"
 #include "MainGameMode.h"
-#include "TileActor.h"
 
 void UState_TActor::OnStateEnter()
 {

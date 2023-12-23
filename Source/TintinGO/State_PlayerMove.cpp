@@ -1,11 +1,8 @@
 #include "State_PlayerMove.h"
 
-#include "GameManager.h"
-#include "GlobalGameManager.h"
 #include "State_AwaitingInputs.h"
 #include "State_TA_Move.h"
 #include "State_TriggerItemsCharacters.h"
-#include "GlobalGameManager.h"
 #include "MainGameMode.h"
 #include "TileActor_MilouSign.h"
 #include "Kismet/GameplayStatics.h"

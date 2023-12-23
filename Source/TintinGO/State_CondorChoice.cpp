@@ -1,9 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "State_CondorChoice.h"
 
-#include "GameManager.h"
 #include "MainGameMode.h"
 #include "State_AwaitingInputs.h"
 #include "State_CondorAttack.h"

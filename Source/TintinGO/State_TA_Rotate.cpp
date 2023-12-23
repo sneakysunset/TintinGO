@@ -1,7 +1,5 @@
 ﻿#include "State_TA_Rotate.h"
 
-#include "GameManager.h"
-#include "GridManager.h"
 #include "MainGameMode.h"
 #include "TileActor_Character.h"
 #include "TileActor_Character_Peruvien.h"

@@ -1,9 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "State_DropMilouBoneAnimation.h"
 
-#include "GameManager.h"
 #include "MainGameMode.h"
 #include "State_MilouBone_Move.h"
 #include "State_MilouRotate.h"

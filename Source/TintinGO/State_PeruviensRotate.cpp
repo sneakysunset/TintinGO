@@ -3,8 +3,6 @@
 
 #include "State_PeruviensRotate.h"
 
-#include "GameManager.h"
-#include "GridManager.h"
 #include "MainGameMode.h"
 #include "State_AwaitingInputs.h"
 #include "State_CondorChoice.h"

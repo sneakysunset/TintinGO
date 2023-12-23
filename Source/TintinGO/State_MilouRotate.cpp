@@ -1,9 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "State_MilouRotate.h"
 
-#include "GameManager.h"
 #include "State_AwaitingInputs.h"
 #include "State_MilouMove.h"
 #include "Tile.h"

@@ -1,7 +1,6 @@
 #include "State_AwaitingInputs.h"
 
 #include "Math/UnrealMathUtility.h"
-#include "GameManager.h"
 #include "MainGameMode.h"
 #include "State_AwaitingInputs_Milou.h"
 #include "State_MilouMove.h"

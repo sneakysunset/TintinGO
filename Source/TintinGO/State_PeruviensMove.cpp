@@ -1,11 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "State_PeruviensMove.h"
 
-#include "GameManager.h"
-#include "GlobalGameManager.h"
-#include "GridManager.h"
 #include "MainGameMode.h"
 #include "State_AwaitingInputs.h"
 #include "State_PeruviensRotate.h"

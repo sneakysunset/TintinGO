@@ -1,7 +1,6 @@
 ﻿#include "State_MilouMove.h"
 
 #include "Barrier.h"
-#include "GameManager.h"
 #include "MainGameMode.h"
 #include "State_AwaitingInputs.h"
 #include "State_MilouRotate.h"

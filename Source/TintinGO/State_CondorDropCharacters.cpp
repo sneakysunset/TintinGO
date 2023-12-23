@@ -1,10 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "State_CondorDropCharacters.h"
 
 #include "GridManager.h"
-#include "GameManager.h"
 #include "State_CondorGoToNextNest.h"
 #include "State_TA_Move.h"
 #include "TileActor_Character_Condor.h"
