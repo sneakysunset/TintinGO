@@ -27,7 +27,6 @@ void UState_TriggerItemsCharacters::OnStateEnter()
 			}
 		}
 	}
-	//_gameManager->StateChange(NewObject<UState_CheckWinConditions>(UState_CheckWinConditions::StaticClass()));
 }
 
 void UState_TriggerItemsCharacters::OnStateTick(float DeltaTime)

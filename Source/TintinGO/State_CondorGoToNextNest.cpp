@@ -11,6 +11,8 @@ void UState_CondorGoToNextNest::OnStateEnter()
 	UState::OnStateEnter();
 	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("Condor Wait State Enter"));
+
+	// Set condor's next nest Tile
 	for (const auto condor : _gameManager->_condors)
 	{
 		condor->_characters.Empty();
@@ -35,6 +37,7 @@ void UState_CondorGoToNextNest::OnStateEnter()
 
 void UState_CondorGoToNextNest::OnStateTick(float DeltaTime)
 {
+	// Set condor's orientation during movement
 	if(!_barrier->_isBarriereCompleted)
 	{
 		for(auto condor : _gameManager->_condors)
@@ -46,7 +49,8 @@ void UState_CondorGoToNextNest::OnStateTick(float DeltaTime)
 			rotateInterpolationValue =  FMath::Clamp(rotateInterpolationValue, 0, 1);
 		}
 	}
-	
+
+	// Set condor's orientation at the end of the movement
 	if(_barrier->_isBarriereCompleted)
 	{
 		if(!hasBarrierCompleted)

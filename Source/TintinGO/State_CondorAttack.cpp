@@ -14,7 +14,7 @@ void UState_CondorAttack::OnStateEnter()
 	if(_gameManager->DebugStateChange)
 		UE_LOG(LogTemp, Warning, TEXT("Condor Attack State Enter"));
 
-
+	// Removes the highlight from the tiles foreach condor's movement path
 	for(const auto condor : _gameManager->_condors)
 	{
 		if(condor->isWaitLastRound)
@@ -52,7 +52,10 @@ void UState_CondorAttack::OnStateEnter()
 			}
 		}
 	}
+	
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
+
+	// Set the target tile foreach condors
 	for (const auto condor : _gameManager->_condors)
 	{
 		condor->isWaitLastRound = false;
@@ -232,6 +235,7 @@ void UState_CondorAttack::OnStateTick(float DeltaTime)
 {
 	UState::OnStateTick(DeltaTime);
 
+	// Set condor's orientation
 	for(auto condor : _gameManager->_condors)
 	{
 		FQuat rot =  FQuat::Slerp(condor->_startRotation, condor->_endRotation, rotateInterpolationValue);

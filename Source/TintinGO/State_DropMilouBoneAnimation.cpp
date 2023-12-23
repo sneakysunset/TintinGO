@@ -18,6 +18,8 @@ void UState_DropMilouBoneAnimation::OnStateEnter()
 	ATileActor_Character_Tintin::GetInstance()->GetCurrentTile()->SpawnMilouBone();
 	
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
+
+	// Add Milou Sign on end tile (Tintin must be with Milou at the end of the level to win)
 	if(_gameManager->_milouSign != nullptr && _gameManager->_endTile != _milou->MilouTilePath[0])
 	{
 		_milouSignBarrier = NewObject<UBarrier>(UBarrier::StaticClass());
@@ -27,9 +29,11 @@ void UState_DropMilouBoneAnimation::OnStateEnter()
 		}
 		_milouSignBarrier->OnBarrierIni(UState_TA_Move::StaticClass());
 	}
-	
-	ATile* previousTile =_milou->GetCurrentTile();
 
+
+	// Set Milou's bone target tile for animation
+	ATile* previousTile =_milou->GetCurrentTile();
+	
 	ATile* nextTile = _milou->MilouTilePath[0];
 	_milou->_milouBoneToDrop->SetCurrentTile(nextTile);
 

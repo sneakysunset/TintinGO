@@ -18,6 +18,8 @@ void UState_CondorDropCharacters::OnStateEnter()
 
 	ATile* targetTile;
 	_barrier = NewObject<UBarrier>(UBarrier::StaticClass());
+
+	// Set targe tile of condor's movement path when condor grabs a character (Milou, enemy, Tintin)
 	for (auto condor : _gameManager->_condors)
 	{
 		const ATile* nextNestTile = _gameManager->_nests[(condor->currentNestNb + 1) % _gameManager->_nests.Num()];
@@ -196,6 +198,7 @@ void UState_CondorDropCharacters::OnStateEnter()
 
 void UState_CondorDropCharacters::OnStateTick(float DeltaTime)
 {
+	// Set condor's orientation
 	for(auto condor : _gameManager->_condors)
 	{
 		FQuat rot =  FQuat::Slerp(condor->_startRotation, condor->_endRotation, rotateInterpolationValue);
@@ -210,6 +213,7 @@ void UState_CondorDropCharacters::OnStateTick(float DeltaTime)
 		{
 			for (auto condor : _gameManager->_condors)
 			{
+				// Update Milou and enemy behaviours
 				for (auto character : condor->_characters)
 				{
 					if(character->IsA<ATileActor_Character_Peruvien>())

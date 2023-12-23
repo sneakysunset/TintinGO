@@ -19,7 +19,6 @@ void UState_MilouBone_Move::OnStateEnter()
 	ATile* tile = _tileActor->GetCurrentTile();
 	if(tile == nullptr)
 	{
-		//UE_LOG(LogTemp, Error, TEXT("Not Valid tile for move"));
 		return;
 	}
 	_endPosition = tile->GetTileActorPosition(_tileActor);

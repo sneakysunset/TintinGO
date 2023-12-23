@@ -10,6 +10,8 @@ void UState_CondorChoice::OnStateEnter()
 	UState::OnStateEnter();
 	if(_gameManager->DebugStateChange)
 	UE_LOG(LogTemp, Warning, TEXT("Condor Choice State Enter"));
+
+	// Set condor's behaviour for current round
 	for (auto condor : _gameManager->_condors)
 	{
 		for (int i = 0; i < _gameManager->_nests.Num(); ++i)

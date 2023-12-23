@@ -28,6 +28,7 @@ void UState_AwaitingInputs::OnStateEnter()
 		pc = _gameManager->pc;
 	}
 
+	// Highlight the trajectory of the condor's movement in the next round
 	if (IsValid(_gameManager))
 	{
 		for(auto condor : _gameManager->_condors)
